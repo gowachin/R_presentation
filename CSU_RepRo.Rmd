@@ -1,9 +1,9 @@
 ---
 title: 'Science Reproductible avec un grand `r icons::fontawesome("r-project")`'
-subtitle: "<br/>"
+subtitle: "slides : [tinyurl.com/ycktp4kv](https://tinyurl.com/ycktp4kv)"
 author: "Maxime Jaunatre"
 institute: "UMR AMURE | IFREMER" 
-date: "2022/03/17 (updated: `r Sys.Date()`)"
+date: "2022-03-17 (updated: `r Sys.Date()`)"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -721,7 +721,7 @@ class: inverse, center, middle
 
 # Merci! Des questions &#x2753;
 
-**ajouter le lien vers les slides**
+[https://gowachin.github.io/R_presentation/CSU_RepRo.html](https://tinyurl.com/ycktp4kv)
 
 `r icons::fontawesome("github")` [Gowachin](https://github.com/gowachin) &nbsp;&nbsp;&nbsp;&nbsp; `r icons::fontawesome("stack-overflow")` [Gowachin](https://stackoverflow.com/users/12501379/gowachin)
 
