@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Science Reproductible avec un grand  </title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Maxime Jaunatre" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Science Reproductible avec un grand <svg viewBox="0 0 581 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"> <path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"></path></svg>
+## <br/>
+### Maxime Jaunatre
+### UMR AMURE | IFREMER
+### 2022/03/17 (updated: 2022-03-04)
+
+---
+
+
+
+
+exclude: true
+
+class: inverse, center, middle
+
+# Introduction
+
+---
+exclude: true
+
+# Science Reproductible avec un grand R
+
+**Résumé :** Le logiciel R est un outil indispensable aux recherches menés au sein d'AMURE.
+Dans le contexte du mouvement de la science ouverte, Qu'il s'agisse d'analyse de données, de statistique ou de modélisation,  se pose la question de la reproductibilité de la science  : sommes nous tous capables de réutiliser les outils développés il y a 6 mois, un an ou plus ? Ces outils sont-ils suffisament ouverts pour permettre une utilisation par tout à chacun ? Enfin, à quoi peuvent bien servir des données ouvertes si les outils qui les utilisent ne le sont pas ?
+Cette présentation fera un tour d'horizon des bonnes pratiques sous R et des outils qu'il propose afin de faciliter une production quotidienne de science reproductible et ouverte. Au programme : Rstudio, packages, Git/Github, données, documentation.
+
+---
+exclude: false
+
+# Objectif : bonnes pratiques en R
+
+Background : Apprentissage de R pour l'écologie, traitements de données.
+
+R est construit par et pour des statisticiens mais possède une grande communauté
+qui partage de plus en plus de "bonne pratiques". Plus proche du software engineering.
+
+On ne va pas parler de stats aujourd'hui.
+
+
+**photo de moi sur le terrain**
+
+
+---
+
+# Reproductibilité ?
+
+.pull-left[
+Pouvoir reproduire une analyse, une figure ou des données efficacement !
+
+##Principe FAIR :
+
+.pull-left[
+- **F**indable
+- **A**ccessible 
+]
+
+.pull-right[
+- **I**nteroperable
+- **R**eusable
+]
+]
+
+.pull-right[
+&lt;img src="CSU_RepRo_files/figure-html/repro_meme.jpg" width="65%" style="display: block; margin: auto;" /&gt;
+]
+
+
+&lt;img src="CSU_RepRo_files/figure-html/repro-spectrum.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+
+.footnote[
+Figure : [Peng. "Reproducible Research in Computational Science". In: *Science* (2011).](https://www.science.org/doi/10.1126/science.1213847)
+]
+
+---
+
+# Findable &amp;#x1F50D;
+
+**Un donnée ou une figure non liées au code qui l'a produit n'est pas reproductible.**
+
+L'emplacement du code doit être explicite. Le trouver ne doit pas être une aventure.
+
+.pull-left[
+Cela passe par quelques conseils :
+
+- Noms de scripts explicites. &lt;br/&gt; (on évite les noms comme **test**, **test2**)
+
+- Structure de dossier, **Compendium**
+
+- Disque réseau et/ou en ligne
+
+- Dossier avec noms de **projets** &lt;br/&gt; (sans espaces et accents !)
+
+&lt;!-- ? expliciter la location du code dans les rapports etc. toujour lier les données aux scripts qui les ont fait. (localité, sources etc) --&gt;
+]
+
+.pull-right[
+&lt;img src="CSU_RepRo_files/figure-html/find_source.jpg" width="90%" style="display: block; margin: auto;" /&gt;
+
+- Logiciel de version control (**git**)
+]
+
+
+```r
+list.files()[1:4]
+```
+
+```
+## [1] "CSU_RepRo.html"  "CSU_RepRo.pdf"   "CSU_RepRo.Rmd"   "CSU_RepRo.Rproj"
+```
+
+
+???
+
+Pour le coup les infos ici vont enormement avec accessible et donc je préciserais ce qu'est un compendium à ce moment.
+La diapo suivante parle de git
+
+
+---
+
+# Pourquoi utiliser un CVS ?
+
+Est-ce que vous avez déjà :
+
+- **Fait un changement de code et voulu revenir en arrière ?**
+- **Perdu du code ou une sauvegarde trop ancienne ?**
+- Voulu voir la difference entre 2 versions ?
+- Voulu vérifier l'historique d'un script ?
+- **Voulu travailler sur un script a plusieurs ?**
+- **Voulu partager votre code à quelqu'un ?**
+- Voulu tester une nouveauté sans modifier du code déjà utile ?
+
+Si oui, et dans plein de cas, un système de version control aurait pu vous simplifier la vie.
+
+---
+background-image: url(./CSU_RepRo_files/figure-html/phd101212s.png)
+background-size: contain
+
+# Pourquoi utiliser un CVS ?
+
+
+---
+layout: true
+
+# Git : comment ça marche ?
+
+---
+
+## 3 commandes à retenir : commit, push, and pull
+
+- pull: met a jour le projet local avec la dernière version du projet&lt;sup&gt;*&lt;/sup&gt;
+
+- commit: enregistre une snapshot du code à un certain point temporel. 
+&lt;br/&gt;(permet d'associer du texte pour expliquer les modifications)
+
+- push: met en commun les modifications locales avec le projet principal&lt;sup&gt;*&lt;/sup&gt;
+
+
+&lt;img src="CSU_RepRo_files/figure-html/git_tab.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+
+
+.footnote[
+[*] Si herbergé en ligne.
+]
+---
+
+&lt;img src="CSU_RepRo_files/figure-html/commit_mess.png" width="85%" style="display: block; margin: auto;" /&gt;
+
+.footnote[
+xkcd comics, [CC BY-NC 2.5 license](https://xkcd.com/license.html)
+]
+---
+
+## Sauvegarder en ligne ?
+
+&lt;img src="CSU_RepRo_files/figure-html/git.svg" width="85%" style="display: block; margin: auto;" /&gt;
+
+---
+
+&lt;img src="CSU_RepRo_files/figure-html/gitlab/gitlab_ifremer.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+**Connection avec login extranet**, possibilité de partager à des membres externes.
+
+---
+
+&lt;img src="CSU_RepRo_files/figure-html/gitlab/create_proj.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+&lt;img src="CSU_RepRo_files/figure-html/gitlab/init_project.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+layout: false
+
+# Ressources Git
+
+.pull-left[
+
+- [Tutoriel ThinkR : R and Git](https://thinkr.fr/travailler-avec-git-via-rstudio-et-versionner-son-code/)
+
+- [Advance R &amp;#x1F4D4;, H. Wickham](http://r-pkgs.had.co.nz/git.html)
+
+- [Happy Git and GitHub for the useR](http://happygitwithr.com/)
+
+- [Git cheatsheet](https://services.github.com/on-demand/downloads/github-git-cheat-sheet.pdf)
+
+- [Quand ça part en vrille](https://github.com/k88hudson/git-flight-rules)
+
+- [Réparer une erreur](http://ohshitgit.com/)
+
+- [Créer une nouvelle branche avec git et merge des branches](https://github.com/Kunena/Kunena-Forum/wiki/Create-a-new-branch-with-git-and-manage-branches)
+]
+
+.pull-right[
+&lt;img src="CSU_RepRo_files/figure-html/git.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+.footnote[
+xkcd comics, [CC BY-NC 2.5 license](https://xkcd.com/license.html)
+]
+---
+layout: true
+
+# Accessible &amp;#x1F4C2;
+
+---
+
+## COMPENDIUM &amp;#x1F4E6;
+
+.pull-left[
+Structurer les dossiers en packages R.
+
+&lt;img src="CSU_RepRo_files/figure-html/mar_scompd.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+[Marwick et al. "Packaging Data Analytical Work Reproducibly Using R (and Friends)". In: *The American Statistician* (2017).](https://peerj.com/preprints/3192/)
+]
+
+.pull-right[
+&lt;img src="CSU_RepRo_files/figure-html/mar_ucompd.png" width="65%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+.pull-left[
+- **`README`** : entrée classique de documentation.
+
+- Aide à l'installation et l'utilisation
+
+- Pour ajouter à un projet : `usethis::use_readme_md()`
+
+&lt;img src="CSU_RepRo_files/figure-html/readme.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+- **`LICENCE`** : sans licence, un code est théoriquement inutilisable. &lt;br/&gt;(**MIT**, **GNU GPL**, **CC**)
+
+Dicte les droits d'utilisation, de copie, de modification d'un code.
+
+[Loi Numérique n°2016-1321](https://www.legifrance.gouv.fr/loda/article_lc/LEGIARTI000033205142/2020-09-21/) impose une licence libre pour tout logiciel produit avec des fonds publics.
+
+&lt;img src="CSU_RepRo_files/figure-html/licence.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+A nuancer avec les questions de publications, de tutelles etc.
+]
+
+---
+
+## Projet = Package &amp;#x1F4E6;
+
+.pull-left[
+- **`DESCRIPTION`** : 
+
+```
+Package: todormd
+Type: Package
+Title: Using todonotes in rmarkdown package
+Version: 0.1.0
+Authors@R: c(
+    person('Maxime', 'Jaunatre', 
+    email = "maxime.jaunatre@yahoo.fr", 
+    role = c('aut', 'cre'))
+    )
+Description: Personnal project number x
+License: CeCILL-2
+Encoding: UTF-8
+Imports:
+    knitr, 
+    rmarkdown
+RoxygenNote: 7.1.1
+Suggests: 
+    testthat (&gt;= 3.0.0)
+```
+
+
+]
+
+.pull-right[
+- **`NEWS.md`** : Fichier de suivis des mises à jour d'un projet.
+
+Permet d'informer sur un changement majeur ou des nouveautés. Important d'avoir un cycle de version avec :&lt;br/&gt; `0.1.1` &gt; `0.1.0`
+
+[Why and how maintain a NEWS file for your R package?](https://blog.r-hub.io/2020/05/08/pkg-news/)
+
+&lt;br/&gt;
+
+- Pour ajouter une dépendances au projet : `devtools::use_package("tidyr")`
+]
+
+---
+
+## Documentation &amp;#x2139;
+
+.pull-left[
+
+- Rédiger en amont (`{Roxygen2}`)
+
+
+```r
+#' half_life
+#' 
+#' compute half_life percentage.
+#' 
+#' @param period period in minute
+#' @param time time elapsed (min)
+#'
+#' @return percentage.
+#' @author M. Jaunatre &lt;mail&gt;
+#' 
+#' @examples
+#' half_life(20, 20)
+#' half_life(20, 40)
+#' 
+half_life &lt;- function(period, time){
+  return((1 - 2^(-time/period)) * 100)
+}
+```
+]
+
+.pull-right[
+&lt;img src="CSU_RepRo_files/figure-html/document-all-the-things.jpg" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+## Documentation &amp;#x2139;
+
+.pull-left[
+
+**Forme longue de documentation**
+
+- `{Rmarkdown}` ! Permet de mélanger texte (**md**, `\(\LaTeX\)`) et code **R**.
+
+- Vignettes pour les packages
+
+- Rédaction d'articles -&gt; `{rticles}`
+
+- Diapos -&gt; `{xaringan}`
+
+- Livre -&gt; `{bookdown}`
+
+- Site web -&gt; `{pkgdown}`
+
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="CSU_RepRo_files/figure-html/rmarkdown.png" alt="   " width="15%" /&gt;&lt;img src="CSU_RepRo_files/figure-html/knitr.png" alt="   " width="15%" /&gt;&lt;img src="CSU_RepRo_files/figure-html/rticles.png" alt="   " width="15%" /&gt;&lt;img src="CSU_RepRo_files/figure-html/xaringan.png" alt="   " width="15%" /&gt;&lt;img src="CSU_RepRo_files/figure-html/bookdown.png" alt="   " width="15%" /&gt;&lt;img src="CSU_RepRo_files/figure-html/pkgdown.png" alt="   " width="15%" /&gt;
+&lt;p class="caption"&gt;   &lt;/p&gt;
+&lt;/div&gt;
+]
+
+.pull-right[
+&lt;img src="CSU_RepRo_files/figure-html/markdown.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+## Lisibilité
+
+.pull-left[
+
+```r
+# Title ####
+# Author, date, contact etc
+# Description
+
+## Depends ####
+library(IAM)
+# devtools::install_github(
+#   "github.com/gowachin/todormd"
+# )
+
+# sources 
+sources("R/hello_world.R")
+# functions
+foo &lt;- function(){cat("Don't panic !")}
+
+## Datasets ####
+read.csv(file = "raw_data/sole.csv")
+
+## Edit Dataset ####
+
+## Plots ####
+## Export ####
+```
+]
+
+.pull-right[
+- **DRY** (Don't Repeat Yourself)
+
+- **KISS** (Keep it Simple, Stupid) &lt;br&gt; plein de petits fichiers &gt; script infini
+
+- `{cleanR}`: nettoyer les lignes inutiles.
+
+- `{styleR}`: reformate le code.
+
+&lt;img src="CSU_RepRo_files/figure-html/unreadible.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+## Lisibilité
+
+.pull-left[
+
+```r
+#                 Bad                 #
+if(`T`){print(10)}
+ `T` &lt;- FALSE
+ `mean` &lt;- function(x) sum(x)
+
+if (y &lt; 0 &amp;&amp; debug) 
+*  message("y is negative")
+*  stop("error for in y test")
+
+
+*function_with_many_argument("that", many)
+
+function_with_many_argument(x = "that", 
+*  many) 
+
+
+x` = `5
+i = 0` ; y=12`
+```
+]
+
+.pull-right[
+
+```r
+#                 Nice                #
+if(TRUE){print(10)} # Full logical
+testing &lt;- FALSE # name conflict
+use_sum &lt;- function(x) sum(x)
+
+if (y &lt; 0 &amp;&amp; debug) {
+  message("y is negative")
+  stop("error for in y test")
+} # Braces
+
+function_with_many_argument(
+  x = "that",
+  y = many # name args
+) # line limit = 80
+
+x &lt;- 5 # arrow
+i &lt;- 0
+y &lt;-12
+```
+]
+
+"**Code needs a lot of whitspace. That is how it breathes.**" Roger Peng
+
+---
+layout: true
+# Interopérable &amp;#x1F4CE;
+
+---
+
+**Un projet ne doit pas dépendre de l'ordinateur qu'il utilise** -&gt; Portabilité
+
+Cela signifie l'oublis de ces commandes maudites : 
+
+
+```r
+*setwd("C:/home/maxime/Documents/Projet magnifique/mouette/analyse/bob/modèle/test/")
+```
+
+
+
+```r
+rm(list = ls()) # -&gt; Supprime uniquement les objects "utilisateurs"
+                # -&gt; Ne supprime pas des dépendances chargées.
+                # -&gt; Indique une sesssion R ouverte depuis 30 ans
+                # -&gt; Vide l'environnement des copains qui veulent aider
+                # -&gt; Participe à la disparition des bébés phoques
+```
+
+Si votre script possède ces lignes, **Jenny Bryan viendra bruler** votre ordinateur. &amp;#x1F525;
+
+Solution ? Utiliser les **Projets Rstudio**
+
+.footnote[
+*A noter l'espace, et l'accent dans ce chemin !*
+]
+
+---
+
+`File -&gt; New Project -&gt; New Directory`
+
+&lt;img src="CSU_RepRo_files/figure-html/new_project.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+Dans un project, tout les chemins sont basés sur la racine du projet (où ce situe `.Rproj`)
+
+&lt;img src="CSU_RepRo_files/figure-html/my_awesome_project.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+Désactiver la sauvegarde automatique !
+
+`Tools -&gt; Global options -&gt; General -&gt; un-tick "always save history"`
+
+---
+layout: true
+
+# Reusable &amp;#x1F503;
+
+---
+
+## Données
+
+**Un script ne doit dépendre que des données présentes dans son projet.**
+
+- Eviter les `.RData` ! Ce format de fichier montre que vos données sont trop complexes et que le script qui les produit n'est pas clair.
+
+Seule exception : les données de type cache : permet de faire tourner les scripts plus facilement. Mais encore une fois des outils existent pour éviter cela comme `{drake}`, qui permet de refaire tourner que les parties modifiées ou dépendantes d'un script.
+
+&lt;img src="CSU_RepRo_files/figure-html/drake.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+Parfois les données sont complexes et non distribuables. Dans ce cas, prévoir le minimum pour montrer que le code marche.
+
+- Avoir un **exemple** simplifié pour chaque script.
+
+Exemple : ici la fonction prend un object en entrée...mais quel format doit-il avoir ?
+
+.pull-left[
+
+```r
+rm_dups &lt;- function(data){
+  data &lt;- data[! duplicated(data$x), ]
+  data
+}
+```
+]
+
+.pull-right[
+
+```r
+df &lt;- data.frame(x = c(0,1,1,0), 
+                 y = c(2,1,0,0))
+rm_dups(df)
+```
+
+```
+##   x y
+## 1 0 2
+## 2 1 1
+```
+]
+
+Fournir un exemple est un très bon début de documentation.
+
+Exemple = niveau 0 du test !
+
+---
+
+## Test !
+
+Nous testons tous nos codes à la main, et ça marche sur le coup...mais 2 semaines après ?
+
+
+.pull-left[
+
+- Ecrire des tests unitaires qui font tourner le code tout seul. &lt;br/&gt; -&gt; Dossier `test/`
+
+- `usethis::use_testthat()` charge automatiquement `{testthat}`
+
+&lt;img src="CSU_RepRo_files/figure-html/testthat_logo.png" width="20%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="CSU_RepRo_files/figure-html/test_doc.jpg" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+**Il vaut mieux prévenir que guérir !**
+
+---
+
+## Test !
+
+.pull-left[
+
+Utiliser `{usethis}` pour simplifier la vie !
+
+- `usethis::use_test("add")`
+
+
+```r
+tests
+├── testthat
+│   └── test-add.R
+└── testthat.R
+```
+
+Rédiger des tests n'est jamais agréable mais sauve du temps plus tard.
+
+**Retour rapide** lors de la modification du code + assurance de rien casser.
+]
+
+.pull-right[
+
+```r
+library(testthat)
+add &lt;- function(y,x){
+  x+y
+}
+
+test_that("add works", {
+  expect_equal(add(39, 3), 42)
+})
+```
+
+```
+## Test passed
+```
+
+&lt;img src="CSU_RepRo_files/figure-html/no_test.jpg" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+layout: false
+
+# Trouver de l'aide pour R &amp;#x1F64F;
+
+.pull-left[
+## RTFM&lt;sup&gt;*&lt;/sup&gt;
+- utiliser les aides `help(sum)` ou `?sum`
+- lire les **manuels** de packages [ggplot2](https://ggplot2.tidyverse.org/)
+- avoir les **cheatsheet** quelque part !
+
+## [Stack overflow &lt;svg viewBox="0 0 384 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M290.7 311L95 269.7 86.8 309l195.7 41zm51-87L188.2 95.7l-25.5 30.8 153.5 128.3zm-31.2 39.7L129.2 179l-16.7 36.5L293.7 300zM262 32l-32 24 119.3 160.3 32-24zm20.5 328h-200v39.7h200zm39.7 80H42.7V320h-40v160h359.5V320h-40z"&gt;&lt;/path&gt;&lt;/svg&gt;](https://stackoverflow.com/questions/tagged/r)
+## Issue Github &lt;svg viewBox="0 0 496 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"&gt;&lt;/path&gt;&lt;/svg&gt;
+]
+.pull-right[
+## Livres et blogs
+- [Advance R, Hadley Wickham](http://r-pkgs.had.co.nz/git.html)
+- [Git et Rstudio, ThinkR](https://thinkr.fr/travailler-avec-git-via-rstudio-et-versionner-son-code/)
+- [Project-oriented workflow, Jenny Bryan](https://www.tidyverse.org/blog/2017/12/workflow-vs-script/)
+
+## Conférences
+- [Code smells and feels, Jenny Bryan](https://youtu.be/7oyiPBjLAWY)
+- Toutes les conférences UseRs &lt;svg viewBox="0 0 576 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"&gt;&lt;/path&gt;&lt;/svg&gt;
+]
+
+## Communauté francophone de R : 
+.pull-left[
+- [frrrenchies](https://github.com/frrrenchies/frrrenchies) : list de doc fr
+]
+.pull-right[
+- [slack grrr](https://join.slack.com/t/r-grrr/shared_invite/zt-46utbgb9-uvo_bg5cbuxOV~H10YUX8w) : question, news, jobs...
+]
+
+.footnote[
+[*] Read The Fucking Manual.
+]
+
+---
+
+class: inverse, center, middle
+
+# Merci! Des questions &amp;#x2753;
+
+**ajouter le lien vers les slides**
+
+&lt;svg viewBox="0 0 496 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"&gt;&lt;/path&gt;&lt;/svg&gt; [Gowachin](https://github.com/gowachin) &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; &lt;svg viewBox="0 0 384 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M290.7 311L95 269.7 86.8 309l195.7 41zm51-87L188.2 95.7l-25.5 30.8 153.5 128.3zm-31.2 39.7L129.2 179l-16.7 36.5L293.7 300zM262 32l-32 24 119.3 160.3 32-24zm20.5 328h-200v39.7h200zm39.7 80H42.7V320h-40v160h359.5V320h-40z"&gt;&lt;/path&gt;&lt;/svg&gt; [Gowachin](https://stackoverflow.com/users/12501379/gowachin)
+
+.footnote[
+Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"highlightSpans": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
