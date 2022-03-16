@@ -22,6 +22,13 @@ options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
 ```
 
+```{r, eval = FALSE, inclue = FALSE}
+remotes::install_github("mitchelloharawild/icons")
+icons::download_fontawesome()
+remotes::install_github("hadley/emo")
+```
+
+
 exclude: true
 
 class: inverse, center, middle
@@ -73,12 +80,15 @@ Pouvoir reproduire une analyse, une figure ou des données efficacement !
 ]
 ]
 
+--
+
 .pull-right[
 ```{r, out.width="65%"}
 knitr::include_graphics("CSU_RepRo_files/figure-html/repro_meme.jpg")
 ```
 ]
 
+--
 
 ```{r, out.width="90%"}
 knitr::include_graphics("CSU_RepRo_files/figure-html/repro-spectrum.jpg")
@@ -285,6 +295,8 @@ Structurer les dossiers en packages R.
   knitr::include_graphics("CSU_RepRo_files/figure-html/readme.png")
 ```
 ]
+
+--
 
 .pull-right[
 - **`LICENCE`** : sans licence, un code est théoriquement inutilisable. <br/>(**MIT**, **GNU GPL**, **CC**)
