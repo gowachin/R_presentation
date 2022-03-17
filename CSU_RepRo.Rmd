@@ -725,6 +725,11 @@ tests
 --
 
 .pull-right[
+
+```{r, echo = FALSE}
+Sys.setenv("LANGUAGE" = "EN")
+```
+
 ```{r, echo = TRUE}
 test_that("add works", {
   expect_equal(add(39, 3), 42)

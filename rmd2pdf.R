@@ -9,9 +9,6 @@ xaringan:::inf_mr(moon = "CSU_RepRo.Rmd")
 
 pagedown::chrome_print("CSU_RepRo.html")
 # install.packages("remotes")
-remotes::install_github("jhelvy/xaringanBuilder")
+# remotes::install_github("jhelvy/xaringanBuilder")
 library(xaringanBuilder) # not working because missing chrome
-# build_pdf("CSU_RepRo.html")
-
-install.packages('sass')
-install.packages('xaringan')
+build_pdf("CSU_RepRo.html", partial_slides = TRUE)
