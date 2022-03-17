@@ -70,6 +70,19 @@ Bonnes pratiques viennent des échanges, de la communauté et de la pratique.
 .footnote[
 On ne va pas parler de statistiques aujourd'hui.
 ]
+
+???
+
+Peu d'utilisateurs sont des informaticiens et n'ont pas les réfléxes 
+de développement logiciel.
+L'apprentissage se fait par la communauté.
+
+Exemple : mon parcours de biologie ne m'a pas donnée les bases d'informatique
+par rapport a mon expérience de terrain en écologie.
+Beaucoup de formation indépendante en autonomie.
+Importance de travailler sur de petits projets persos et de se tenir au courant
+des nouveautés de la communauté. S'impliquer.
+
 ---
 
 # Reproductibilité ?
@@ -103,6 +116,12 @@ Pouvoir reproduire une analyse, une figure ou des données efficacement !
 .footnote[
 Figure : [Peng. "Reproducible Research in Computational Science". In: *Science* (2011).](https://www.science.org/doi/10.1126/science.1213847)
 ]
+
+???
+
+La science se doit d'être reproductible pour les données comme pour les analyses.
+La présentation va suivre l'ordre FAIR et partir du niveau dossier vers 
+une organisation en fichiers.
 
 ---
 
@@ -139,14 +158,21 @@ list.files()[1:4]
 ```
 
 ```
-## [1] "CSU_RepRo_files" "CSU_RepRo.html"  "CSU_RepRo.pdf"   "CSU_RepRo.Rmd"
+## [1] "CSU_RepRo.html"  "CSU_RepRo.pdf"   "CSU_RepRo.Rmd"   "CSU_RepRo.Rproj"
 ```
 
 
 ???
 
-Pour le coup les infos ici vont enormement avec accessible et donc je préciserais ce qu'est un compendium à ce moment.
-La diapo suivante parle de git
+Bien nommer et placer ses dossiers est important, il ne faut pas perdre de temps
+à chercher ses petits scrips.
+
+Les espaces et les accents sont embettants quand on partage nos dossiers
+avec d'autres gens (norme anglophone) et pour l'utilisation d'outils de recherche
+d'information (outils linux, grep et scripts R -&gt; norme ASCII)
+
+L'organisation en compendium est détaillée dans la partie "accessible"
+Git est detaillé dans les diapos suivantes.
 
 
 ---
@@ -165,6 +191,10 @@ Est-ce que vous avez déjà :
 - Voulu tester une nouveauté sans modifier du code déjà utile ?
 
 Si oui, et dans plein de cas, un système de version control aurait pu vous simplifier la vie.
+
+???
+
+Diapo dite à l'orale avec le comic suivant.
 
 ---
 background-image: url(./CSU_RepRo_files/figure-html/phd101212s.png)
@@ -197,6 +227,17 @@ layout: true
 .footnote[
 [*] Si herbergé en ligne.
 ]
+
+???
+
+Installation de git sur l'ordinateur et initialisation de dépots dans un dossier
+rejoint la notion de compendium (un projet = un dépot git = un dossier)
+
+commit permet un enregistrement d'une étape temporelle pour les fichiers textes
+permet de travailler sur tout fichier texte simple (md, tex, R, code...)
+
+Important de bien nommer ses commits pour se retrouver temporellement
+
 ---
 
 &lt;img src="CSU_RepRo_files/figure-html/commit_mess.png" width="85%" style="display: block; margin: auto;" /&gt;
@@ -204,17 +245,40 @@ layout: true
 .footnote[
 xkcd comics, [CC BY-NC 2.5 license](https://xkcd.com/license.html)
 ]
+
+???
+
+commit = doc temporelle, important de pas nommer n'importe comment sinon on s'y 
+perd.
+
 ---
 
 ## Sauvegarder en ligne ?
 
 &lt;img src="CSU_RepRo_files/figure-html/git.svg" width="85%" style="display: block; margin: auto;" /&gt;
 
+???
+
+Github est juste un serveur web avec git d'installer dessus et qui peut 
+fonctionner comme un drive.
+
+Permet de travailler à plusieurs ordinateurs (une personne) ou du coup à
+plusieurs.
+
+Important de commencer seul sur un petit projet pour appréhender le systeme
+
+Github = Microsoft (GAFAM)
+
 ---
 
 &lt;img src="CSU_RepRo_files/figure-html/gitlab/gitlab_ifremer.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 **Connection avec login extranet**, possibilité de partager à des membres externes.
+
+???
+
+gitlab est une alternative, moins répandue mais plus souveraine.
+Ifremer héberge un gitlab et quelques universités également.
 
 ---
 
@@ -224,6 +288,11 @@ xkcd comics, [CC BY-NC 2.5 license](https://xkcd.com/license.html)
 
 
 &lt;img src="CSU_RepRo_files/figure-html/gitlab/init_project.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+???
+
+On peut gérer l'acces aux projets et l'ouvrir au public ou non.
+Permet de travailler sur des manuscrits par exemple.
 
 ---
 layout: false
@@ -254,6 +323,13 @@ layout: false
 .footnote[
 xkcd comics, [CC BY-NC 2.5 license](https://xkcd.com/license.html)
 ]
+
+???
+
+Beaucoup d'information est disponible.
+Encore une fois, il vaut mieux commencer sur un petit projet où l'on est à
+l'aise.
+
 ---
 layout: true
 
@@ -275,6 +351,17 @@ Structurer les dossiers en packages R.
 .pull-right[
 &lt;img src="CSU_RepRo_files/figure-html/mar_ucompd.png" width="65%" style="display: block; margin: auto;" /&gt;
 ]
+
+???
+
+Vraiment lire l'article de Marwick 2017.
+Le package R est l'exemple typique de code reproductible et distribuable.
+
+A gauche on a l'exemple minimal d'un compendium et à droite la structure la 
+plus complete.
+
+Organiser nos projets comme des packages permet d'utiliser des outils
+de développement et d'avoir accès à des outils reproductibles (test, doc etc.)
 
 ---
 
@@ -301,6 +388,12 @@ Dicte les droits d'utilisation, de copie, de modification d'un code.
 
 A nuancer avec les questions de publications, de tutelles etc.
 ]
+
+???
+
+Faire le lien avec la notice Licence écrite pour IAM.
+Prendre le temps de lire la Licence CeCILL en Fr peut être bénéfique
+pour comprendre les enjeux et s'ouvrir à l'open source.
 
 ---
 
@@ -349,6 +442,13 @@ Permet d'informer sur un changement majeur ou des nouveautés. Important d'avoir
 &lt;/div&gt;
 ]
 
+???
+
+Diapo davantage tournée vers la structure de package.
+
+DESCRIPTION est un fichier pensé pour être lue par l'ordi également
+ajoute la notion de dépendance d'un package.
+
 ---
 
 ## Documentation &amp;#x2139;
@@ -385,6 +485,14 @@ half_life &lt;- function(period, time){
 &lt;img src="CSU_RepRo_files/figure-html/document-all-the-things.jpg" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
+???
+
+Il vaut mieux documenter en amont comme cela on réfléchis à ce que l'on code.
+Permet de clairement identifier ce que l'on prend en entrée et ce que l'on 
+retourne.
+
+Permet également d'écrire quelques exemple.
+
 ---
 
 ## Documentation &amp;#x2139;
@@ -415,6 +523,15 @@ half_life &lt;- function(period, time){
 .pull-right[
 &lt;img src="CSU_RepRo_files/figure-html/markdown.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
+
+???
+
+Rmarkdown permet de tout lier et de ne fournir qu'un seul document contentant
+l'analyse et la rédaction. Permet de s'assurer que tout tourne,
+exemple des scripts stochastiques !
+moins de fichiers annexe comme les png et jpeg etc. Juste un fichier et des données
+
+Diapo faites avec Xaringan
 
 ---
 
@@ -462,6 +579,19 @@ read.csv(file = "raw_data/sole.csv")
 
 &lt;img src="CSU_RepRo_files/figure-html/unreadible.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
+
+???
+
+Organisation d'un script présenté ainsi permet au lecteur de 
+s'assurer qu'il peut le reproduire
+par exemple les librairies au début facilite la vie au lecteur, 
+il ne faut plus chercher les dépendances
+
+functions au début permet d'utiliser le principe DRY
+
+si beaucoup de function apparaissent -&gt; faire un script externe
+si beaucoup de librairie apparaisent -&gt; KISS et nouveau script.
+
 
 ---
 
@@ -552,6 +682,10 @@ Solution ? Utiliser les **Projets Rstudio** ou `{here}`
 *A noter l'espace, et l'accent dans ce chemin !*
 ]
 
+???
+
+Non vraiment il ne faut pas s'en servir...
+
 ---
 
 `File -&gt; New Project -&gt; New Directory`
@@ -597,6 +731,11 @@ Seule exception : les données de type cache : faire tourner les scripts plus fa
 Package `{drake}` pour refaire tourner que les parties modifiées ou dépendantes d'un script.
 
 &lt;img src="CSU_RepRo_files/figure-html/drake.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+???
+
+On doit pouvoir supprimer les .RData et le dossier data car ce sont des données
+temporaires et donc reproductibles.
 
 ---
 
@@ -663,6 +802,14 @@ Nous testons tous nos codes à la main, et ça marche sur le coup...mais 2 semai
 
 **Il vaut mieux prévenir que guérir !**
 
+???
+
+Vérifier manuellement que le code marche est une première chose,
+mais on risque d'oublier ce que l'on fait à la main après 6 mois.
+
+Un test écrit n'oublis pas ce qu'il faut tester.
+
+
 ---
 
 ## Test !
@@ -704,7 +851,7 @@ test_that("add works", {
 ```
 
 ```
-## Test passed 🎊
+## Test passed
 ```
 
 ```r
@@ -718,7 +865,7 @@ test_that("add str error", {
 ```
 
 ```
-## Test passed 🎉
+## Test passed
 ```
 ]
 
@@ -780,7 +927,7 @@ layout: false
 - [frrrenchies](https://github.com/frrrenchies/frrrenchies) : list de doc fr
 ]
 .pull-right[
-- [slack grrr](https://join.slack.com/t/r-grrr/shared_invite/zt-46utbgb9-uvo_bg5cbuxOV~H10YUX8w) : question, news, jobs...
+- [slack grrr](https://join.slack.com/t/r-grrr/shared_invite/zt-46utbgb9-uvo_bg5cbuxOV~H10YUX8w) : question, news...
 ]
 
 .footnote[
