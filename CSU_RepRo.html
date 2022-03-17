@@ -17,7 +17,7 @@ class: center, middle, inverse, title-slide
 ## slides : <a href="https://tinyurl.com/ycktp4kv">tinyurl.com/ycktp4kv</a>
 ### Maxime Jaunatre
 ### UMR AMURE | IFREMER
-### 2022-03-17 (updated: 2022-03-16)
+### 2022-03-17 (updated: 2022-03-17)
 
 ---
 
@@ -53,16 +53,19 @@ exclude: false
 
 - Bonne pratiques de *software engineering* diffusent dans la communauté.
 
-.pull-left[
-Background personnel : Apprentissage de R pour l'**écologie**, traitements de données.
+--
 
-Bonnes pratiques viennent de la pratique, des échanges et de la communauté.
+.pull-left[
+Formation personnelle : Apprentissage de R pour l'**écologie**, traitements de données.
+
+Bonnes pratiques viennent des échanges, de la communauté et de la pratique.
 ]
 
 .pull-right[
-&lt;img src="CSU_RepRo_files/figure-html/papaillon.jpg" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="CSU_RepRo_files/figure-html/primula.jpg" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
+--
 
 .footnote[
 On ne va pas parler de statistiques aujourd'hui.
@@ -93,6 +96,7 @@ Pouvoir reproduire une analyse, une figure ou des données efficacement !
 &lt;img src="CSU_RepRo_files/figure-html/repro_meme.jpg" width="65%" style="display: block; margin: auto;" /&gt;
 ]
 
+--
 
 &lt;img src="CSU_RepRo_files/figure-html/repro-spectrum.jpg" width="90%" style="display: block; margin: auto;" /&gt;
 
@@ -122,10 +126,11 @@ Cela passe par quelques conseils :
 &lt;!-- ? expliciter la location du code dans les rapports etc. toujour lier les données aux scripts qui les ont fait. (localité, sources etc) --&gt;
 ]
 
+
 .pull-right[
 &lt;img src="CSU_RepRo_files/figure-html/find_source.jpg" width="90%" style="display: block; margin: auto;" /&gt;
 
-- Logiciel de version control (**git**)
+- Logiciel de control de version (**git**)
 ]
 
 
@@ -134,7 +139,7 @@ list.files()[1:4]
 ```
 
 ```
-## [1] "CSU_RepRo_files" "CSU_RepRo.html"  "CSU_RepRo.pdf"   "CSU_RepRo.Rmd"
+## [1] "CSU_RepRo.html"  "CSU_RepRo.pdf"   "CSU_RepRo.Rmd"   "CSU_RepRo.Rproj"
 ```
 
 
@@ -145,6 +150,7 @@ La diapo suivante parle de git
 
 
 ---
+exclude: false
 
 # Pourquoi utiliser un CVS ?
 
@@ -176,17 +182,17 @@ layout: true
 
 ## 3 commandes à retenir : commit, push, and pull
 
-- pull: met a jour le projet local avec la dernière version du projet&lt;sup&gt;*&lt;/sup&gt;
-
 - commit: enregistre une snapshot du code à un certain point temporel. 
 &lt;br/&gt;(permet d'associer du texte pour expliquer les modifications)
 
+
+&lt;img src="CSU_RepRo_files/figure-html/git_tab.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+--
+
+- pull: met a jour le projet local avec la dernière version du projet&lt;sup&gt;*&lt;/sup&gt;
+
 - push: met en commun les modifications locales avec le projet principal&lt;sup&gt;*&lt;/sup&gt;
-
-
-&lt;img src="CSU_RepRo_files/figure-html/git_tab.png" width="60%" style="display: block; margin: auto;" /&gt;
-
-
 
 .footnote[
 [*] Si herbergé en ligne.
@@ -265,6 +271,7 @@ Structurer les dossiers en packages R.
 [Marwick et al. "Packaging Data Analytical Work Reproducibly Using R (and Friends)". In: *The American Statistician* (2017).](https://peerj.com/preprints/3192/)
 ]
 
+
 .pull-right[
 &lt;img src="CSU_RepRo_files/figure-html/mar_ucompd.png" width="65%" style="display: block; margin: auto;" /&gt;
 ]
@@ -323,6 +330,7 @@ Suggests:
     testthat (&gt;= 3.0.0)
 ```
 
+--
 
 ]
 
@@ -333,9 +341,12 @@ Permet d'informer sur un changement majeur ou des nouveautés. Important d'avoir
 
 [Why and how maintain a NEWS file for your R package?](https://blog.r-hub.io/2020/05/08/pkg-news/)
 
-&lt;br/&gt;
-
 - Pour ajouter une dépendances au projet : `devtools::use_package("tidyr")`
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="CSU_RepRo_files/figure-html/devtools.png" alt="   " width="15%" /&gt;
+&lt;p class="caption"&gt;   &lt;/p&gt;
+&lt;/div&gt;
 ]
 
 ---
@@ -367,6 +378,8 @@ half_life &lt;- function(period, time){
 }
 ```
 ]
+
+--
 
 .pull-right[
 &lt;img src="CSU_RepRo_files/figure-html/document-all-the-things.jpg" width="100%" style="display: block; margin: auto;" /&gt;
@@ -435,6 +448,8 @@ read.csv(file = "raw_data/sole.csv")
 ```
 ]
 
+--
+
 .pull-right[
 - **DRY** (Don't Repeat Yourself)
 
@@ -443,6 +458,7 @@ read.csv(file = "raw_data/sole.csv")
 - `{cleanR}`: nettoyer les lignes inutiles.
 
 - `{styleR}`: reformate le code.
+
 
 &lt;img src="CSU_RepRo_files/figure-html/unreadible.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
@@ -523,12 +539,14 @@ rm(list = ls()) # -&gt; Supprime uniquement les objects "utilisateurs"
                 # -&gt; Ne supprime pas des dépendances chargées.
                 # -&gt; Indique une sesssion R ouverte depuis 30 ans
                 # -&gt; Vide l'environnement des copains qui veulent aider
-                # -&gt; Participe à la disparition des bébés phoques
+                # -&gt; Fait aussi disparaitre les bébés phoques
 ```
+
+--
 
 Si votre script possède ces lignes, **Jenny Bryan viendra bruler** votre ordinateur. &amp;#x1F525;
 
-Solution ? Utiliser les **Projets Rstudio**
+Solution ? Utiliser les **Projets Rstudio** ou `{here}`
 
 .footnote[
 *A noter l'espace, et l'accent dans ce chemin !*
@@ -559,28 +577,34 @@ layout: true
 
 ## Données
 
-**Un script ne doit dépendre que des données présentes dans son projet.**
+Un script ne doit dépendre que des données présentes dans son projet.
 
-- Eviter les `.RData` ! Indice de données trop complexes et de script pas clair.
-
-    
 .pull-left[
-**raw_data/ = intouchable**
+**raw_data/ = données intouchables**
 ]
 
 .pull-right[
 **data/ = données temporaires**
 ]
 
-Seule exception : les données de type cache : permet de faire tourner les scripts plus facilement. Package `{drake}` pour refaire tourner que les parties modifiées ou dépendantes d'un script.
+--
 
-&lt;img src="CSU_RepRo_files/figure-html/drake.png" width="70%" style="display: block; margin: auto;" /&gt;
+- Eviter les `.RData` ! Indice de données trop complexes et de script pas clair.
+
+  
+Seule exception : les données de type cache : faire tourner les scripts plus facilement. 
+
+Package `{drake}` pour refaire tourner que les parties modifiées ou dépendantes d'un script.
+
+&lt;img src="CSU_RepRo_files/figure-html/drake.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ---
 
 Parfois les données sont complexes et **non distribuables**.
 
 - **ReprEx** : Avoir un **exemple** reproductible simplifié pour chaque script. 
+
+--
 
 Exemple : ici la fonction prend un object en entrée...mais quel format doit-il avoir ?
 
@@ -593,6 +617,8 @@ rm_dups &lt;- function(data){
 }
 ```
 ]
+
+--
 
 .pull-right[
 
@@ -608,6 +634,8 @@ rm_dups(df)
 ## 2 1 1
 ```
 ]
+
+--
 
 Fournir un exemple est un très bon début de documentation.
 
@@ -643,6 +671,14 @@ Nous testons tous nos codes à la main, et ça marche sur le coup...mais 2 semai
 
 Utiliser `{usethis}` pour simplifier la vie !
 
+
+```r
+library(testthat)
+add &lt;- function(y,x){
+  x+y
+}
+```
+
 - `usethis::use_test("add")`
 
 
@@ -652,32 +688,64 @@ tests
 │   └── test-add.R
 └── testthat.R
 ```
-
-Rédiger des tests n'est jamais agréable mais sauve du temps plus tard.
-
-**Retour rapide** lors de la modification du code + assurance de rien casser.
 ]
+
+--
 
 .pull-right[
 
 ```r
-library(testthat)
-add &lt;- function(y,x){
-  x+y
-}
-
 test_that("add works", {
   expect_equal(add(39, 3), 42)
 })
 ```
 
 ```
-## Test passed 🥳
+## Test passed
 ```
 
-&lt;img src="CSU_RepRo_files/figure-html/no_test.jpg" width="70%" style="display: block; margin: auto;" /&gt;
+```r
+test_that("add str error", {
+  err = paste("non-numeric argument",
+              "to binary operator")
+  expect_error(
+    add("hello", "world"), err
+    )
+})
+```
+
+```
+## Test passed
+```
 ]
 
+--
+
+Rédiger des tests n'est jamais agréable mais sauve du temps plus tard.
+
+**Retour rapide** lors de la modification du code + assurance de rien casser.
+
+
+---
+layout: false
+
+# A retenir
+
+.pull-left[
+&lt;img src="CSU_RepRo_files/figure-html/mar_ucompd.png" width="65%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+- **Projets** Rstudio (`setwd()` = &amp;#x1F525;)
+
+- **Lisibilité** (structure script)
+
+- **ReprEx** (exemples)
+
+- **Tests**
+
+&lt;img src="CSU_RepRo_files/figure-html/document-all-the-things.jpg" width="70%" style="display: block; margin: auto;" /&gt;
+]
 
 ---
 layout: false

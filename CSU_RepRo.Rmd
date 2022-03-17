@@ -55,18 +55,21 @@ exclude: false
 
 - Bonne pratiques de *software engineering* diffusent dans la communauté.
 
-.pull-left[
-Background personnel : Apprentissage de R pour l'**écologie**, traitements de données.
+--
 
-Bonnes pratiques viennent de la pratique, des échanges et de la communauté.
+.pull-left[
+Formation personnelle : Apprentissage de R pour l'**écologie**, traitements de données.
+
+Bonnes pratiques viennent des échanges, de la communauté et de la pratique.
 ]
 
 .pull-right[
 ```{r, out.width="100%"}
-knitr::include_graphics("CSU_RepRo_files/figure-html/papaillon.jpg")
+knitr::include_graphics("CSU_RepRo_files/figure-html/primula.jpg")
 ```
 ]
 
+--
 
 .footnote[
 On ne va pas parler de statistiques aujourd'hui.
@@ -131,12 +134,13 @@ Cela passe par quelques conseils :
 <!-- ? expliciter la location du code dans les rapports etc. toujour lier les données aux scripts qui les ont fait. (localité, sources etc) -->
 ]
 
+
 .pull-right[
 ```{r, out.width="90%"}
 knitr::include_graphics("CSU_RepRo_files/figure-html/find_source.jpg")
 ```
 
-- Logiciel de version control (**git**)
+- Logiciel de control de version (**git**)
 ]
 
 ```{r, echo=TRUE}
@@ -151,6 +155,7 @@ La diapo suivante parle de git
 
 
 ---
+exclude: false
 
 # Pourquoi utiliser un CVS ?
 
@@ -182,19 +187,19 @@ layout: true
 
 ## 3 commandes à retenir : commit, push, and pull
 
-- pull: met a jour le projet local avec la dernière version du projet<sup>*</sup>
-
 - commit: enregistre une snapshot du code à un certain point temporel. 
 <br/>(permet d'associer du texte pour expliquer les modifications)
 
-- push: met en commun les modifications locales avec le projet principal<sup>*</sup>
 
-
-```{r, out.width="60%"}
+```{r, out.width="50%"}
 knitr::include_graphics("CSU_RepRo_files/figure-html/git_tab.png")
 ```
 
+--
 
+- pull: met a jour le projet local avec la dernière version du projet<sup>*</sup>
+
+- push: met en commun les modifications locales avec le projet principal<sup>*</sup>
 
 .footnote[
 [*] Si herbergé en ligne.
@@ -287,6 +292,7 @@ Structurer les dossiers en packages R.
 [Marwick et al. "Packaging Data Analytical Work Reproducibly Using R (and Friends)". In: *The American Statistician* (2017).](https://peerj.com/preprints/3192/)
 ]
 
+
 .pull-right[
 ```{r, out.width="65%"}
   knitr::include_graphics("CSU_RepRo_files/figure-html/mar_ucompd.png")
@@ -351,6 +357,7 @@ Suggests:
     testthat (>= 3.0.0)
 ```
 
+--
 
 ]
 
@@ -361,9 +368,12 @@ Permet d'informer sur un changement majeur ou des nouveautés. Important d'avoir
 
 [Why and how maintain a NEWS file for your R package?](https://blog.r-hub.io/2020/05/08/pkg-news/)
 
-<br/>
-
 - Pour ajouter une dépendances au projet : `devtools::use_package("tidyr")`
+
+```{r, out.width="15%", fig.show='hold', align.center = TRUE, fig.cap="   "}
+knitr::include_graphics(c(
+  "CSU_RepRo_files/figure-html/devtools.png"))
+```
 ]
 
 ---
@@ -394,6 +404,8 @@ half_life <- function(period, time){
 }
 ```
 ]
+
+--
 
 .pull-right[
 ```{r, out.width="100%"}
@@ -470,6 +482,8 @@ read.csv(file = "raw_data/sole.csv")
 ```
 ]
 
+--
+
 .pull-right[
 - **DRY** (Don't Repeat Yourself)
 
@@ -478,6 +492,7 @@ read.csv(file = "raw_data/sole.csv")
 - `{cleanR}`: nettoyer les lignes inutiles.
 
 - `{styleR}`: reformate le code.
+
 
 ```{r, out.width="100%"}
   knitr::include_graphics("CSU_RepRo_files/figure-html/unreadible.png")
@@ -556,12 +571,14 @@ rm(list = ls()) # -> Supprime uniquement les objects "utilisateurs"
                 # -> Ne supprime pas des dépendances chargées.
                 # -> Indique une sesssion R ouverte depuis 30 ans
                 # -> Vide l'environnement des copains qui veulent aider
-                # -> Participe à la disparition des bébés phoques
+                # -> Fait aussi disparaitre les bébés phoques
 ```
+
+--
 
 Si votre script possède ces lignes, **Jenny Bryan viendra bruler** votre ordinateur. &#x1F525;
 
-Solution ? Utiliser les **Projets Rstudio**
+Solution ? Utiliser les **Projets Rstudio** ou `{here}`
 
 .footnote[
 *A noter l'espace, et l'accent dans ce chemin !*
@@ -596,22 +613,26 @@ layout: true
 
 ## Données
 
-**Un script ne doit dépendre que des données présentes dans son projet.**
+Un script ne doit dépendre que des données présentes dans son projet.
 
-- Eviter les `.RData` ! Indice de données trop complexes et de script pas clair.
-
-    
 .pull-left[
-**raw_data/ = intouchable**
+**raw_data/ = données intouchables**
 ]
 
 .pull-right[
 **data/ = données temporaires**
 ]
 
-Seule exception : les données de type cache : permet de faire tourner les scripts plus facilement. Package `{drake}` pour refaire tourner que les parties modifiées ou dépendantes d'un script.
+--
 
-```{r, out.width="70%"}
+- Eviter les `.RData` ! Indice de données trop complexes et de script pas clair.
+
+  
+Seule exception : les données de type cache : faire tourner les scripts plus facilement. 
+
+Package `{drake}` pour refaire tourner que les parties modifiées ou dépendantes d'un script.
+
+```{r, out.width="60%"}
   knitr::include_graphics("CSU_RepRo_files/figure-html/drake.png")
 ```
 
@@ -620,6 +641,8 @@ Seule exception : les données de type cache : permet de faire tourner les scrip
 Parfois les données sont complexes et **non distribuables**.
 
 - **ReprEx** : Avoir un **exemple** reproductible simplifié pour chaque script. 
+
+--
 
 Exemple : ici la fonction prend un object en entrée...mais quel format doit-il avoir ?
 
@@ -632,6 +655,8 @@ rm_dups <- function(data){
 ```
 ]
 
+--
+
 .pull-right[
 ```{r, echo = TRUE}
 df <- data.frame(x = c(0,1,1,0), 
@@ -639,6 +664,8 @@ df <- data.frame(x = c(0,1,1,0),
 rm_dups(df)
 ```
 ]
+
+--
 
 Fournir un exemple est un très bon début de documentation.
 
@@ -678,6 +705,13 @@ Nous testons tous nos codes à la main, et ça marche sur le coup...mais 2 semai
 
 Utiliser `{usethis}` pour simplifier la vie !
 
+```{r, echo = TRUE}
+library(testthat)
+add <- function(y,x){
+  x+y
+}
+```
+
 - `usethis::use_test("add")`
 
 ```{r, echo = TRUE, eval = FALSE}
@@ -686,29 +720,57 @@ tests
 │   └── test-add.R
 └── testthat.R
 ```
+]
+
+--
+
+.pull-right[
+```{r, echo = TRUE}
+test_that("add works", {
+  expect_equal(add(39, 3), 42)
+})
+
+test_that("add str error", {
+  err = paste("non-numeric argument",
+              "to binary operator")
+  expect_error(
+    add("hello", "world"), err
+    )
+})
+```
+]
+
+--
 
 Rédiger des tests n'est jamais agréable mais sauve du temps plus tard.
 
 **Retour rapide** lors de la modification du code + assurance de rien casser.
+
+
+---
+layout: false
+
+# A retenir
+
+.pull-left[
+```{r, out.width="65%"}
+  knitr::include_graphics("CSU_RepRo_files/figure-html/mar_ucompd.png")
+```
 ]
 
 .pull-right[
-```{r, echo = TRUE}
-library(testthat)
-add <- function(y,x){
-  x+y
-}
+- **Projets** Rstudio (`setwd()` = &#x1F525;)
 
-test_that("add works", {
-  expect_equal(add(39, 3), 42)
-})
-```
+- **Lisibilité** (structure script)
+
+- **ReprEx** (exemples)
+
+- **Tests**
 
 ```{r, out.width="70%"}
-  knitr::include_graphics("CSU_RepRo_files/figure-html/no_test.jpg")
+  knitr::include_graphics("CSU_RepRo_files/figure-html/document-all-the-things.jpg")
 ```
 ]
-
 
 ---
 layout: false
