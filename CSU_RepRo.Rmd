@@ -42,17 +42,28 @@ exclude: false
 
 # Objectif : bonnes pratiques en R
 
-Background : Apprentissage de R pour l'écologie, traitements de données.
+## `r icons::fontawesome("r-project")` : Construit par et pour des statisticiens.
 
-R est construit par et pour des statisticiens mais possède une grande communauté
-qui partage de plus en plus de "bonne pratiques". Plus proche du software engineering.
+- Majorité d'utilisateurs non informaticiens. 
 
-On ne va pas parler de stats aujourd'hui.
+- Bonne pratiques de *software engineering* diffusent dans la communauté.
+
+.pull-left[
+Background personnel : Apprentissage de R pour l'**écologie**, traitements de données.
+
+Bonnes pratiques viennent de la pratique, des échanges et de la communauté.
+]
+
+.pull-right[
+```{r, out.width="100%"}
+knitr::include_graphics("CSU_RepRo_files/figure-html/papaillon.jpg")
+```
+]
 
 
-**photo de moi sur le terrain**
-
-
+.footnote[
+On ne va pas parler de statistiques aujourd'hui.
+]
 ---
 
 # Reproductibilité ?
@@ -575,9 +586,18 @@ layout: true
 
 **Un script ne doit dépendre que des données présentes dans son projet.**
 
-- Eviter les `.RData` ! Ce format de fichier montre que vos données sont trop complexes et que le script qui les produit n'est pas clair.
+- Eviter les `.RData` ! Indice de données trop complexes et de script pas clair.
 
-Seule exception : les données de type cache : permet de faire tourner les scripts plus facilement. Mais encore une fois des outils existent pour éviter cela comme `{drake}`, qui permet de refaire tourner que les parties modifiées ou dépendantes d'un script.
+    
+.pull-left[
+**raw_data/ = intouchable**
+]
+
+.pull-right[
+**data/ = données temporaires**
+]
+
+Seule exception : les données de type cache : permet de faire tourner les scripts plus facilement. Package `{drake}` pour refaire tourner que les parties modifiées ou dépendantes d'un script.
 
 ```{r, out.width="70%"}
   knitr::include_graphics("CSU_RepRo_files/figure-html/drake.png")
@@ -585,9 +605,9 @@ Seule exception : les données de type cache : permet de faire tourner les scrip
 
 ---
 
-Parfois les données sont complexes et non distribuables. Dans ce cas, prévoir le minimum pour montrer que le code marche.
+Parfois les données sont complexes et **non distribuables**.
 
-- Avoir un **exemple** simplifié pour chaque script.
+- **ReprEx** : Avoir un **exemple** reproductible simplifié pour chaque script. 
 
 Exemple : ici la fonction prend un object en entrée...mais quel format doit-il avoir ?
 
