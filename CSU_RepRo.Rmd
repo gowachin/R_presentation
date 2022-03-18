@@ -23,6 +23,7 @@ knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
 ```
 
 ```{r, eval = FALSE, inclue = FALSE}
+# This are the dependencies to compile this rmd.
 remotes::install_github("mitchelloharawild/icons")
 icons::download_fontawesome()
 remotes::install_github("hadley/emo")
@@ -55,6 +56,13 @@ exclude: false
 
 - Bonne pratiques de *software engineering* diffusent dans la communauté.
 
+???
+
+Peu d'utilisateurs sont des informaticiens et n'ont pas les réflexes 
+de développement logiciel.
+L'apprentissage se fait par la communauté et toutes les ressources disponibles 
+(présentations, blogs, livres).
+
 --
 
 .pull-left[
@@ -69,6 +77,18 @@ knitr::include_graphics("CSU_RepRo_files/figure-html/primula.jpg")
 ```
 ]
 
+???
+
+Exemple : mon parcours de biologie ne m'a pas donnée les bases d'informatique
+par rapport a mon expérience de terrain en écologie.
+Beaucoup de formation indépendante en autonomie.
+Importance de travailler sur de petits projets persos et de se tenir au courant
+des nouveautés de la communauté. S'impliquer.
+
+Je vais aussi présenter plein de choses que j'ai apprises, ou qui existents.
+L'important n'est pas de tout tester d'un coup mais d'incorporer aux méthodes 
+de travail au fur et a mesure.
+
 --
 
 .footnote[
@@ -77,15 +97,7 @@ On ne va pas parler de statistiques aujourd'hui.
 
 ???
 
-Peu d'utilisateurs sont des informaticiens et n'ont pas les réfléxes 
-de développement logiciel.
-L'apprentissage se fait par la communauté.
-
-Exemple : mon parcours de biologie ne m'a pas donnée les bases d'informatique
-par rapport a mon expérience de terrain en écologie.
-Beaucoup de formation indépendante en autonomie.
-Importance de travailler sur de petits projets persos et de se tenir au courant
-des nouveautés de la communauté. S'impliquer.
+Et les diapos contiennent le minimum de code.
 
 ---
 
@@ -107,6 +119,14 @@ Pouvoir reproduire une analyse, une figure ou des données efficacement !
 ]
 ]
 
+???
+
+Le principe FAIR a été expliqué auparavant pour l'ouverture des données
+mais de nombreux parallèles peuvent être utilisés pour le code source.
+
+La présentation va suivre l'ordre FAIR et partir du niveau dossier vers 
+une organisation en fichiers.
+
 --
 
 .pull-right[
@@ -127,9 +147,10 @@ Figure : [Peng. "Reproducible Research in Computational Science". In: *Science* 
 
 ???
 
-La science se doit d'être reproductible pour les données comme pour les analyses.
-La présentation va suivre l'ordre FAIR et partir du niveau dossier vers 
-une organisation en fichiers.
+Encore une fois, chaque projet se place sur ce spectre et peut s'améliorer par 
+de petits ajouts. Pas besoin d'utiliser toute ce qui est présenté.
+Le mieux est d'inserer ces bonnes pratiques dès le début des projets.
+
 
 ---
 
@@ -172,12 +193,14 @@ list.files()[1:4]
 Bien nommer et placer ses dossiers est important, il ne faut pas perdre de temps
 à chercher ses petits scrips.
 
-Les espaces et les accents sont embettants quand on partage nos dossiers
+Les espaces et les accents sont pénibles quand on partage nos dossiers
 avec d'autres gens (norme anglophone) et pour l'utilisation d'outils de recherche
 d'information (outils linux, grep et scripts R -> norme ASCII)
 
 L'organisation en compendium est détaillée dans la partie "accessible"
 Git est detaillé dans les diapos suivantes.
+
+Trouver "géographiquement" le code mais aussi temporellement avec git.
 
 
 ---
@@ -207,6 +230,9 @@ background-size: contain
 
 # Pourquoi utiliser un CVS ?
 
+???
+
+Multiplier les versions sur un ordi n'aide pas à retrouver facilement le code
 
 ---
 layout: true
@@ -225,6 +251,16 @@ layout: true
 knitr::include_graphics("CSU_RepRo_files/figure-html/git_tab.png")
 ```
 
+???
+
+Installation de git sur l'ordinateur et initialisation de dépots dans un dossier
+rejoint la notion de compendium (un projet = un dépot git = un dossier)
+
+commit permet un enregistrement d'une étape temporelle pour les fichiers textes
+permet de travailler sur tout fichier texte simple (md, tex, R, code...)
+
+Important de bien nommer ses commits pour se retrouver temporellement
+
 --
 
 - pull: met a jour le projet local avec la dernière version du projet<sup>*</sup>
@@ -237,13 +273,9 @@ knitr::include_graphics("CSU_RepRo_files/figure-html/git_tab.png")
 
 ???
 
-Installation de git sur l'ordinateur et initialisation de dépots dans un dossier
-rejoint la notion de compendium (un projet = un dépot git = un dossier)
-
-commit permet un enregistrement d'une étape temporelle pour les fichiers textes
-permet de travailler sur tout fichier texte simple (md, tex, R, code...)
-
-Important de bien nommer ses commits pour se retrouver temporellement
+Important : git est indépendant de github et peut s'utiliser en solitaire.
+pull et push permet de mettre à jour un dépot par rapport à un autre, 
+souvent en ligne.
 
 ---
 
@@ -292,6 +324,8 @@ knitr::include_graphics("CSU_RepRo_files/figure-html/gitlab/gitlab_ifremer.png")
 
 gitlab est une alternative, moins répandue mais plus souveraine.
 Ifremer héberge un gitlab et quelques universités également.
+
+quoi qu'il arrive les dépots github/gitlab peuvent être totalement privés.
 
 ---
 
@@ -381,7 +415,8 @@ Vraiment lire l'article de Marwick 2017.
 Le package R est l'exemple typique de code reproductible et distribuable.
 
 A gauche on a l'exemple minimal d'un compendium et à droite la structure la 
-plus complete.
+plus complete. Cela dépend de quelques fichiers clés que je vais détailler,
+mais on peut y rajouter des dossiers comme data, raw_data, test etc.
 
 Organiser nos projets comme des packages permet d'utiliser des outils
 de développement et d'avoir accès à des outils reproductibles (test, doc etc.)
@@ -399,6 +434,11 @@ de développement et d'avoir accès à des outils reproductibles (test, doc etc.
   knitr::include_graphics("CSU_RepRo_files/figure-html/readme.png")
 ```
 ]
+
+???
+
+Générallement le premier fichier à lire quand on ouvre un projet.
+Format de présenter du code et du texte pour montrer des exemples.
 
 --
 
@@ -450,6 +490,13 @@ Suggests:
     testthat (>= 3.0.0)
 ```
 
+???
+
+Diapo davantage tournée vers la structure de package.
+
+DESCRIPTION est un fichier pensé pour être lue par l'ordi également
+ajoute la notion des dépendances d'un package.
+
 --
 
 ]
@@ -471,10 +518,8 @@ knitr::include_graphics(c(
 
 ???
 
-Diapo davantage tournée vers la structure de package.
-
-DESCRIPTION est un fichier pensé pour être lue par l'ordi également
-ajoute la notion de dépendance d'un package.
+NEWS permet d'informer l'utilisateurs des changements entre différentes versions
+d'un projet. Bien tenu à jour, il complète git.
 
 ---
 
@@ -505,6 +550,14 @@ half_life <- function(period, time){
 ```
 ]
 
+???
+
+Il vaut mieux documenter en amont comme cela on réfléchis à ce que l'on code.
+Permet de clairement identifier ce que l'on prend en entrée et ce que l'on 
+retourne.
+
+Permet également d'écrire quelques exemple.
+
 --
 
 .pull-right[
@@ -515,11 +568,7 @@ half_life <- function(period, time){
 
 ???
 
-Il vaut mieux documenter en amont comme cela on réfléchis à ce que l'on code.
-Permet de clairement identifier ce que l'on prend en entrée et ce que l'on 
-retourne.
-
-Permet également d'écrire quelques exemple.
+La redondance dans la documentation est bénéfique !
 
 ---
 
@@ -568,6 +617,10 @@ moins de fichiers annexe comme les png et jpeg etc. Juste un fichier et des donn
 
 Diapo faites avec Xaringan
 
+rticles est très efficaces pour produire des pdfs au format de soumissions.
+Intéressant car cela supprime l'export de figures et assure qu'elles sont
+toujours à jour.
+
 ---
 
 ## Lisibilité
@@ -599,6 +652,15 @@ read.csv(file = "raw_data/sole.csv")
 ```
 ]
 
+???
+
+Organisation d'un script présenté ainsi permet au lecteur de 
+s'assurer qu'il peut le reproduire
+par exemple les librairies au début facilite la vie au lecteur, 
+il ne faut plus chercher les dépendances
+
+functions au début permet d'utiliser le principe DRY
+
 --
 
 .pull-right[
@@ -618,14 +680,7 @@ read.csv(file = "raw_data/sole.csv")
 
 ???
 
-Organisation d'un script présenté ainsi permet au lecteur de 
-s'assurer qu'il peut le reproduire
-par exemple les librairies au début facilite la vie au lecteur, 
-il ne faut plus chercher les dépendances
-
-functions au début permet d'utiliser le principe DRY
-
-si beaucoup de function apparaissent -> faire un script externe
+si beaucoup de fonctions apparaissent -> faire un script externe
 si beaucoup de librairie apparaisent -> KISS et nouveau script.
 
 
@@ -717,6 +772,10 @@ Solution ? Utiliser les **Projets Rstudio** ou `{here}`
 ???
 
 Non vraiment il ne faut pas s'en servir...
+Liens vers le blog de Jenny Bryan à la fin du diapo
+
+Je n'ai pas testé le package {here} mais il semble une bonne alternative pour
+ceux qui n'utilisent pas Rstudio.
 
 ---
 
@@ -725,6 +784,10 @@ Non vraiment il ne faut pas s'en servir...
 ```{r, out.width="70%"}
   knitr::include_graphics("CSU_RepRo_files/figure-html/new_project.png")
 ```
+
+???
+
+Comment créer un projet
 
 ---
 
@@ -737,6 +800,11 @@ Dans un project, tout les chemins sont basés sur la racine du projet (où ce si
 Désactiver la sauvegarde automatique !
 
 `Tools -> Global options -> General -> un-tick "always save history"`
+
+???
+
+Désactiver la sauvegarde automatique permet d'assurer la reproducibilité car
+chaque session devient indépendante et doit donc être reproductible.
 
 ---
 layout: true
@@ -775,6 +843,10 @@ Package `{drake}` pour refaire tourner que les parties modifiées ou dépendante
 On doit pouvoir supprimer les .RData et le dossier data car ce sont des données
 temporaires et donc reproductibles.
 
+Le mieux étant de privilégier l'export vers des données de type CSV, excell, etc.
+Il faut penser à la reproductibilité même en dehors de R, et laisser la possibilité
+d'utiliser d'autres outils que R comme python ou excell.
+
 ---
 
 Parfois les données sont complexes et **non distribuables**.
@@ -794,6 +866,11 @@ rm_dups <- function(data){
 ```
 ]
 
+???
+
+Cette fonction marche sur mon ordi mais je ne peux pas prouver cela sur un ordi
+externe car le jeu de donnée est sensible.
+
 --
 
 .pull-right[
@@ -803,6 +880,10 @@ df <- data.frame(x = c(0,1,1,0),
 rm_dups(df)
 ```
 ]
+
+???
+
+Un exemple reproductible permet de démontrer que cela marche.
 
 --
 
@@ -869,6 +950,11 @@ tests
 ```
 ]
 
+???
+
+usethis crée directement le fichier test au bon endroit et 
+me l'ouvre pour l'éditer.
+
 --
 
 .pull-right[
@@ -893,11 +979,21 @@ test_that("add str error", {
 ```
 ]
 
+???
+
+Deux tests, un pour vérifier qu'il marche et un autre pour vérifier qu'il 
+donne les bonnes erreurs.
+
 --
 
 Rédiger des tests n'est jamais agréable mais sauve du temps plus tard.
 
 **Retour rapide** lors de la modification du code + assurance de rien casser.
+
+???
+
+Prendre une méthode de travail où l'on exécute tout les tests après chaque 
+modification du code.
 
 
 ---
@@ -968,9 +1064,11 @@ class: inverse, center, middle
 
 # Merci! Des questions &#x2753;
 
-[https://gowachin.github.io/R_presentation/CSU_RepRo.html](https://tinyurl.com/ycktp4kv)
+Slides en ligne [https://gowachin.github.io/R_presentation/CSU_RepRo.html](https://tinyurl.com/ycktp4kv)
 
-`r icons::fontawesome("github")` [Gowachin](https://github.com/gowachin) &nbsp;&nbsp;&nbsp;&nbsp; `r icons::fontawesome("stack-overflow")` [Gowachin](https://stackoverflow.com/users/12501379/gowachin)
+[Fichiers source `r icons::fontawesome("r-project")`](https://github.com/gowachin/R_presentation) &nbsp;&nbsp;|&nbsp;&nbsp; [Fichier pdf `r icons::fontawesome("file-pdf")`](https://github.com/gowachin/R_presentation/raw/main/CSU_RepRo.pdf)
+
+`r icons::fontawesome("github")` [gowachin](https://github.com/gowachin) &nbsp;&nbsp;&nbsp;&nbsp; `r icons::fontawesome("stack-overflow")` [gowachin](https://stackoverflow.com/users/12501379/gowachin)
 
 .footnote[
 Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).

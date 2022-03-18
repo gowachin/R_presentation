@@ -1,5 +1,22 @@
 # R_presentation
-My slides about R. 
+
+My slides about R. Because they are done with `{xaringan}`, some of my oral notes
+can be viewed by pressing **P** when viewing the html files.
+
+You can compile the documents once the package is installed :
+
+```{r}
+install.packages(xaringan)
+```
+
+Some `.Rmd` contains R code with library to load before. You can install them with the code provided below :
+
+```{r}
+# install.packages(remote)
+remotes::install_github("mitchelloharawild/icons")
+icons::download_fontawesome()
+remotes::install_github("hadley/emo")
+```
 
 ## Science Reproductible avec un grand R (fr)
 

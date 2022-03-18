@@ -17,7 +17,7 @@ class: center, middle, inverse, title-slide
 ## slides : <a href="https://tinyurl.com/ycktp4kv">tinyurl.com/ycktp4kv</a>
 ### Maxime Jaunatre
 ### UMR AMURE | IFREMER
-### 2022-03-17 (updated: 2022-03-17)
+### 2022-03-17 (updated: 2022-03-18)
 
 ---
 
@@ -53,6 +53,13 @@ exclude: false
 
 - Bonne pratiques de *software engineering* diffusent dans la communauté.
 
+???
+
+Peu d'utilisateurs sont des informaticiens et n'ont pas les réflexes 
+de développement logiciel.
+L'apprentissage se fait par la communauté et toutes les ressources disponibles 
+(présentations, blogs, livres).
+
 --
 
 .pull-left[
@@ -65,6 +72,18 @@ Bonnes pratiques viennent des échanges, de la communauté et de la pratique.
 &lt;img src="CSU_RepRo_files/figure-html/primula.jpg" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
+???
+
+Exemple : mon parcours de biologie ne m'a pas donnée les bases d'informatique
+par rapport a mon expérience de terrain en écologie.
+Beaucoup de formation indépendante en autonomie.
+Importance de travailler sur de petits projets persos et de se tenir au courant
+des nouveautés de la communauté. S'impliquer.
+
+Je vais aussi présenter plein de choses que j'ai apprises, ou qui existents.
+L'important n'est pas de tout tester d'un coup mais d'incorporer aux méthodes 
+de travail au fur et a mesure.
+
 --
 
 .footnote[
@@ -73,15 +92,7 @@ On ne va pas parler de statistiques aujourd'hui.
 
 ???
 
-Peu d'utilisateurs sont des informaticiens et n'ont pas les réfléxes 
-de développement logiciel.
-L'apprentissage se fait par la communauté.
-
-Exemple : mon parcours de biologie ne m'a pas donnée les bases d'informatique
-par rapport a mon expérience de terrain en écologie.
-Beaucoup de formation indépendante en autonomie.
-Importance de travailler sur de petits projets persos et de se tenir au courant
-des nouveautés de la communauté. S'impliquer.
+Et les diapos contiennent le minimum de code.
 
 ---
 
@@ -103,6 +114,14 @@ Pouvoir reproduire une analyse, une figure ou des données efficacement !
 ]
 ]
 
+???
+
+Le principe FAIR a été expliqué auparavant pour l'ouverture des données
+mais de nombreux parallèles peuvent être utilisés pour le code source.
+
+La présentation va suivre l'ordre FAIR et partir du niveau dossier vers 
+une organisation en fichiers.
+
 --
 
 .pull-right[
@@ -119,9 +138,10 @@ Figure : [Peng. "Reproducible Research in Computational Science". In: *Science* 
 
 ???
 
-La science se doit d'être reproductible pour les données comme pour les analyses.
-La présentation va suivre l'ordre FAIR et partir du niveau dossier vers 
-une organisation en fichiers.
+Encore une fois, chaque projet se place sur ce spectre et peut s'améliorer par 
+de petits ajouts. Pas besoin d'utiliser toute ce qui est présenté.
+Le mieux est d'inserer ces bonnes pratiques dès le début des projets.
+
 
 ---
 
@@ -167,12 +187,14 @@ list.files()[1:4]
 Bien nommer et placer ses dossiers est important, il ne faut pas perdre de temps
 à chercher ses petits scrips.
 
-Les espaces et les accents sont embettants quand on partage nos dossiers
+Les espaces et les accents sont pénibles quand on partage nos dossiers
 avec d'autres gens (norme anglophone) et pour l'utilisation d'outils de recherche
 d'information (outils linux, grep et scripts R -&gt; norme ASCII)
 
 L'organisation en compendium est détaillée dans la partie "accessible"
 Git est detaillé dans les diapos suivantes.
+
+Trouver "géographiquement" le code mais aussi temporellement avec git.
 
 
 ---
@@ -202,6 +224,9 @@ background-size: contain
 
 # Pourquoi utiliser un CVS ?
 
+???
+
+Multiplier les versions sur un ordi n'aide pas à retrouver facilement le code
 
 ---
 layout: true
@@ -218,6 +243,16 @@ layout: true
 
 &lt;img src="CSU_RepRo_files/figure-html/git_tab.png" width="50%" style="display: block; margin: auto;" /&gt;
 
+???
+
+Installation de git sur l'ordinateur et initialisation de dépots dans un dossier
+rejoint la notion de compendium (un projet = un dépot git = un dossier)
+
+commit permet un enregistrement d'une étape temporelle pour les fichiers textes
+permet de travailler sur tout fichier texte simple (md, tex, R, code...)
+
+Important de bien nommer ses commits pour se retrouver temporellement
+
 --
 
 - pull: met a jour le projet local avec la dernière version du projet&lt;sup&gt;*&lt;/sup&gt;
@@ -230,13 +265,9 @@ layout: true
 
 ???
 
-Installation de git sur l'ordinateur et initialisation de dépots dans un dossier
-rejoint la notion de compendium (un projet = un dépot git = un dossier)
-
-commit permet un enregistrement d'une étape temporelle pour les fichiers textes
-permet de travailler sur tout fichier texte simple (md, tex, R, code...)
-
-Important de bien nommer ses commits pour se retrouver temporellement
+Important : git est indépendant de github et peut s'utiliser en solitaire.
+pull et push permet de mettre à jour un dépot par rapport à un autre, 
+souvent en ligne.
 
 ---
 
@@ -279,6 +310,8 @@ Github = Microsoft (GAFAM)
 
 gitlab est une alternative, moins répandue mais plus souveraine.
 Ifremer héberge un gitlab et quelques universités également.
+
+quoi qu'il arrive les dépots github/gitlab peuvent être totalement privés.
 
 ---
 
@@ -358,7 +391,8 @@ Vraiment lire l'article de Marwick 2017.
 Le package R est l'exemple typique de code reproductible et distribuable.
 
 A gauche on a l'exemple minimal d'un compendium et à droite la structure la 
-plus complete.
+plus complete. Cela dépend de quelques fichiers clés que je vais détailler,
+mais on peut y rajouter des dossiers comme data, raw_data, test etc.
 
 Organiser nos projets comme des packages permet d'utiliser des outils
 de développement et d'avoir accès à des outils reproductibles (test, doc etc.)
@@ -374,6 +408,11 @@ de développement et d'avoir accès à des outils reproductibles (test, doc etc.
 
 &lt;img src="CSU_RepRo_files/figure-html/readme.png" width="90%" style="display: block; margin: auto;" /&gt;
 ]
+
+???
+
+Générallement le premier fichier à lire quand on ouvre un projet.
+Format de présenter du code et du texte pour montrer des exemples.
 
 --
 
@@ -423,6 +462,13 @@ Suggests:
     testthat (&gt;= 3.0.0)
 ```
 
+???
+
+Diapo davantage tournée vers la structure de package.
+
+DESCRIPTION est un fichier pensé pour être lue par l'ordi également
+ajoute la notion des dépendances d'un package.
+
 --
 
 ]
@@ -444,10 +490,8 @@ Permet d'informer sur un changement majeur ou des nouveautés. Important d'avoir
 
 ???
 
-Diapo davantage tournée vers la structure de package.
-
-DESCRIPTION est un fichier pensé pour être lue par l'ordi également
-ajoute la notion de dépendance d'un package.
+NEWS permet d'informer l'utilisateurs des changements entre différentes versions
+d'un projet. Bien tenu à jour, il complète git.
 
 ---
 
@@ -479,6 +523,14 @@ half_life &lt;- function(period, time){
 ```
 ]
 
+???
+
+Il vaut mieux documenter en amont comme cela on réfléchis à ce que l'on code.
+Permet de clairement identifier ce que l'on prend en entrée et ce que l'on 
+retourne.
+
+Permet également d'écrire quelques exemple.
+
 --
 
 .pull-right[
@@ -487,11 +539,7 @@ half_life &lt;- function(period, time){
 
 ???
 
-Il vaut mieux documenter en amont comme cela on réfléchis à ce que l'on code.
-Permet de clairement identifier ce que l'on prend en entrée et ce que l'on 
-retourne.
-
-Permet également d'écrire quelques exemple.
+La redondance dans la documentation est bénéfique !
 
 ---
 
@@ -533,6 +581,10 @@ moins de fichiers annexe comme les png et jpeg etc. Juste un fichier et des donn
 
 Diapo faites avec Xaringan
 
+rticles est très efficaces pour produire des pdfs au format de soumissions.
+Intéressant car cela supprime l'export de figures et assure qu'elles sont
+toujours à jour.
+
 ---
 
 ## Lisibilité
@@ -565,6 +617,15 @@ read.csv(file = "raw_data/sole.csv")
 ```
 ]
 
+???
+
+Organisation d'un script présenté ainsi permet au lecteur de 
+s'assurer qu'il peut le reproduire
+par exemple les librairies au début facilite la vie au lecteur, 
+il ne faut plus chercher les dépendances
+
+functions au début permet d'utiliser le principe DRY
+
 --
 
 .pull-right[
@@ -582,14 +643,7 @@ read.csv(file = "raw_data/sole.csv")
 
 ???
 
-Organisation d'un script présenté ainsi permet au lecteur de 
-s'assurer qu'il peut le reproduire
-par exemple les librairies au début facilite la vie au lecteur, 
-il ne faut plus chercher les dépendances
-
-functions au début permet d'utiliser le principe DRY
-
-si beaucoup de function apparaissent -&gt; faire un script externe
+si beaucoup de fonctions apparaissent -&gt; faire un script externe
 si beaucoup de librairie apparaisent -&gt; KISS et nouveau script.
 
 
@@ -685,12 +739,20 @@ Solution ? Utiliser les **Projets Rstudio** ou `{here}`
 ???
 
 Non vraiment il ne faut pas s'en servir...
+Liens vers le blog de Jenny Bryan à la fin du diapo
+
+Je n'ai pas testé le package {here} mais il semble une bonne alternative pour
+ceux qui n'utilisent pas Rstudio.
 
 ---
 
 `File -&gt; New Project -&gt; New Directory`
 
 &lt;img src="CSU_RepRo_files/figure-html/new_project.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+???
+
+Comment créer un projet
 
 ---
 
@@ -701,6 +763,11 @@ Dans un project, tout les chemins sont basés sur la racine du projet (où ce si
 Désactiver la sauvegarde automatique !
 
 `Tools -&gt; Global options -&gt; General -&gt; un-tick "always save history"`
+
+???
+
+Désactiver la sauvegarde automatique permet d'assurer la reproducibilité car
+chaque session devient indépendante et doit donc être reproductible.
 
 ---
 layout: true
@@ -737,6 +804,10 @@ Package `{drake}` pour refaire tourner que les parties modifiées ou dépendante
 On doit pouvoir supprimer les .RData et le dossier data car ce sont des données
 temporaires et donc reproductibles.
 
+Le mieux étant de privilégier l'export vers des données de type CSV, excell, etc.
+Il faut penser à la reproductibilité même en dehors de R, et laisser la possibilité
+d'utiliser d'autres outils que R comme python ou excell.
+
 ---
 
 Parfois les données sont complexes et **non distribuables**.
@@ -757,6 +828,11 @@ rm_dups &lt;- function(data){
 ```
 ]
 
+???
+
+Cette fonction marche sur mon ordi mais je ne peux pas prouver cela sur un ordi
+externe car le jeu de donnée est sensible.
+
 --
 
 .pull-right[
@@ -773,6 +849,10 @@ rm_dups(df)
 ## 2 1 1
 ```
 ]
+
+???
+
+Un exemple reproductible permet de démontrer que cela marche.
 
 --
 
@@ -837,6 +917,11 @@ tests
 ```
 ]
 
+???
+
+usethis crée directement le fichier test au bon endroit et 
+me l'ouvre pour l'éditer.
+
 --
 
 .pull-right[
@@ -869,11 +954,21 @@ test_that("add str error", {
 ```
 ]
 
+???
+
+Deux tests, un pour vérifier qu'il marche et un autre pour vérifier qu'il 
+donne les bonnes erreurs.
+
 --
 
 Rédiger des tests n'est jamais agréable mais sauve du temps plus tard.
 
 **Retour rapide** lors de la modification du code + assurance de rien casser.
+
+???
+
+Prendre une méthode de travail où l'on exécute tout les tests après chaque 
+modification du code.
 
 
 ---
@@ -940,9 +1035,11 @@ class: inverse, center, middle
 
 # Merci! Des questions &amp;#x2753;
 
-[https://gowachin.github.io/R_presentation/CSU_RepRo.html](https://tinyurl.com/ycktp4kv)
+Slides en ligne [https://gowachin.github.io/R_presentation/CSU_RepRo.html](https://tinyurl.com/ycktp4kv)
 
-&lt;svg viewBox="0 0 496 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"&gt;&lt;/path&gt;&lt;/svg&gt; [Gowachin](https://github.com/gowachin) &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; &lt;svg viewBox="0 0 384 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M290.7 311L95 269.7 86.8 309l195.7 41zm51-87L188.2 95.7l-25.5 30.8 153.5 128.3zm-31.2 39.7L129.2 179l-16.7 36.5L293.7 300zM262 32l-32 24 119.3 160.3 32-24zm20.5 328h-200v39.7h200zm39.7 80H42.7V320h-40v160h359.5V320h-40z"&gt;&lt;/path&gt;&lt;/svg&gt; [Gowachin](https://stackoverflow.com/users/12501379/gowachin)
+[Fichiers source &lt;svg viewBox="0 0 581 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"&gt;&lt;/path&gt;&lt;/svg&gt;](https://github.com/gowachin/R_presentation) &amp;nbsp;&amp;nbsp;|&amp;nbsp;&amp;nbsp; [Fichier pdf &lt;svg viewBox="0 0 384 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M369.9 97.9L286 14C277 5 264.8-.1 252.1-.1H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V131.9c0-12.7-5.1-25-14.1-34zM332.1 128H256V51.9l76.1 76.1zM48 464V48h160v104c0 13.3 10.7 24 24 24h104v288H48zm250.2-143.7c-12.2-12-47-8.7-64.4-6.5-17.2-10.5-28.7-25-36.8-46.3 3.9-16.1 10.1-40.6 5.4-56-4.2-26.2-37.8-23.6-42.6-5.9-4.4 16.1-.4 38.5 7 67.1-10 23.9-24.9 56-35.4 74.4-20 10.3-47 26.2-51 46.2-3.3 15.8 26 55.2 76.1-31.2 22.4-7.4 46.8-16.5 68.4-20.1 18.9 10.2 41 17 55.8 17 25.5 0 28-28.2 17.5-38.7zm-198.1 77.8c5.1-13.7 24.5-29.5 30.4-35-19 30.3-30.4 35.7-30.4 35zm81.6-190.6c7.4 0 6.7 32.1 1.8 40.8-4.4-13.9-4.3-40.8-1.8-40.8zm-24.4 136.6c9.7-16.9 18-37 24.7-54.7 8.3 15.1 18.9 27.2 30.1 35.5-20.8 4.3-38.9 13.1-54.8 19.2zm131.6-5s-5 6-37.3-7.8c35.1-2.6 40.9 5.4 37.3 7.8z"&gt;&lt;/path&gt;&lt;/svg&gt;](https://github.com/gowachin/R_presentation/raw/main/CSU_RepRo.pdf)
+
+&lt;svg viewBox="0 0 496 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"&gt;&lt;/path&gt;&lt;/svg&gt; [gowachin](https://github.com/gowachin) &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; &lt;svg viewBox="0 0 384 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M290.7 311L95 269.7 86.8 309l195.7 41zm51-87L188.2 95.7l-25.5 30.8 153.5 128.3zm-31.2 39.7L129.2 179l-16.7 36.5L293.7 300zM262 32l-32 24 119.3 160.3 32-24zm20.5 328h-200v39.7h200zm39.7 80H42.7V320h-40v160h359.5V320h-40z"&gt;&lt;/path&gt;&lt;/svg&gt; [gowachin](https://stackoverflow.com/users/12501379/gowachin)
 
 .footnote[
 Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
