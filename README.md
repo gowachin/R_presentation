@@ -20,7 +20,7 @@ remotes::install_github("hadley/emo")
 
 ## Science Reproductible avec un grand R (fr)
 
-[Slides :https://gowachin.github.io/R_presentation/CSU_RepRo.html#1](https://gowachin.github.io/R_presentation/CSU_RepRo.html#1)
+[Slides : https://gowachin.github.io/R_presentation/CSU_RepRo.html#1](https://gowachin.github.io/R_presentation/CSU_RepRo.html#1)
 
 **CSU : Café Scientifique Underground**, UMR AMURE, IFREMER 17/03/2022.
 
