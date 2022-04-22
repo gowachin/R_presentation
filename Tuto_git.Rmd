@@ -1,0 +1,296 @@
+---
+title: 'Science Reproductible avec `r icons::fontawesome("git-square")`'
+subtitle: "slides : [tinyurl.com/ycktp4kv](https://tinyurl.com/ycktp4kv)"
+author: "Maxime Jaunatre"
+institute: "UMR AMURE | IFREMER" 
+date: "2022-05-05 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [default, metropolis, metropolis-fonts]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      highlightSpans: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+library(emo)
+library(icons)
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(fig.align = "center")
+```
+
+```{r, eval = FALSE, include = FALSE}
+# This are the dependencies to compile this rmd.
+remotes::install_github("mitchelloharawild/icons")
+icons::download_fontawesome()
+remotes::install_github("hadley/emo")
+```
+
+
+exclude: true
+
+class: inverse, center, middle
+
+# Introduction
+
+---
+exclude: true
+
+# Utilisation de Git dans un travail avec R
+
+**Résumé :** 
+
+---
+
+background-image: url(./CSU_RepRo_files/figure-html/phd101212s.png)
+background-size: contain
+
+# Pourquoi utiliser un CVS ?
+
+???
+
+Multiplier les versions sur un ordi n'aide pas à retrouver facilement le code.
+
+
+---
+# Pourquoi utiliser un CVS ?
+
+## Git aide à comprendre l'historique.
+
+Principe de **snapshot**, nommés **commit** dans git.
+
+```{r, out.width="100%", echo = FALSE}
+knitr::include_graphics("Tuto_git_files/figure-html/files.png")
+```
+
+```{r, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE}
+
+\begin{tikzpicture}
+\gitDAG[grow right sep = 2em]{
+  file -- file1 -- { 
+    file2,
+    filefinal -- fileFINAL,
+  }
+};
+\end{tikzpicture}
+```
+
+--- 
+
+Créer un projet Rstudio !
+
+---
+
+# Initier git
+
+## Créer un nouveau dossier
+
+## Initialitation
+
+Avec le terminal de commande Git Bash
+
+```{bash, eval = FALSE}
+$ cd
+$ git init
+Initialized empty Git repository in path/to/your/directory/.git/
+
+```
+
+Avec une commande R : Tools > Project Options … > Git/SVN. Under “Version control system”, choisir “Git”. Confirm New Git Repository? Oui!
+
+```{r, eval = FALSE}
+usethis::use_git()
+```
+
+
+Sinon : 
+
+---
+exclude:true
+
+# Pourquoi utiliser un CVS ?
+
+Est-ce que vous avez déjà :
+
+- **Fait un changement de code et voulu revenir en arrière ?**
+- **Perdu du code ou une sauvegarde trop ancienne ?**
+- Voulu voir la difference entre 2 versions ?
+- Voulu vérifier l'historique d'un script ?
+- **Voulu travailler sur un script a plusieurs ?**
+- **Voulu partager votre code à quelqu'un ?**
+- Voulu tester une nouveauté sans modifier du code déjà utile ?
+
+Si oui, et dans plein de cas, un système de version control aurait pu vous simplifier la vie.
+
+???
+
+Diapo dite à l'orale avec le comic suivant.
+
+---
+exclude: true
+background-image: url(./CSU_RepRo_files/figure-html/phd101212s.png)
+background-size: contain
+
+# Pourquoi utiliser un CVS ?
+
+???
+
+Multiplier les versions sur un ordi n'aide pas à retrouver facilement le code
+
+---
+exclude: true
+
+# Git : comment ça marche ?
+
+## 3 commandes à retenir : commit, push, and pull
+
+- commit: enregistre une snapshot du code à un certain point temporel. 
+<br/>(permet d'associer du texte pour expliquer les modifications)
+
+
+```{r, out.width="50%"}
+knitr::include_graphics("CSU_RepRo_files/figure-html/git_tab.png")
+```
+
+???
+
+Installation de git sur l'ordinateur et initialisation de dépots dans un dossier
+rejoint la notion de compendium (un projet = un dépot git = un dossier)
+
+commit permet un enregistrement d'une étape temporelle pour les fichiers textes
+permet de travailler sur tout fichier texte simple (md, tex, R, code...)
+
+Important de bien nommer ses commits pour se retrouver temporellement
+
+--
+exclude: true
+
+- pull: met a jour le projet local avec la dernière version du projet<sup>*</sup>
+
+- push: met en commun les modifications locales avec le projet principal<sup>*</sup>
+
+.footnote[
+[*] Si herbergé en ligne.
+]
+
+???
+
+Important : git est indépendant de github et peut s'utiliser en solitaire.
+pull et push permet de mettre à jour un dépot par rapport à un autre, 
+souvent en ligne.
+
+---
+exclude: true
+
+# Git : comment ça marche ?
+
+```{r, out.width="85%"}
+knitr::include_graphics("CSU_RepRo_files/figure-html/commit_mess.png")
+```
+
+.footnote[
+xkcd comics, [CC BY-NC 2.5 license](https://xkcd.com/license.html)
+]
+
+???
+
+commit = doc temporelle, important de pas nommer n'importe comment sinon on s'y 
+perd.
+
+
+---
+exclude: true
+
+# Ressources Git
+
+.pull-left[
+
+- [Tutoriel ThinkR : R and Git](https://thinkr.fr/travailler-avec-git-via-rstudio-et-versionner-son-code/)
+
+- [Advance R &#x1F4D4;, H. Wickham](http://r-pkgs.had.co.nz/git.html)
+
+- [Happy Git and GitHub for the useR](http://happygitwithr.com/)
+
+- [Git cheatsheet](https://services.github.com/on-demand/downloads/github-git-cheat-sheet.pdf)
+
+- [Quand ça part en vrille](https://github.com/k88hudson/git-flight-rules)
+
+- [Réparer une erreur](http://ohshitgit.com/)
+
+- [Créer une nouvelle branche avec git et merge des branches](https://github.com/Kunena/Kunena-Forum/wiki/Create-a-new-branch-with-git-and-manage-branches)
+]
+
+.pull-right[
+```{r, out.width="90%"}
+knitr::include_graphics("CSU_RepRo_files/figure-html/git.png")
+```
+]
+
+.footnote[
+xkcd comics, [CC BY-NC 2.5 license](https://xkcd.com/license.html)
+]
+
+???
+
+Beaucoup d'information est disponible.
+Encore une fois, il vaut mieux commencer sur un petit projet où l'on est à
+l'aise.
+
+
+---
+layout: false
+exclude: true
+
+# Trouver de l'aide pour R &#x1F64F;
+
+.pull-left[
+## RTFM<sup>*</sup>
+- utiliser les aides `help(sum)` ou `?sum`
+- lire les **manuels** de packages [ggplot2](https://ggplot2.tidyverse.org/)
+- avoir les **cheatsheet** quelque part !
+
+## [Stack overflow `r icons::fontawesome("stack-overflow")`](https://stackoverflow.com/questions/tagged/r)
+## Issue Github `r icons::fontawesome("github")`
+]
+.pull-right[
+## Livres et blogs
+- [Advance R, Hadley Wickham](http://r-pkgs.had.co.nz/git.html)
+- [Git et Rstudio, ThinkR](https://thinkr.fr/travailler-avec-git-via-rstudio-et-versionner-son-code/)
+- [Project-oriented workflow, Jenny Bryan](https://www.tidyverse.org/blog/2017/12/workflow-vs-script/)
+
+## Conférences
+- [Code smells and feels, Jenny Bryan](https://youtu.be/7oyiPBjLAWY)
+- Toutes les conférences UseRs `r icons::fontawesome("youtube")`
+]
+
+## Communauté francophone de R : 
+.pull-left[
+- [frrrenchies](https://github.com/frrrenchies/frrrenchies) : list de doc fr
+]
+.pull-right[
+- [slack grrr](https://join.slack.com/t/r-grrr/shared_invite/zt-46utbgb9-uvo_bg5cbuxOV~H10YUX8w) : question, news...
+]
+
+.footnote[
+[*] Read The Fucking Manual.
+]
+
+---
+exclude: true
+
+class: inverse, center, middle
+
+# Merci! Des questions &#x2753;
+
+Slides en ligne [https://gowachin.github.io/R_presentation/CSU_RepRo.html](https://tinyurl.com/ycktp4kv)
+
+[Fichiers source `r icons::fontawesome("r-project")`](https://github.com/gowachin/R_presentation) &nbsp;&nbsp;|&nbsp;&nbsp; [Fichier pdf `r icons::fontawesome("file-pdf")`](https://github.com/gowachin/R_presentation/raw/main/CSU_RepRo.pdf)
+
+`r icons::fontawesome("github")` [gowachin](https://github.com/gowachin) &nbsp;&nbsp;&nbsp;&nbsp; `r icons::fontawesome("stack-overflow")` [gowachin](https://stackoverflow.com/users/12501379/gowachin)
+
+.footnote[
+Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+]
