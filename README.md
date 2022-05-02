@@ -29,4 +29,6 @@ Cette présentation fera un tour d'horizon des bonnes pratiques sous R et des ou
 
 ## Tutorat git (fr)
 
+[Slides : https://gowachin.github.io/R_presentation/Tuto_git.html#1](https://gowachin.github.io/R_presentation/Tuto_git.html#1)
+
 UMR AMURE, IFREMER 05/05/2022.

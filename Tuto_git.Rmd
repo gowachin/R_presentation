@@ -55,6 +55,27 @@ background-size: contain
 Le travail de recherche est de nature incrémentielle et oblige l'accumulation de versions différentes. Cela devient vite compliqué de s'y retrouver.
 
 ---
+exclude:true
+
+# Pourquoi utiliser un CVS ?
+
+Est-ce que vous avez déjà :
+
+- **Fait un changement de code et voulu revenir en arrière ?**
+- **Perdu du code ou une sauvegarde trop ancienne ?**
+- Voulu voir la difference entre 2 versions ?
+- Voulu vérifier l'historique d'un script ?
+- **Voulu travailler sur un script a plusieurs ?**
+- **Voulu partager votre code à quelqu'un ?**
+- Voulu tester une nouveauté sans modifier du code déjà utile ?
+
+Si oui, et dans plein de cas, un système de version control aurait pu vous simplifier la vie.
+
+???
+
+Diapo dite à l'orale avec le comic suivant.
+
+---
 # Pourquoi utiliser un CVS ?
 
 ```{r, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE}
@@ -149,7 +170,7 @@ Example :
 
 ```{bash}
 commit f36044df028b44352c293bafb0d6016b666c09c0
-Author: gowachin <gowachin974@gmail.com>
+Author: Maxime <gowachin@gmail.com>
 Date:   Sun Nov 21 22:30:43 2021 +0100
 
     Time of deco stop near MN90 values
@@ -215,7 +236,7 @@ Dans le terminal de commande Git Bash :
 
 ```{bash}
 $ git config --global user.name 'Maxime Jaunatre'
-$ git config --global user.email 'maxime.jaunatre@yahoo.fr'
+$ git config --global user.email 'gowachin@gmail.com'
 $ git config --global --list
 ```
 
@@ -228,7 +249,7 @@ On peut aussi utiliser le package usethis dans la console R :
 ## install.packages("usethis")
 library(usethis)
 use_git_config(user.name = "Maxime Jaunatre", 
-               user.email = "maxime.jaunatre@yahoo.fr")
+               user.email = "gowachin@gmail.com")
 ```
 
 ---
@@ -406,37 +427,117 @@ On va faire quelques commits... Ajoutez des fichiers pour tester !
 
 ---
 
----
-exclude:true
+class: inverse, center, middle
 
-# Pourquoi utiliser un CVS ?
+# Exercice 2 : plusieurs fichiers locaux
 
-Est-ce que vous avez déjà :
-
-- **Fait un changement de code et voulu revenir en arrière ?**
-- **Perdu du code ou une sauvegarde trop ancienne ?**
-- Voulu voir la difference entre 2 versions ?
-- Voulu vérifier l'historique d'un script ?
-- **Voulu travailler sur un script a plusieurs ?**
-- **Voulu partager votre code à quelqu'un ?**
-- Voulu tester une nouveauté sans modifier du code déjà utile ?
-
-Si oui, et dans plein de cas, un système de version control aurait pu vous simplifier la vie.
-
-???
-
-Diapo dite à l'orale avec le comic suivant.
 
 ---
-exclude: true
-background-image: url(./CSU_RepRo_files/figure-html/phd101212s.png)
-background-size: contain
+# Multiples fichiers !
 
-# Pourquoi utiliser un CVS ?
+## Git peut inclure plusieurs fichiers dans un commit.
 
-???
+A vous de tester les différents cas suivants :
 
-Multiplier les versions sur un ordi n'aide pas à retrouver facilement le code
+.pull-left[
+
+* Ajouter des fichiers
+
+* Supprimer un fichier
+]
+
+.pull-right[
+
+* Renommer un fichier
+
+* Déplacer un fichier dans un dossier
+]
+
+--
+
+## Cas spécial : ignore un fichier
+
+Il est parfois important de ne pas suivre un fichier avec Git. Pour cela on utilise le **.gitignore**
+
+.pull-left[
+**Git Bash**
+```{bash}
+$ vim .gitignore
+```
+]
+
+.pull-right[
+**Rstudio**
+
+* Nouveau fichier txt nommé
+]
+
+```{bash}
+./*.csv
+./*.Rproj
+./*.html
+```
+
+
+---
+
+class: inverse, center, middle
+
+# Partie 2: Github et dépôts distants
+
+
+---
+
+# Travailler à plusieurs
+
+```{r, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE}
+\begin{tikzpicture}
+  \matrix (m)
+    [
+      matrix of nodes,
+      nodes in empty cells,
+      column sep      = 3em,
+      row sep         = 5ex,
+      column 1/.style = { nodes = { empty } },
+      column 2/.style = { nodes = { empty } },
+      column 3/.style = { nodes = { empty } },
+      column 4/.style = { nodes = { empty } },
+    ]
+    {
+        &  &  &  \\
+        % A.txt & A.txt & A.txt &  \\  % \textit{7f21c09}
+        A1.txt & A1'.txt & A1''.txt &  \\  % \textit{7f21c09}
+        A2.txt & A2'.txt &  & B.txt \\  % \textit{7f21c09}
+        A2.txt &  & B1.txt & B1'.txt \\  % \textit{7f21c09}
+        & C.txt & B2.txt &  \\  % \textit{7f21c09}
+        & D.txt &  &  \\  % \textit{7f21c09}
+    };
+    \node[fit=(m-1-1)(m-1-1)]{Etno P.};
+    \node[fit=(m-1-2)(m-1-2)]{Gorgious K.};
+    \node[fit=(m-1-3)(m-1-3)]{Candy H. C.};
+    \node[fit=(m-1-4)(m-1-4)]{Bud B.};
+  
+    \draw [arrow] (m-2-1) -- (m-3-1);
+    \draw [arrow] (m-3-1) -- (m-4-1);
+    \draw [arrow] (m-4-1) -- (m-5-2);
+
+    \draw [arrow] (m-2-2) -- (m-3-2);
+    \draw [arrow] (m-3-2) -- (m-4-1);
+    \draw [arrow] (m-5-2) -- (m-6-2);
+
+    \draw [arrow] (m-2-3) -- (m-3-4);
+    \draw [arrow] (m-4-3) -- (m-5-3);
+    \draw [arrow] (m-4-3) -- (m-5-2);
+    \draw [arrow] (m-5-3) -- (m-6-2);
+    
+    \draw [arrow] (m-3-4) -- (m-4-4);
+    \draw [arrow] (m-3-4) -- (m-4-3);
+    \draw [arrow] (m-4-4) -- (m-5-3);
+
+\end{tikzpicture}
+```
+
+Ca devient vite le bordel... 12 versions dans un dossier ?
 
 ---
 exclude: true
@@ -484,7 +585,7 @@ souvent en ligne.
 
 
 ---
-exclude: true
+exclude: false
 
 # Ressources Git
 
@@ -506,8 +607,8 @@ exclude: true
 ]
 
 .pull-right[
-```{r, out.width="90%"}
-knitr::include_graphics("CSU_RepRo_files/figure-html/git.png")
+```{r, out.width="90%", eval = TRUE, echo = FALSE}
+knitr::include_graphics("Tuto_git_files/figure-html/git.png")
 ```
 ]
 
@@ -518,58 +619,16 @@ xkcd comics, [CC BY-NC 2.5 license](https://xkcd.com/license.html)
 ???
 
 Beaucoup d'information est disponible.
-Encore une fois, il vaut mieux commencer sur un petit projet où l'on est à
-l'aise.
-
+Encore une fois, il vaut mieux commencer sur un petit projet où l'on est à l'aise.
 
 ---
-layout: false
-exclude: true
-
-# Trouver de l'aide pour R &#x1F64F;
-
-.pull-left[
-## RTFM<sup>*</sup>
-- utiliser les aides `help(sum)` ou `?sum`
-- lire les **manuels** de packages [ggplot2](https://ggplot2.tidyverse.org/)
-- avoir les **cheatsheet** quelque part !
-
-## [Stack overflow `r icons::fontawesome("stack-overflow")`](https://stackoverflow.com/questions/tagged/r)
-## Issue Github `r icons::fontawesome("github")`
-]
-.pull-right[
-## Livres et blogs
-- [Advance R, Hadley Wickham](http://r-pkgs.had.co.nz/git.html)
-- [Git et Rstudio, ThinkR](https://thinkr.fr/travailler-avec-git-via-rstudio-et-versionner-son-code/)
-- [Project-oriented workflow, Jenny Bryan](https://www.tidyverse.org/blog/2017/12/workflow-vs-script/)
-
-## Conférences
-- [Code smells and feels, Jenny Bryan](https://youtu.be/7oyiPBjLAWY)
-- Toutes les conférences UseRs `r icons::fontawesome("youtube")`
-]
-
-## Communauté francophone de R : 
-.pull-left[
-- [frrrenchies](https://github.com/frrrenchies/frrrenchies) : list de doc fr
-]
-.pull-right[
-- [slack grrr](https://join.slack.com/t/r-grrr/shared_invite/zt-46utbgb9-uvo_bg5cbuxOV~H10YUX8w) : question, news...
-]
-
-.footnote[
-[*] Read The Fucking Manual.
-]
-
----
-exclude: true
-
 class: inverse, center, middle
 
 # Merci! Des questions &#x2753;
 
-Slides en ligne [https://gowachin.github.io/R_presentation/CSU_RepRo.html](https://tinyurl.com/ycktp4kv)
+Slides en ligne [https://gowachin.github.io/R_presentation/Tuto_git.html](https://tinyurl.com/ycktp4kv)
 
-[Fichiers source `r icons::fontawesome("r-project")`](https://github.com/gowachin/R_presentation) &nbsp;&nbsp;|&nbsp;&nbsp; [Fichier pdf `r icons::fontawesome("file-pdf")`](https://github.com/gowachin/R_presentation/raw/main/CSU_RepRo.pdf)
+[Fichiers source `r icons::fontawesome("r-project")`](https://github.com/gowachin/R_presentation) &nbsp;&nbsp;|&nbsp;&nbsp; [Fichier pdf `r icons::fontawesome("file-pdf")`](https://github.com/gowachin/R_presentation/raw/main/Tuto_git.pdf)
 
 `r icons::fontawesome("github")` [gowachin](https://github.com/gowachin) &nbsp;&nbsp;&nbsp;&nbsp; `r icons::fontawesome("stack-overflow")` [gowachin](https://stackoverflow.com/users/12501379/gowachin)
 
