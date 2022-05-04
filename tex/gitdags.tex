@@ -4,6 +4,9 @@
 \usepackage{amsmath}
 \usepackage{tex/gitdags}
 \usetikzlibrary{matrix}
+\usetikzlibrary{chains}
+\usetikzlibrary{shapes}
+\definecolor{strange}{RGB}{230,244,253}
 %% EXTRA_TIKZ_PREAMBLE_CODE %%
 
 \usetikzlibrary{arrows.meta}
@@ -12,6 +15,8 @@
   centered/.style = { align=center, anchor=center },
      empty/.style = { font=\sffamily\Large, centered, text width=2cm },
      arrow/.style = { very thick, color=gray, ->, >=Triangle},
+     harrow/.style = { very thick, color=blue, ->, >=Triangle},
+     high/.style = {color = blue}
 }
 \newcommand*{\com}{Commit}
 
