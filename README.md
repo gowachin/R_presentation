@@ -27,3 +27,14 @@ remotes::install_github("hadley/emo")
 Le logiciel R est un outil indispensable aux recherches menés au sein d'AMURE.
 Dans le contexte du mouvement de la science ouverte, qu'il s'agisse d'analyse de données, de statistique ou de modélisation,  se pose la question de la reproductibilité de la science  : sommes nous tous capables de réutiliser les outils développés il y a 6 mois, un an ou plus ? Ces outils sont-ils suffisamment ouverts pour permettre une utilisation par tout à chacun ? Enfin, à quoi peuvent bien servir des données ouvertes si les outils qui les utilisent ne le sont pas ?
 Cette présentation fera un tour d'horizon des bonnes pratiques sous R et des outils qu'il propose afin de faciliter une production quotidienne de science reproductible et ouverte. Au programme : Rstudio, packages, Git/Github, données, documentation.
+
+
+## Tutorat git (fr)
+
+[Slides : https://gowachin.github.io/R_presentation/Tuto_git.html#1](https://gowachin.github.io/R_presentation/Tuto_git.html#1)
+
+UMR AMURE, IFREMER 05/05/2022.
+
+Session tutorat sur Git pour expliquer son utilisation locale (commit), et son utilisation avec des remotes pour un travail collectif. Les slides sont avant tout un support pour une demi-journée interractive où chacun test les différentes commandes. Les commandes sont si possible montrées sur Git Bash, Rstudio, R et Github Desktop. 
+
+La session requiert au préalable l'installation de Git, R, Rstudio ainsi que la création d'un compte Github pour cloner un dépot exemple de travail.

@@ -1,0 +1,41 @@
+\documentclass[
+%% TIKZ_CLASSOPTION %%
+]{standalone}
+\usepackage{amsmath}
+\usepackage{tex/gitdags}
+\usetikzlibrary{matrix}
+\usetikzlibrary{chains}
+\usetikzlibrary{shapes}
+\definecolor{strange}{RGB}{230,244,253}
+%% EXTRA_TIKZ_PREAMBLE_CODE %%
+
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{fit}
+\tikzset{
+  centered/.style = { align=center, anchor=center },
+     empty/.style = { font=\sffamily\Large, centered, text width=2cm },
+     arrow/.style = { very thick, color=gray, ->, >=Triangle},
+     harrow/.style = { very thick, color=blue, ->, >=Triangle},
+     high/.style = {color = blue}
+}
+\newcommand*{\com}{Commit}
+
+\def\Size{20pt}
+\tikzset{
+  file/.pic={
+    \draw (0,-0.6*\Size) -- (0,0.6*\Size) --
+        (0.7*\Size,0.6*\Size) -- (0.7*\Size,0.2*\Size) -- (1*\Size,0.2*\Size) --
+        (1*\Size,-0.6*\Size) -- cycle;
+    \draw (0.7*\Size,0.6*\Size) -- (1*\Size,0.2*\Size);
+
+    \foreach \y in {-0.4*\Size,-0.2*\Size,0}{
+      \draw (0.2*\Size,\y) -- (0.8*\Size,\y);
+    }
+    \draw (0.2*\Size,0.2*\Size) -- (0.6*\Size,0.2*\Size);
+    \draw (0.2*\Size,0.4*\Size) -- (0.6*\Size,0.4*\Size);
+  }
+}
+
+\begin{document}
+%% TIKZ_CODE %%
+\end{document}

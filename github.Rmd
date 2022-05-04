@@ -1,0 +1,630 @@
+---
+title: 'Science Reproductible avec `r icons::fontawesome("github")`'
+subtitle: "slides : [tinyurl.com/ycktp4kv](https://tinyurl.com/ycktp4kv)"
+author: "Maxime Jaunatre"
+institute: "UMR AMURE | IFREMER" 
+date: "2022-05-05 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [default, metropolis, metropolis-fonts]
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      highlightSpans: true
+      countIncrementalSlides: false
+      seal: false
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(emo)
+library(icons)
+options(htmltools.dir.version = FALSE, knitr.duplicate.label = 'allow')
+knitr::opts_chunk$set(fig.align = "center", eval = FALSE)
+```
+
+```{r, eval = FALSE, include = FALSE}
+# This are the dependencies to compile this rmd.
+remotes::install_github("mitchelloharawild/icons")
+icons::download_fontawesome()
+remotes::install_github("hadley/emo")
+```
+
+
+exclude: true
+
+class: inverse, center, middle
+
+# Introduction
+
+---
+exclude: true
+
+# Utilisation de Git dans un travail avec R
+
+**Résumé :** 
+
+---
+
+class: inverse, center, middle
+
+# Partie : Github et dépôts distants
+
+
+---
+# Travailler à plusieurs
+
+```{r bordel, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache= TRUE}
+\begin{tikzpicture}
+  \matrix (m)
+    [
+      matrix of nodes,
+      nodes in empty cells,
+      column sep      = 3em,
+      row sep         = 5ex,
+      column 1/.style = { nodes = { empty } },
+      column 2/.style = { nodes = { empty } },
+      column 3/.style = { nodes = { empty } },
+      column 4/.style = { nodes = { empty } },
+    ]
+    {
+        &  &  &  \\
+        % A.txt & A.txt & A.txt &  \\
+        A1.txt & A1'.txt & A1''.txt &  \\
+        A2.txt & A2'.txt &  & B.txt \\
+        A2.txt &  & B1.txt & B1'.txt \\
+        & C.txt & B2.txt &  \\
+        & D.txt &  &  \\
+    };
+    \node[fit=(m-1-1)(m-1-1)]{Etno P.};
+    \node[fit=(m-1-2)(m-1-2)]{Gorgious K.};
+    \node[fit=(m-1-3)(m-1-3)]{Candy H. C.};
+    \node[fit=(m-1-4)(m-1-4)]{Bud B.};
+  
+    \draw [arrow] (m-2-1) -- (m-3-1);
+    \draw [arrow] (m-3-1) -- (m-4-1);
+    \draw [arrow] (m-4-1) -- (m-5-2);
+
+    \draw [arrow] (m-2-2) -- (m-3-2);
+    \draw [arrow] (m-3-2) -- (m-4-1);
+    \draw [arrow] (m-5-2) -- (m-6-2);
+
+    \draw [arrow] (m-2-3) -- (m-3-4);
+    \draw [arrow] (m-4-3) -- (m-5-3);
+    \draw [arrow] (m-4-3) -- (m-5-2);
+    \draw [arrow] (m-5-3) -- (m-6-2);
+    
+    \draw [arrow] (m-3-4) -- (m-4-4);
+    \draw [arrow] (m-3-4) -- (m-4-3);
+    \draw [arrow] (m-4-4) -- (m-5-3);
+
+\end{tikzpicture}
+```
+
+Ca devient vite complexe... 12 versions dans un dossier ?
+
+---
+# Utilisation d'un remote
+
+Git est installé sur votre ordinateur, et un dépôt dans votre dossier.
+
+Principe de **Cloud** : installation de Git sur un serveur et copie du dépôt.
+
+Plusieurs hébergeur existent :
+
+**Github** (Microsoft) `r icons::fontawesome("github")`   
+**Bitbucket** `r icons::fontawesome("bitbucket")`   
+**Gitlab** `r icons::fontawesome("gitlab")`
+
+Et la liste est longue : [https://git.wiki.kernel.org/index.php/GitHosting](https://git.wiki.kernel.org/index.php/GitHosting)
+
+On peut tout à fait copier un dépôt sur plusieurs hébergeurs (mirroring) !
+
+*On peut même avoir un remote sur le même ordinateur, ou sur un disque externe ! Par exemple le disque Z...mais la réalité est un peu plus complexe.*
+
+---
+# Depot chez Gorgious
+
+**Repo** : github.com/Gorgious/name
+
+```{r github, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache= TRUE}
+
+\begin{tikzpicture}
+  \matrix (m)
+    [
+      matrix of nodes,
+      nodes in empty cells,
+      column sep      = 3em,
+      row sep         = 5ex,
+      column 1/.style = { nodes = { empty } },
+      column 2/.style = { nodes = { empty } },
+      column 3/.style = { nodes = { empty } },
+    ]
+    {
+        &  &  \\
+        & 7f21c09 & \\  
+        & d39ac60 & \\  
+        & c78c64d & \\  
+        &  & \\ 
+    };
+     \node[fit=(m-1-1)(m-1-1)]{Etno P.};
+     \node[fit=(m-1-2)(m-1-2)]{Gorgious K.};
+     \node[fit=(m-1-3)(m-1-3)]{Candy H. C.};
+  
+    \foreach \i/\j in {2/3, 3/4} {
+      \draw [arrow] (m-\i-2) -- (m-\j-2);
+    }
+\end{tikzpicture}
+```
+
+---
+# Clone a remote
+
+```{r clone, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache= TRUE}
+
+\begin{tikzpicture}
+  \matrix (m)
+    [
+      matrix of nodes,
+      nodes in empty cells,
+      column sep      = 3em,
+      row sep         = 5ex,
+      column 1/.style = { nodes = { empty } },
+      column 2/.style = { nodes = { empty } },
+      column 3/.style = { nodes = { empty } },
+    ]
+    {
+        &  &  \\
+        & 7f21c09 & 7f21c09 \\  
+        & d39ac60 & d39ac60 \\  
+        & c78c64d & c78c64d \\  
+        &  &  \\  
+    };
+    \node[fit=(m-1-1)(m-1-1)]{Etno P.};
+    \node[fit=(m-1-2)(m-1-2)]{Gorgious K.};
+    \node[fit=(m-1-3)(m-1-3)]{Candy H. C.};
+  
+    \foreach \i/\j in {2/3, 3/4} {
+      \draw [arrow] (m-\i-2) -- (m-\j-2);
+      \draw [arrow] (m-\i-3) -- (m-\j-3);
+    }
+\end{tikzpicture}
+```
+
+---
+# Local commit
+
+```{r local, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache= TRUE}
+
+\begin{tikzpicture}
+  \matrix (m)
+    [
+      matrix of nodes,
+      nodes in empty cells,
+      column sep      = 3em,
+      row sep         = 5ex,
+      column 1/.style = { nodes = { empty } },
+      column 2/.style = { nodes = { empty } },
+      column 3/.style = { nodes = { empty } },
+    ]
+    {
+        &  &  \\
+        & 7f21c09 & 7f21c09 \\  
+        & d39ac60 & d39ac60 \\  
+        & c78c64d & c78c64d \\  
+        &  & |[high]| cbdac1e \\  
+    };
+    \node[fit=(m-1-1)(m-1-1)]{Etno P.};
+    \node[fit=(m-1-2)(m-1-2)]{Gorgious K.};
+    \node[fit=(m-1-3)(m-1-3)]{Candy H. C.};
+  
+    \foreach \i/\j in {2/3, 3/4} {
+      \draw [arrow] (m-\i-2) -- (m-\j-2);
+      \draw [arrow] (m-\i-3) -- (m-\j-3);
+    }
+  \draw [harrow] (m-4-3) -- (m-5-3);
+\end{tikzpicture}
+```
+
+---
+# Push
+
+```{r push, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache= TRUE}
+
+\begin{tikzpicture}
+  \matrix (m)
+    [
+      matrix of nodes,
+      nodes in empty cells,
+      column sep      = 3em,
+      row sep         = 5ex,
+      column 1/.style = { nodes = { empty } },
+      column 2/.style = { nodes = { empty } },
+      column 3/.style = { nodes = { empty } },
+    ]
+    {
+        &  &  \\
+        & 7f21c09 & 7f21c09 \\  
+        & d39ac60 & d39ac60 \\  
+        & c78c64d & c78c64d \\  
+        & |[high]| cbdac1e & |[high]| cbdac1e \\  
+    };
+    \node[fit=(m-1-1)(m-1-1)]{Etno P.};
+    \node[fit=(m-1-2)(m-1-2)]{Gorgious K.};
+    \node[fit=(m-1-3)(m-1-3)]{Candy H. C.};
+  
+    \foreach \i/\j in {2/3, 3/4} {
+      \draw [arrow] (m-\i-2) -- (m-\j-2);
+      \draw [arrow] (m-\i-3) -- (m-\j-3);
+    }
+    \draw [harrow] (m-4-2) -- (m-5-2);
+    \draw [harrow] (m-4-3) -- (m-5-3);
+\end{tikzpicture}
+```
+
+---
+# Retard
+
+```{r retard, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache=TRUE}
+
+\begin{tikzpicture}
+  \matrix (m)
+    [
+      matrix of nodes,
+      nodes in empty cells,
+      column sep      = 3em,
+      row sep         = 5ex,
+      column 1/.style = { nodes = { empty } },
+      column 2/.style = { nodes = { empty } },
+      column 3/.style = { nodes = { empty } },
+    ]
+    {
+        &  &  \\
+        7f21c09 & 7f21c09 & 7f21c09 \\  
+        d39ac60 & d39ac60 & d39ac60 \\  
+        c78c64d & c78c64d & c78c64d \\  
+         & cbdac1e & cbdac1e \\
+    };
+    \node[fit=(m-1-1)(m-1-1)]{Etno P.};
+    \node[fit=(m-1-2)(m-1-2)]{Gorgious K.};
+    \node[fit=(m-1-3)(m-1-3)]{Candy H. C.};
+  
+    \foreach \i/\j in {2/3, 3/4} {
+      \draw [arrow] (m-\i-1) -- (m-\j-1);
+      \draw [arrow] (m-\i-2) -- (m-\j-2);
+      \draw [arrow] (m-\i-3) -- (m-\j-3);
+    }
+    \draw [arrow] (m-4-2) -- (m-5-2);
+    \draw [arrow] (m-4-3) -- (m-5-3);
+\end{tikzpicture}
+```
+
+---
+# Pull
+
+```{r pull, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE}
+
+\begin{tikzpicture}
+  \matrix (m)
+    [
+      matrix of nodes,
+      nodes in empty cells,
+      column sep      = 3em,
+      row sep         = 5ex,
+      column 1/.style = { nodes = { empty } },
+      column 2/.style = { nodes = { empty } },
+      column 3/.style = { nodes = { empty } },
+    ]
+    {
+        &  &  \\
+        7f21c09 & 7f21c09 & 7f21c09 \\  
+        d39ac60 & d39ac60 & d39ac60 \\  
+        c78c64d & c78c64d & c78c64d \\  
+        |[high]| cbdac1e & cbdac1e & cbdac1e \\
+    };
+    \node[fit=(m-1-1)(m-1-1)]{Etno P.};
+    \node[fit=(m-1-2)(m-1-2)]{Gorgious K.};
+    \node[fit=(m-1-3)(m-1-3)]{Candy H. C.};
+  
+    \foreach \i/\j in {2/3, 3/4} {
+      \draw [arrow] (m-\i-1) -- (m-\j-1);
+      \draw [arrow] (m-\i-2) -- (m-\j-2);
+      \draw [arrow] (m-\i-3) -- (m-\j-3);
+    }
+    \draw [arrow] (m-4-2) -- (m-5-2);
+    \draw [arrow] (m-4-3) -- (m-5-3);
+    \draw [harrow] (m-4-1) -- (m-5-1);
+\end{tikzpicture}
+```
+
+
+---
+# Lien COMMIT -> PULL -> PUSH
+
+```{r pull_push_diag, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE}
+\begin{tikzpicture}[block/.style={draw,fill=strange,minimum height=2.5em},
+    font=\sffamily,>=stealth]
+
+    \begin{scope}[start chain=A going below,node distance=1em,
+                  local bounding box=buffers]
+        \node[block,minimum width=6em](remote){Remote github};
+        \node[right= 8em of remote, block,minimum width=6em](local){Fichiers};
+    \end{scope} 
+
+    \node[below= 6em of buffers,align=center, block,minimum width=6em](repo){Repository \\Git local};
+
+    %\draw[->, thick](remote) edge[bend left] node[midway, fill=white]{Pull} (local);
+    \draw[->, thick](remote) edge[bend left] node[midway, fill=white]{Pull} (repo);
+    %\draw[->, thick](remote) edge[dashed] node[midway, fill=white]{Fetch} (repo);
+    \draw[->, thick](remote) edge node[midway, fill=white]{Clone} (local);
+    \draw[->,thick](local) edge[bend left] node[midway, fill=white]{Add} (repo);
+    \draw[->,thick](repo) edge[bend left] node[midway, fill=white]{Push} (remote);
+    \draw[->,thick](repo) edge[loop right] node[midway, fill=white]{Commit} (repo);
+    
+
+\end{tikzpicture}
+```
+
+
+
+---
+
+class: inverse, center, middle
+
+# Exercice : Cloner un dépot distant
+
+---
+# Config Github Token (PAT) !
+
+Github ne fonctionne plus avec les mot de passe -> sécurité !
+
+Créer un Token en allant sur le site [https://github.com/settings/tokens](https://github.com/settings/tokens) and -> “Generate token”.
+
+Ou alors dans R :
+
+```{r}
+usethis::create_github_token()
+```
+
+
+Valider les cases "repo", "user" et "workflow". Penser a copier la clé !
+Elle sera demandé à la prochaine utilisation de git en ayant besoin.
+
+On peut même la stocker avec R :
+
+```{r}
+gitcreds::gitcreds_set() # commande interactive
+```
+
+
+---
+# Cloner un dépôt github
+
+On va copier un dépot distant sur le disque : **https://github.com/Ifremer-IAM/Tutorat_git**
+
+
+.pull-left[
+
+**Git Bash**
+
+```{bash}
+$ git clone <URL>
+```
+]
+
+.pull-right[
+
+**R**
+
+Pour une fois que R ne fait pas tout...
+]
+
+.pull-left[
+**GHD**
+
+* File -> Clone repository
+
+* URL : copier l'url
+
+*NE PERMET PAS DE CLONER LES DEPOTS PRIVES*
+]
+
+.pull-right[
+**Rstudio**
+
+* File -> New Project
+
+* Version Control -> Git
+
+* URL : copier l'url
+]
+
+--
+
+**A vous de rajouter un document de votre choix avec un commit !**
+
+[Happy Git for the useR](https://happygitwithr.com/usage-intro.html) explique d'autre cas que celui-ci.
+
+???
+
+Prendre le temps que chacun pull and commit, car il va y avoir des conflits !
+
+---
+# Commit -> Pull -> Push
+```{r diag, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE}
+\begin{tikzpicture}[block/.style={draw,fill=strange,minimum height=2.5em},
+    font=\sffamily,>=stealth]
+
+    \begin{scope}[start chain=A going below,node distance=1em,
+                  local bounding box=buffers]
+        \node[block,minimum width=6em](remote){Remote github};
+        \node[right= 8em of remote, block,minimum width=6em](local){Fichiers};
+    \end{scope} 
+
+    \node[below= 6em of buffers,align=center, block,minimum width=6em](repo){Repository \\Git local};
+
+    %\draw[->, thick](remote) edge[bend left] node[midway, fill=white]{Pull} (local);
+    \draw[->, thick](remote) edge[bend left] node[midway, fill=white]{Pull} (repo);
+    %\draw[->, thick](remote) edge[dashed] node[midway, fill=white]{Fetch} (repo);
+    \draw[->, thick](remote) edge node[midway, fill=white]{Clone} (local);
+    \draw[->,thick](local) edge[bend left] node[midway, fill=white]{Add} (repo);
+    \draw[->,thick](repo) edge[bend left] node[midway, fill=white]{Push} (remote);
+    \draw[->,thick](repo) edge[loop right] node[midway, fill=white]{Commit} (repo);
+    
+
+\end{tikzpicture}
+```
+
+---
+# Conflits : DON'T PANIC
+
+Un conflit interviens quand plusieurs personnes modifient le même document au même endroit.
+
+La plupart du temps git gère les différences (**merge**) en solo. Il demande l'intervention d'un utilisateur en cas de choix impossible.
+
+.pull-left[
+```{bash}
+# Commit d39ac60
+Coucou
+- Ceci est un fichier.
++ Ceci est un super fichier.
+Bisous
+```
+
+```{bash}
+# Commit cbdac1e
+Coucou
+- Ceci est un fichier.
++ Ceci est un fichier nul.
+Bisous
+```
+]
+
+--
+
+.pull-right[
+```{bash}
+Coucou
+*<<<<<<< HEAD:file.R
+*+ Ceci est un super fichier.
+*=======
+*+ Ceci est un fichier nul.
+*>>>>>>> main:File.R
+Bisous
+```
+
+Il faut éditer à la main et commit.
+]
+
+Important de garder le contact sur qui fait quoi ^^
+
+---
+# Alternative : branches
+
+Pouvoir tester des choses sur un historique parallèle pour s'assurer de ne rien casser.
+
+```{r branches, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE}
+\begin{tikzpicture}
+  \gitDAG[grow right sep = 2em]{
+    A -- B -- { 
+      C,
+      {D -- E },
+    }
+  };
+  % Remote branch
+  \gitremotebranch
+    [origmaster]    % node name
+    {origin/master} % node text
+    {above=of C}    % node placement
+    {C}             % target
+  % Branch
+  \gitbranch
+    {dev}        % node name and text 
+    {above=of E} % node placement
+    {E}          % target
+  % HEAD reference
+  \gitHEAD
+    {above=of dev} % node placement
+    {dev}          % target
+\end{tikzpicture}
+```
+
+**HEAD** : situation actuelle des fichiers.
+*master* et *dev* : nom de branche
+
+---
+# Merging branches
+
+Une fois que le code fonctionne on peut faire un **merge** des branches.
+
+```{r branch merge, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE}
+\begin{tikzpicture}
+  \gitDAG[grow right sep = 2em]{
+    A -- B -- { 
+      C,
+      {D -- E },
+    } -- F
+  };
+  % Remote branch
+  \gitremotebranch
+    [origmaster]    % node name
+    {origin/master} % node text
+    {above=of F}    % node placement
+    {F}             % target
+  % Branch
+  \gitbranch
+    {dev}        % node name and text 
+    {below=of F} % node placement
+    {F}          % target
+  % HEAD reference
+  \gitHEAD
+    {below=of dev} % node placement
+    {dev}          % target
+  % \SAandWT
+\end{tikzpicture}
+```
+
+
+---
+
+class: inverse, center, middle
+
+# Exercice : Créer une branche
+
+
+---
+# Créer une branche
+
+On va tous créer une branche avec notre nom :
+
+.pull-left[
+
+**Git Bash**
+
+```{bash}
+$ git checkout -b <NOM>
+```
+]
+
+.pull-right[
+
+**R**
+
+Pour une fois que R ne fait pas tout...
+]
+
+.pull-left[
+**GHD**
+
+* Branch -> New Branch
+]
+
+.pull-right[
+**Rstudio**
+
+* Onglet Git -> Symbole violet
+]
+
+On peut tous travailler sur notre branche et ensuite un responsable peut les merge ou alors proposer un **pull-request**
+
