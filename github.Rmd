@@ -1,6 +1,6 @@
 ---
 title: 'Science Reproductible avec `r icons::fontawesome("github")`'
-subtitle: "slides : [tinyurl.com/ycktp4kv](https://tinyurl.com/ycktp4kv)"
+subtitle: "slides : [https://tinyurl.com/2s4antdy](https://tinyurl.com/2s4antdy)"
 author: "Maxime Jaunatre"
 institute: "UMR AMURE | IFREMER" 
 date: "2022-05-05 (updated: `r Sys.Date()`)"

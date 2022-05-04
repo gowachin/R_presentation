@@ -1,6 +1,6 @@
 ---
 title: 'Science Reproductible avec `r icons::fontawesome("git-square")`'
-subtitle: "slides : [tinyurl.com/ycktp4kv](https://tinyurl.com/ycktp4kv)"
+subtitle: "slides : [https://tinyurl.com/2s4antdy](https://tinyurl.com/2s4antdy)"
 author: "Maxime Jaunatre"
 institute: "UMR AMURE | IFREMER" 
 date: "2022-05-05 (updated: `r Sys.Date()`)"
@@ -527,9 +527,9 @@ class: inverse, center, middle
 
 # Merci! Des questions &#x2753;
 
-Slides en ligne [https://gowachin.github.io/R_presentation/Tuto_git.html](https://tinyurl.com/ycktp4kv)
+Slides en ligne [https://gowachin.github.io/R_presentation/Tuto_git.html](https://gowachin.github.io/R_presentation/Tuto_git.html)
 
-[Fichiers source `r icons::fontawesome("r-project")`](https://github.com/gowachin/R_presentation) &nbsp;&nbsp;|&nbsp;&nbsp; [Fichier pdf `r icons::fontawesome("file-pdf")`](https://github.com/gowachin/R_presentation/raw/main/Tuto_git.pdf)
+[Fichiers source `r icons::fontawesome("r-project")`](https://github.com/gowachin/R_presentation) <!-- &nbsp;&nbsp;|&nbsp;&nbsp; [Fichier pdf `r icons::fontawesome("file-pdf")`](https://github.com/gowachin/R_presentation/raw/main/Tuto_git.pdf) -->
 
 `r icons::fontawesome("github")` [gowachin](https://github.com/gowachin) &nbsp;&nbsp;&nbsp;&nbsp; `r icons::fontawesome("stack-overflow")` [gowachin](https://stackoverflow.com/users/12501379/gowachin)
 
