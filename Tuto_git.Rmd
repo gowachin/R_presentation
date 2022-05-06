@@ -222,6 +222,17 @@ knitr::include_graphics("Tuto_git_files/figure-html/files.png")
 \end{tikzpicture}
 ```
 
+---
+# Slide technique
+
+Ces slides présentent l'utilisation de Git avec Rstudio, Github Desktop, R et bien sur Git Bash qui est un terminal de commande.
+
+Bien que tout ces outils permettent de faire des dépots Git et de commit, plus on va avancer, plus il deviendra pertinent d'utiliser le terminal.
+
+Il est donc préférable de lire cette partie de [Happy git for Ruser](https://happygitwithr.com/shell.html) afin d'appréhender cet outils qui offre toute la puissance de git.
+
+Afin de ne pas paniquer, une [cheatsheet](https://services.github.com/on-demand/downloads/github-git-cheat-sheet.pdf) est également disponible ici pour comprendre la plupart des options.
+
 
 ---
 
@@ -481,7 +492,7 @@ $ vim .gitignore
 
 ---
 
-```{r child='github.Rmd', echo=FALSE, eval=TRUE}
+```{r child='github.Rmd', eval=TRUE}
 ```
 
 

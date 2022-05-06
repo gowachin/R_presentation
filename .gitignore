@@ -8,3 +8,4 @@
 *.rdx
 *.RData
 *_cache/
+*.log
