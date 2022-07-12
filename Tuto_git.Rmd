@@ -505,7 +505,7 @@ exclude: false
 
 - [Tutoriel ThinkR : R and Git](https://thinkr.fr/travailler-avec-git-via-rstudio-et-versionner-son-code/)
 
-- [Advance R &#x1F4D4;, H. Wickham](http://r-pkgs.had.co.nz/git.html)
+- [Advance R &#x1F4D4;, H. Wickham](https://adv-r.hadley.nz/)
 
 - [Happy Git and GitHub for the useR](http://happygitwithr.com/)
 

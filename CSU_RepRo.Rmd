@@ -1051,7 +1051,7 @@ layout: false
 ]
 .pull-right[
 ## Livres et blogs
-- [Advance R, Hadley Wickham](http://r-pkgs.had.co.nz/git.html)
+- [Advance R, Hadley Wickham](https://adv-r.hadley.nz/)
 - [Git et Rstudio, ThinkR](https://thinkr.fr/travailler-avec-git-via-rstudio-et-versionner-son-code/)
 - [Project-oriented workflow, Jenny Bryan](https://www.tidyverse.org/blog/2017/12/workflow-vs-script/)
 
