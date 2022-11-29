@@ -1,0 +1,786 @@
+---
+    title: 'Using `r icons::fontawesome("git-square")` with `r icons::fontawesome("r-project")`'
+#subtitle: "slides : [https://tinyurl.com/2s4antdy](https://tinyurl.com/2s4antdy)"
+author: "Maxime Jaunatre"
+institute: "LESSEM | INRAE"
+date: "2022-12-01 (updated: `r Sys.Date()`)"
+output:
+    xaringan::moon_reader:
+    lib_dir: libs
+css: [default, metropolis, metropolis-fonts]
+nature:
+    highlightStyle: github
+highlightLines: true
+highlightSpans: true
+countIncrementalSlides: false
+seal: false
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(emo)
+library(icons)
+options(htmltools.dir.version = FALSE, knitr.duplicate.label = 'allow')
+knitr::opts_chunk$set(fig.align = "center", eval = FALSE)
+```
+
+```{r, eval = FALSE, include = FALSE}
+# This are the dependencies to compile this rmd.
+remotes::install_github("mitchelloharawild/icons")
+icons::download_fontawesome()
+remotes::install_github("hadley/emo")
+```
+
+---
+
+class: inverse, center, middle
+
+# Practice
+
+<!-- Ces slides présentent l'utilisation de Git avec Rstudio, Github Desktop, R et bien sur Git Bash qui est un terminal de commande. -->
+
+<!-- Bien que tout ces outils permettent de faire des dépots Git et de commit, plus on va avancer, plus il deviendra pertinent d'utiliser le terminal. -->
+
+<!-- Il est donc préférable de lire cette partie de [Happy git for Ruser](https://happygitwithr.com/shell.html) afin d'appréhender cet outils qui offre toute la puissance de git. -->
+
+<!-- Afin de ne pas paniquer, une [cheatsheet](https://services.github.com/on-demand/downloads/github-git-cheat-sheet.pdf) est également disponible ici pour comprendre la plupart des options. -->
+
+
+---
+# Config git account !
+
+In Git Bash terminal :
+
+```{bash}
+$ git config --global user.name 'Maxime Jaunatre'
+$ git config --global user.email 'myveryownmail@mail.com'
+$ git config --global --list
+```
+
+Or using the `{usethis}` package in R terminal :
+
+```{r}
+## install if needed (do this exactly once):
+## install.packages("usethis")
+library(usethis)
+use_git_config(user.name = "Maxime Jaunatre",
+               user.email = "myveryownmail@mail.com")
+```
+
+This allow to sign the commits
+
+---
+# Initiate git
+
+## Create a new folder (Rstudio project)
+
+In Git Bash terminal :
+
+```{bash}
+$ cd
+$ git init tuto_git
+Initialized empty Git repository in path/to/your/directory/tuto/.git/
+```
+
+<!-- Avec Github Desktop (GHD) : File > New Repository > Type name > Create repository -->
+
+With Rstudio : File > New Directory > R project > Type name + cocher "Create git repository"
+
+---
+# Initiate git
+
+## On peut aussi ajouter git à un projet existant
+
+In Git Bash terminal :
+
+```{bash}
+$ cd path/to/directory
+$ git init
+Initialized empty Git repository in path/to/your/directory/tuto/.git/
+```
+
+In R terminal :
+
+```{r}
+usethis::use_git()
+# Read the messages !
+```
+
+<!-- Avec Github Desktop (GHD) : File > New Repository > Type name > Create repository -->
+
+With Rstudio : Tools > Project Options … > Git/SVN. Under “Version control system”, choose “Git”. Confirm New Git Repository? Yes!
+
+
+???
+
+Globalement la même chose mais à partir d'un dossier existant.
+
+
+---
+# Adding files to git repository
+
+Once the file is saved (Ctrl+S), **git** will observe the change!
+
+Check this in the Git tab or in the command terminal:
+
+```{bash}
+$ git status
+```
+
+We can also see that in the Git tab which indicates a small *A* next to our file.
+
+???
+
+We can set Rstudio to show the git bash terminal! And that's handy
+
+
+<!-- --- -->
+<!-- # Premier commit -->
+
+<!-- On peut faire notre premier commit !!! -->
+<!-- Cela se passe en 2 étapes : ajouter les fichiers à l'index et faire le commit. -->
+
+<!-- .pull-left[ -->
+
+<!-- **Git Bash** -->
+
+<!-- ```{bash} -->
+<!-- $ git add Notes_Maxime.Rmd -->
+<!-- $ git commit -->
+<!-- ``` -->
+
+<!-- Cela va ouvrir un éditeur de texte ! (Vim par défaut). On peut écrire ce qu'on veut ici. -->
+<!-- ] -->
+
+<!-- .pull-right[ -->
+
+<!-- **R** -->
+
+<!-- ```{r} -->
+<!-- usethis::use_git( -->
+<!--   message = "Initial commit" -->
+<!--   ) -->
+<!-- ``` -->
+
+<!-- Ne permet pas d'être très précis. -->
+<!-- ] -->
+
+<!-- .pull-left[ -->
+<!-- **GHD** -->
+
+<!-- * Cliquer sur Changes -->
+
+<!-- * Cocher la case à gauche -->
+
+<!-- * Ecrire le commit -->
+<!-- ] -->
+
+<!-- .pull-right[ -->
+<!-- **Rstudio** -->
+
+<!-- * Cliquer sur Commit -->
+
+<!-- * Cocher la case *Staged* -->
+
+<!-- * Ecrire le commit -->
+<!-- ] -->
+
+
+<!-- ??? -->
+
+<!-- Tab permet l'auto completion des noms de fichiers ! -->
+
+<!-- --- -->
+<!-- # Répéter l'opération -->
+
+<!-- On peut maintenant modifier le fichier et recommencer : -->
+
+<!-- **Editer -> Sauvegarder -> Ajouter à l'index -> Commit** -->
+
+<!-- -- -->
+
+<!-- On peut vérifier l'état avec *Diff* et l'historique avec *log* -->
+
+<!-- .pull-left[ -->
+
+<!-- **Git Bash** -->
+
+<!-- ```{bash} -->
+<!-- $ git status -->
+<!-- $ git diff -->
+<!-- $ git log -->
+<!-- ``` -->
+<!-- ] -->
+
+<!-- .pull-right[ -->
+
+<!-- **R** -->
+
+<!-- Pour une fois que R ne fait pas tout... -->
+<!-- ] -->
+
+<!-- .pull-left[ -->
+<!-- **GHD** -->
+
+<!-- * Status -> Changes -->
+
+<!-- * log -> History -->
+<!-- ] -->
+
+<!-- .pull-right[ -->
+<!-- **Rstudio** -->
+
+<!-- * Status -> Diff -->
+
+<!-- * log -> icone Horloge -->
+<!-- ] -->
+
+<!-- On va faire quelques commits... Ajoutez des fichiers pour tester ! -->
+
+<!-- --- -->
+
+<!-- class: inverse, center, middle -->
+
+<!-- # Exercice : plusieurs fichiers locaux -->
+
+
+<!-- --- -->
+<!-- # Multiples fichiers ! -->
+
+<!-- ## Git peut inclure plusieurs fichiers dans un commit. -->
+
+<!-- A vous de tester les différents cas suivants : -->
+
+<!-- .pull-left[ -->
+
+<!-- * Ajouter des fichiers -->
+
+<!-- * Supprimer un fichier -->
+<!-- ] -->
+
+<!-- .pull-right[ -->
+
+<!-- * Renommer un fichier -->
+
+<!-- * Déplacer un fichier dans un dossier -->
+<!-- ] -->
+
+<!-- -- -->
+
+<!-- ## Cas spécial : ignore un fichier -->
+
+<!-- Il est parfois important de ne pas suivre un fichier avec Git. Pour cela on utilise le **.gitignore** -->
+
+<!-- .pull-left[ -->
+<!-- **Git Bash** -->
+<!-- ```{bash} -->
+<!-- $ vim .gitignore -->
+<!-- ``` -->
+<!-- ] -->
+
+<!-- .pull-right[ -->
+<!-- **Rstudio** -->
+
+<!-- * Nouveau fichier txt nommé -->
+<!-- ] -->
+
+<!-- ```{bash} -->
+<!-- ./*.csv -->
+<!-- ./*.Rproj -->
+<!-- ./*.html -->
+<!-- ``` -->
+
+
+<!-- --- -->
+
+<!-- class: inverse, center, middle -->
+
+<!-- # Exercice : Cloner un dépot distant -->
+
+<!-- --- -->
+<!-- # Config Github Token (PAT) ! -->
+
+<!-- Github ne fonctionne plus avec les mot de passe -> sécurité ! -->
+
+<!-- Créer un Token en allant sur le site [https://github.com/settings/tokens](https://github.com/settings/tokens) and -> “Generate token”. -->
+
+<!-- Ou alors dans R : -->
+
+<!-- ```{r, echo = TRUE} -->
+<!-- usethis::create_github_token() -->
+<!-- ``` -->
+
+
+<!-- Valider les cases "repo", "user" et "workflow". Penser a copier la clé ! -->
+<!-- Elle sera demandé à la prochaine utilisation de git en ayant besoin. -->
+
+<!-- On peut même la stocker avec R : -->
+
+<!-- ```{r, echot = TRUE} -->
+<!-- gitcreds::gitcreds_set() # commande interactive -->
+<!-- ``` -->
+
+
+<!-- --- -->
+<!-- # Cloner un dépôt github -->
+
+<!-- On va copier un dépot distant sur le disque : **https://github.com/Ifremer-IAM/Tutorat_git** -->
+
+
+<!-- .pull-left[ -->
+
+<!-- **Git Bash** -->
+
+<!-- ```{bash, echo = TRUE} -->
+<!-- $ git clone <URL> -->
+<!-- ``` -->
+<!-- ] -->
+
+<!-- .pull-right[ -->
+
+<!-- **R** -->
+
+<!-- Pour une fois que R ne fait pas tout... -->
+<!-- ] -->
+
+<!-- .pull-left[ -->
+<!-- **GHD** -->
+
+<!-- * File -> Clone repository -->
+
+<!-- * URL : copier l'url -->
+
+<!-- *NE PERMET PAS DE CLONER LES DEPOTS PRIVES* -->
+<!-- ] -->
+
+<!-- .pull-right[ -->
+<!-- **Rstudio** -->
+
+<!-- * File -> New Project -->
+
+<!-- * Version Control -> Git -->
+
+<!-- * URL : copier l'url -->
+<!-- ] -->
+
+<!-- -- -->
+
+<!-- **A vous de rajouter un document de votre choix avec un commit !** -->
+
+<!-- [Happy Git for the useR](https://happygitwithr.com/usage-intro.html) explique d'autre cas que celui-ci. -->
+
+<!-- ??? -->
+
+<!-- Prendre le temps que chacun pull and commit, car il va y avoir des conflits ! -->
+
+<!-- --- -->
+<!-- # Commit -> Pull -> Push -->
+<!-- ```{r diag, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE} -->
+<!-- \begin{tikzpicture}[block/.style={draw,fill=strange,minimum height=2.5em}, -->
+<!--                     font=\sffamily,>=stealth] -->
+
+<!-- \begin{scope}[start chain=A going below,node distance=1em, -->
+<!--               local bounding box=buffers] -->
+<!-- \node[block,minimum width=6em](remote){Remote github}; -->
+<!-- \node[right= 8em of remote, block,minimum width=6em](local){Fichiers}; -->
+<!-- \end{scope} -->
+
+<!-- \node[below= 6em of buffers,align=center, block,minimum width=6em](repo){Repository \\Git local}; -->
+
+<!-- %\draw[->, thick](remote) edge[bend left] node[midway, fill=white]{Pull} (local); -->
+<!-- \draw[->, thick](remote) edge[bend left] node[midway, fill=white]{Pull} (repo); -->
+<!-- %\draw[->, thick](remote) edge[dashed] node[midway, fill=white]{Fetch} (repo); -->
+<!-- \draw[->, thick](remote) edge node[midway, fill=white]{Clone} (local); -->
+<!-- \draw[->,thick](local) edge[bend left] node[midway, fill=white]{Add} (repo); -->
+<!-- \draw[->,thick](repo) edge[bend left] node[midway, fill=white]{Push} (remote); -->
+<!-- \draw[->,thick](repo) edge[loop right] node[midway, fill=white]{Commit} (repo); -->
+
+
+<!-- \end{tikzpicture} -->
+<!-- ``` -->
+
+<!-- --- -->
+<!-- # Conflits : DON'T PANIC -->
+
+<!-- Un conflit interviens quand plusieurs personnes modifient le même document au même endroit. -->
+
+<!-- La plupart du temps git gère les différences (**merge**) en solo. Il demande l'intervention d'un utilisateur en cas de choix impossible. -->
+
+<!-- .pull-left[ -->
+<!-- ```{bash, echo = TRUE} -->
+<!-- # Commit d39ac60 -->
+<!-- Coucou -->
+<!-- - Ceci est un fichier. -->
+<!-- + Ceci est un super fichier. -->
+<!-- Bisous -->
+<!-- ``` -->
+
+<!-- ```{bash, echo = TRUE} -->
+<!-- # Commit cbdac1e -->
+<!-- Coucou -->
+<!-- - Ceci est un fichier. -->
+<!-- + Ceci est un fichier nul. -->
+<!-- Bisous -->
+<!-- ``` -->
+<!-- ] -->
+
+<!-- -- -->
+
+<!-- .pull-right[ -->
+<!-- ```{bash, echo = TRUE} -->
+<!-- Coucou -->
+<!-- *<<<<<<< HEAD:file.R -->
+<!-- *+ Ceci est un super fichier. -->
+<!-- *======= -->
+<!-- *+ Ceci est un fichier nul. -->
+<!-- *>>>>>>> main:File.R -->
+<!-- Bisous -->
+<!-- ``` -->
+
+<!-- Il faut éditer à la main et commit. -->
+<!-- ] -->
+
+<!-- Important de garder le contact sur qui fait quoi ^^ -->
+
+<!-- --- -->
+<!-- # Alternative : branches -->
+
+<!-- Pouvoir tester des choses sur un historique parallèle pour s'assurer de ne rien casser. -->
+
+<!-- ```{r branches, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE} -->
+<!-- \begin{tikzpicture} -->
+<!-- \gitDAG[grow right sep = 2em]{ -->
+<!--     A -- B -- { -->
+<!--         C, -->
+<!--         {D -- E }, -->
+<!--     } -->
+<!-- }; -->
+<!-- % Remote branch -->
+<!-- \gitremotebranch -->
+<!-- [origmaster]    % node name -->
+<!-- {origin/master} % node text -->
+<!-- {above=of C}    % node placement -->
+<!-- {C}             % target -->
+<!-- % Branch -->
+<!-- \gitbranch -->
+<!-- {dev}        % node name and text -->
+<!-- {above=of E} % node placement -->
+<!-- {E}          % target -->
+<!-- % HEAD reference -->
+<!-- \gitHEAD -->
+<!-- {above=of dev} % node placement -->
+<!-- {dev}          % target -->
+<!-- \end{tikzpicture} -->
+<!-- ``` -->
+
+<!-- **HEAD** : situation actuelle des fichiers. -->
+<!-- *master* et *dev* : nom de branche -->
+
+<!-- --- -->
+
+<!-- class: inverse, center, middle -->
+
+<!-- # Exercice : Créer une branche -->
+
+
+<!-- --- -->
+<!-- # Créer une branche -->
+
+<!-- On va tous créer une branche avec notre nom : -->
+
+<!-- .pull-left[ -->
+
+<!-- **Git Bash** -->
+
+<!-- ```{bash} -->
+<!-- $ git checkout -b <NOM> -->
+<!-- ``` -->
+<!-- ] -->
+
+<!-- .pull-right[ -->
+
+<!-- **R** -->
+
+<!-- Pour une fois que R ne fait pas tout... -->
+<!-- ] -->
+
+<!-- .pull-left[ -->
+<!-- **GHD** -->
+
+<!-- * Branch -> New Branch -->
+<!-- ] -->
+
+<!-- .pull-right[ -->
+<!-- **Rstudio** -->
+
+<!-- * Onglet Git -> Symbole violet -->
+<!-- ] -->
+
+<!-- On peut tous travailler sur notre branche et ensuite un responsable peut les merge ou alors proposer un **pull-request** -->
+
+<!-- --- -->
+<!-- # Naviguer dans l'historique -->
+
+<!-- Une fois un certain nombre de commits définis, on peut revenir en arrière ou surtout changer de branches. -->
+
+<!-- ## Changement de branche -->
+
+<!-- .pull-left[ -->
+
+<!-- **Git Bash** -->
+
+<!-- Il suffit de donner le nom de la branche. On peut les lister comme suivant : -->
+
+<!-- ```{bash} -->
+<!-- $ git branch -->
+<!-- ``` -->
+
+<!-- On bascule sur la branche *main* -->
+
+<!-- ```{bash} -->
+<!-- $ git checkout main -->
+<!-- ``` -->
+<!-- ] -->
+
+<!-- .pull-right[ -->
+<!-- **Rstudio** -->
+
+<!-- * Onglet Git -> A côté de la création des branches on peut choisir laquelle on regarde -->
+<!-- ] -->
+
+<!-- On peut changer de branches si tout les fichiers sont **commit** ou ignorés. -->
+
+
+<!-- --- -->
+<!-- # Naviguer dans l'historique -->
+
+<!-- Une fois un certain nombre de commits définis, on peut revenir en arrière ou surtout changer de branches. -->
+
+<!-- ## Changement de commit -->
+
+<!-- .pull-left[ -->
+<!-- **Git Bash** -->
+
+<!-- Il suffit de donner le SHA du commit. On peut les lister comme suivant : -->
+
+<!-- ```{bash} -->
+<!-- $ git log --oneline -->
+<!-- $ git checkout <SHA> -->
+<!-- ``` -->
+<!-- ] -->
+
+<!-- .pull-right[ -->
+<!-- **Rstudio** -->
+
+<!-- Je n'ai pas encore fait ça avec Rstudio, si jamais quelqu'un trouve... -->
+<!-- ] -->
+
+<!-- On peut changer de commits si tout les fichiers sont **commit** ou ignorés. -->
+
+<!-- Une manière également d'observer le passé est de passer par **Github** qui permet de visualiser facilement l'historiqure d'un dépôt : voir l'article de [Happy Git for Ruser](https://happygitwithr.com/time-travel-see-past.html). -->
+
+<!-- --- -->
+<!-- # Explication -->
+
+<!-- **git checkout** permet de déplacer **HEAD**, qui correspond à ce qui est présenté sur votre ordinateur. -->
+
+<!-- .pull-left[ -->
+<!-- ```{r head_act, engine='tikz', fig.ext = 'png', fig.width = 2, engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE} -->
+<!-- \begin{tikzpicture} -->
+<!-- \gitDAG[grow right sep = 2em]{ -->
+<!--     A -- B -- { -->
+<!--         C, -->
+<!--         {D -- E }, -->
+<!--     } -->
+<!-- }; -->
+<!-- % Branch -->
+<!-- \gitbranch -->
+<!-- {dev}      % node name and text -->
+<!-- {above=of E} % node placement -->
+<!-- {E}          % target -->
+<!-- \gitbranch -->
+<!-- {main}      % node name and text -->
+<!-- {above=of C} % node placement -->
+<!-- {C}          % target -->
+<!-- % HEAD reference -->
+<!-- \gitHEAD -->
+<!-- {above= of B} % node placement -->
+<!-- {B}          % target -->
+<!-- % \SAandWT -->
+<!-- \node[below= of A](git){\small \$ git checkout B}; -->
+<!-- \end{tikzpicture} -->
+<!-- ``` -->
+<!-- ] -->
+
+<!-- .pull-right[ -->
+<!-- ```{r head_branch, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE} -->
+
+<!-- \begin{tikzpicture} -->
+<!-- \gitDAG[grow right sep = 2em]{ -->
+<!--     A -- B -- { -->
+<!--         C, -->
+<!--         {D -- E }, -->
+<!--     } -->
+<!-- }; -->
+<!-- % Branch -->
+<!-- \gitbranch -->
+<!-- {dev}      % node name and text -->
+<!-- {above=of E} % node placement -->
+<!-- {E}          % target -->
+<!-- \gitbranch -->
+<!-- {main}      % node name and text -->
+<!-- {above=of C} % node placement -->
+<!-- {C}          % target -->
+<!-- % HEAD reference -->
+<!-- \gitHEAD -->
+<!-- {above=of dev} % node placement -->
+<!-- {dev}          % target -->
+<!-- % \SAandWT -->
+<!-- \node[below= of A](git){\small \$ git checkout dev}; -->
+<!-- \end{tikzpicture} -->
+<!-- ``` -->
+<!-- ] -->
+
+<!-- -- -->
+
+<!-- .pull-left[ -->
+<!-- Revenir en arrière permet de voir l'état mais on peut également commencer une nouvelles branche re-commit depuis un commit passé. -->
+<!-- Exemple : -->
+
+<!-- ```{bash} -->
+<!-- $ git checkout -b test A -->
+<!-- $ git add ... ; git commit -m 'F' -->
+<!-- ``` -->
+
+<!-- ] -->
+
+<!-- .pull-right[ -->
+<!-- ```{r head_past, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE} -->
+<!-- \begin{tikzpicture} -->
+<!-- \gitDAG[grow right sep = 2em]{ -->
+<!--     A -- {B -- { -->
+<!--         C, -->
+<!--         {D -- E }, -->
+<!--     }, -->
+<!--         F -->
+<!--     } -->
+<!-- }; -->
+<!-- % Branch -->
+<!-- \gitbranch -->
+<!-- {dev}      % node name and text -->
+<!-- {right=of E} % node placement -->
+<!-- {E}          % target -->
+<!-- \gitbranch -->
+<!-- {main}      % node name and text -->
+<!-- {right=of C} % node placement -->
+<!-- {C}          % target -->
+<!-- \gitbranch -->
+<!-- {test}      % node name and text -->
+<!-- {right=of F} % node placement -->
+<!-- {F}          % target -->
+<!-- % HEAD reference -->
+<!-- \gitHEAD -->
+<!-- {above=of F} % node placement -->
+<!-- {F}          % target -->
+<!-- % \SAandWT -->
+<!-- \end{tikzpicture} -->
+<!-- ``` -->
+<!-- ] -->
+
+<!-- --- -->
+<!-- # Merging branches -->
+
+<!-- Une fois que le code fonctionne on peut faire un **merge** des branches. -->
+
+<!-- .pull-left[ -->
+<!-- ```{r branch_pre, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE} -->
+<!-- \begin{tikzpicture} -->
+<!-- \gitDAG[grow right sep = 2em]{ -->
+<!--     A -- B -- { -->
+<!--         C, -->
+<!--         {D -- E }, -->
+<!--     } -->
+<!-- }; -->
+<!-- % Branch -->
+<!-- \gitbranch -->
+<!-- {dev}        % node name and text -->
+<!-- {right=of E} % node placement -->
+<!-- {E}          % target -->
+<!-- \gitbranch -->
+<!-- {main}        % node name and text -->
+<!-- {right=of C} % node placement -->
+<!-- {C}          % target -->
+<!-- % HEAD reference -->
+<!-- \gitHEAD -->
+<!-- {below=of E} % node placement -->
+<!-- {E}          % target -->
+<!-- % \SAandWT -->
+<!-- \end{tikzpicture} -->
+<!-- ``` -->
+<!-- ] -->
+
+<!-- .pull-right[ -->
+<!-- ```{r branch_premerge, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE} -->
+<!-- \begin{tikzpicture} -->
+<!-- \gitDAG[grow right sep = 2em]{ -->
+<!--     A -- B -- { -->
+<!--         C, -->
+<!--         {D -- E }, -->
+<!--     } -->
+<!-- }; -->
+<!-- % Branch -->
+<!-- \gitbranch -->
+<!-- {dev}        % node name and text -->
+<!-- {right=of E} % node placement -->
+<!-- {E}          % target -->
+<!-- \gitbranch -->
+<!-- {main}        % node name and text -->
+<!-- {right=of C} % node placement -->
+<!-- {C}          % target -->
+<!-- % HEAD reference -->
+<!-- \gitHEAD -->
+<!-- {right=of main} % node placement -->
+<!-- {main}          % target -->
+<!-- % \SAandWT -->
+<!-- \end{tikzpicture} -->
+<!-- ``` -->
+<!-- ] -->
+
+<!-- .pull-left[ -->
+<!-- Un merge se fait toujours depuis la branche cible (*main*) en incorporant la branche externe (ici *dev*) -->
+
+<!-- ```{bash} -->
+<!-- $ git checkout main -->
+<!-- $ git merge dev -->
+<!-- ``` -->
+<!-- ] -->
+
+<!-- .pull-right[ -->
+<!-- ```{r branch merge, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE} -->
+<!-- \begin{tikzpicture} -->
+<!-- \gitDAG[grow right sep = 2em]{ -->
+<!--     A -- B -- { -->
+<!--         C, -->
+<!--         {D -- E }, -->
+<!--     } -- Merge -->
+<!-- }; -->
+<!-- % Branch -->
+<!-- \gitbranch -->
+<!-- {main}        % node name and text -->
+<!-- {right=of Merge} % node placement -->
+<!-- {Merge}          % target -->
+<!-- \gitbranch -->
+<!-- {dev}        % node name and text -->
+<!-- {below=of main} % node placement -->
+<!-- {Merge}          % target -->
+<!-- % HEAD reference -->
+<!-- \gitHEAD -->
+<!-- {above=of Merge} % node placement -->
+<!-- {Merge}          % target -->
+<!-- % \SAandWT -->
+<!-- \end{tikzpicture} -->
+<!-- ``` -->
+<!-- ] -->
+
+<!-- Dans le cas où chaque branche a des commits, un nouveau commit *merge* va être créé avec l'opportunité de régler les conflits. Ce commit appartient aux deux branches *main* et *dev*. -->
+
