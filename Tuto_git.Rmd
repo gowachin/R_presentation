@@ -204,6 +204,37 @@ On the usefulness of putting a comment that makes sense.
 
 
 ---
+# Repository 
+
+A repository is the **folder** in which git is used and the sum of all files tracked.
+
+All git information is in **.git** and it's better to not touch it.
+
+We just need to say to git : start tracking this file now with the keyword **ADD**
+
+```{r pull_push_diag, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE}
+\begin{tikzpicture}[block/.style={draw,fill=strange,minimum height=2.5em},
+    font=\sffamily,>=stealth]
+
+    \begin{scope}[start chain=A going below,node distance=1em,
+                  local bounding box=buffers]
+        % \node[block,minimum width=6em](remote){Remote github};
+        \node[block,minimum width=6em](local){Fichiers};
+    \end{scope} 
+
+    \node[right= 6em of buffers,align=center, block,minimum width=6em](repo){Repository \\Git local};
+
+    \draw[->,thick](local) edge[bend left] node[midway, fill=white]{Add} (repo);
+    \draw[->,thick](repo) edge[loop right] node[midway, fill=white]{Commit} (repo);
+    
+\end{tikzpicture}
+```
+
+### .gitignore
+
+File to list all sensible files that we **don't** want to save. Like *data/* or temporary files *rmd.log*, *.Rhistory* etc...
+
+---
 
 ```{r child='github.Rmd', eval=TRUE}
 ```

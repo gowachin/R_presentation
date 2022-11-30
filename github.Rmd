@@ -365,3 +365,82 @@ It is possible to copy a repository on several hosts (mirroring) !
 
 \end{tikzpicture}
 ```
+
+
+---
+# Conflits : DON'T PANIC
+
+A conflict occurs when several people modify the same document in the same place.
+
+Most of the time git handles the differences (**merge**) alone. It requires the intervention of a user in case of impossible choice.
+
+.pull-left[
+```{bash, echo = TRUE}
+# Commit d39ac60
+x <- "Hi"
+- x <- paste(x,"this is a file")
++ x <- paste(x,"this is a great file")
+cat(x)
+```
+
+```{bash, echo = TRUE}
+# Commit cbdac1e
+x <- "Hi"
+- x <- paste(x,"this is a file").
++ x <- paste(x,"this is a boring file")
+cat(x)
+```
+]
+
+--
+
+.pull-right[
+```{bash, echo = TRUE}
+x <- "Hi"
+*<<<<<<< HEAD:file.R
+*+ x <- paste(x,"this is a great file")
+*=======
+*+ x <- paste(x,"this is a boring file")
+*>>>>>>> main:File.R
+cat(x)
+```
+
+We need to edit by hand (solve the conflict) and commit.
+]
+
+It's important here to have someone in charge of the main repository.
+
+---
+# Alternative : branches
+
+Be able to test things on a parallel history to make sure you don't break anything.
+
+```{r branches, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE}
+\begin{tikzpicture}
+\gitDAG[grow right sep = 2em]{
+    A -- B -- {
+        C,
+        {D -- E },
+    }
+};
+% Remote branch
+\gitremotebranch
+[origmaster]    % node name
+{origin/master} % node text
+{above=of C}    % node placement
+{C}             % target
+% Branch
+\gitbranch
+{dev}        % node name and text
+{above=of E} % node placement
+{E}          % target
+% HEAD reference
+\gitHEAD
+{above=of dev} % node placement
+{dev}          % target
+\end{tikzpicture}
+```
+
+**HEAD** : current status of the files.
+*master* et *dev* : branch names
+

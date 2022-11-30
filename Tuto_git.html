@@ -23,7 +23,7 @@ class: center, middle, inverse, title-slide
 ### LESSEM | INRAE
 ]
 .date[
-### 2022-12-01 (updated: 2022-11-29)
+### 2022-12-01 (updated: 2022-11-30)
 ]
 
 ---
@@ -96,7 +96,7 @@ Comparison between a "classic" history and a history with git. The file name is 
 ---
 # Keeping a history with Git
 
-## Qu'est-ce qu'un commit ?
+## What is a commit ?
 
 We have seen that it is a snapshot, but it contains more meta-data!
 
@@ -172,301 +172,194 @@ xkcd comics, [CC BY-NC 2.5 license](https://xkcd.com/license.html)
 
 On the usefulness of putting a comment that makes sense.
 
-&lt;!-- --- --&gt;
-&lt;!-- exclude:true --&gt;
-&lt;!-- # Garder un historique avec Git --&gt;
 
-&lt;!-- ## Git aide à comprendre l'historique. --&gt;
+---
+# Repository 
 
-&lt;!-- Principe de **snapshot**, nommés **commit** dans git. --&gt;
+A repository is the **folder** in which git is used and the sum of all files tracked.
 
-&lt;!-- ```{r, out.width="100%", echo = FALSE, eval=TRUE} --&gt;
-&lt;!-- knitr::include_graphics("Tuto_git_files/figure-html/files.png") --&gt;
-&lt;!-- ``` --&gt;
+All git information is in **.git** and it's better to not touch it.
 
-&lt;!-- ```{r, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE} --&gt;
+We just need to say to git : start tracking this file now with the keyword **ADD**
 
-&lt;!-- \begin{tikzpicture} --&gt;
-&lt;!-- \gitDAG[grow right sep = 2em]{ --&gt;
-&lt;!--   file -- file1 -- {  --&gt;
-&lt;!--     file2, --&gt;
-&lt;!--     filefinal -- fileFINAL, --&gt;
-&lt;!--   } --&gt;
-&lt;!-- }; --&gt;
-&lt;!-- \end{tikzpicture} --&gt;
-&lt;!-- ``` --&gt;
+&lt;img src="Tuto_git_files/figure-html/pull_push_diag-1.png" style="display: block; margin: auto;" /&gt;
 
-&lt;!-- --- --&gt;
-&lt;!-- # Slide technique --&gt;
+### .gitignore
 
-&lt;!-- Ces slides présentent l'utilisation de Git avec Rstudio, Github Desktop, R et bien sur Git Bash qui est un terminal de commande. --&gt;
+File to list all sensible files that we **don't** want to save. Like *data/* or temporary files *rmd.log*, *.Rhistory* etc...
 
-&lt;!-- Bien que tout ces outils permettent de faire des dépots Git et de commit, plus on va avancer, plus il deviendra pertinent d'utiliser le terminal. --&gt;
+---
 
-&lt;!-- Il est donc préférable de lire cette partie de [Happy git for Ruser](https://happygitwithr.com/shell.html) afin d'appréhender cet outils qui offre toute la puissance de git. --&gt;
 
-&lt;!-- Afin de ne pas paniquer, une [cheatsheet](https://services.github.com/on-demand/downloads/github-git-cheat-sheet.pdf) est également disponible ici pour comprendre la plupart des options. --&gt;
 
 
-&lt;!-- --- --&gt;
 
-&lt;!-- class: inverse, center, middle --&gt;
 
-&lt;!-- # Exercice : un fichier local --&gt;
 
-&lt;!-- --- --&gt;
-&lt;!-- # Config git account ! --&gt;
 
-&lt;!-- Dans le terminal de commande Git Bash : --&gt;
 
-&lt;!-- ```{bash} --&gt;
-&lt;!-- $ git config --global user.name 'Maxime Jaunatre' --&gt;
-&lt;!-- $ git config --global user.email 'gowachin@gmail.com' --&gt;
-&lt;!-- $ git config --global --list --&gt;
-&lt;!-- ``` --&gt;
 
-&lt;!-- Cela remplace votre nom et mail associé à votre compte github. --&gt;
 
-&lt;!-- On peut aussi utiliser le package usethis dans la console R : --&gt;
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- ## install if needed (do this exactly once): --&gt;
-&lt;!-- ## install.packages("usethis") --&gt;
-&lt;!-- library(usethis) --&gt;
-&lt;!-- use_git_config(user.name = "Maxime Jaunatre",  --&gt;
-&lt;!--                user.email = "gowachin@gmail.com") --&gt;
-&lt;!-- ``` --&gt;
 
-&lt;!-- --- --&gt;
-&lt;!-- # Initier git --&gt;
 
-&lt;!-- ## Créer un nouveau dossier (projet Rstudio) --&gt;
 
-&lt;!-- Avec le terminal de commande Git Bash : --&gt;
 
-&lt;!-- ```{bash} --&gt;
-&lt;!-- $ cd  --&gt;
-&lt;!-- $ git init tuto_git --&gt;
-&lt;!-- Initialized empty Git repository in path/to/your/directory/tuto/.git/ --&gt;
 
-&lt;!-- ``` --&gt;
 
-&lt;!-- Avec Github Desktop (GHD) : File &gt; New Repository &gt; Type name &gt; Create repository --&gt;
 
-&lt;!-- Avec Rstudio : File &gt; New Directory &gt; R project &gt; Type name + cocher "Create git repository" --&gt;
 
-&lt;!-- --- --&gt;
-&lt;!-- # Initier git --&gt;
 
-&lt;!-- ## On peut aussi ajouter git à un projet existant --&gt;
 
-&lt;!-- Avec le terminal de commande Git Bash : --&gt;
 
-&lt;!-- ```{bash} --&gt;
-&lt;!-- $ cd path/to/directory --&gt;
-&lt;!-- $ git init --&gt;
-&lt;!-- Initialized empty Git repository in path/to/your/directory/tuto/.git/ --&gt;
-&lt;!-- ``` --&gt;
 
-&lt;!-- Avec une commande R :  --&gt;
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- usethis::use_git() --&gt;
-&lt;!-- # Lire ce qui se dit dans la console. --&gt;
-&lt;!-- ``` --&gt;
+exclude: true
 
-&lt;!-- Avec Github Desktop (GHD) : File &gt; New Repository &gt; Type name &gt; Create repository --&gt;
+class: inverse, center, middle
 
-&lt;!-- Avec Rstudio : Tools &gt; Project Options … &gt; Git/SVN. Under “Version control system”, choisir “Git”. Confirm New Git Repository? Oui! --&gt;
+# Introduction
 
+---
+exclude: true
 
-&lt;!-- ??? --&gt;
+# Utilisation de Git dans un travail avec R
 
-&lt;!-- Globalement la même chose mais à partir d'un dossier existant. --&gt;
+**Résumé :** 
 
+---
 
-&lt;!-- --- --&gt;
-&lt;!-- # Créer un fichier et l'ajouter à Git --&gt;
+class: inverse, center, middle
 
-&lt;!-- On va créer un fichier (.Rmd). Je propose que ce soit votre fichier de notes pour la session.  --&gt;
+# Remote repository : Github
 
-&lt;!-- On va le nommer `Notes_Maxime.Rmd`. Je vous laisse noter quelques mots dedans histoire d'avoir un fichier remplis. --&gt;
 
-&lt;!-- Une fois le fichier sauvegardé (Ctrl+S), **git** va observer la modification ! --&gt;
+---
+# Working with others
 
-&lt;!-- Vérifier cela dans l'onglet Git ou alors dans le terminal de commande : --&gt;
+&lt;img src="Tuto_git_files/figure-html/bordel-1.png" style="display: block; margin: auto;" /&gt;
 
-&lt;!-- ```{bash} --&gt;
-&lt;!-- $ git status --&gt;
-&lt;!-- ``` --&gt;
+It becomes complex very quickly... 12 versions of a single file?
 
-&lt;!-- On peut aussi voir ça dans l'onglet Git qui indique une petit *A* à côté de notre fichier. --&gt;
+---
+# Using a remote repository
 
-&lt;!-- ??? --&gt;
+Git is installed on your computer, and a repository in your folder.
 
-&lt;!-- On peut régler Rstudio pour qu'il montre le terminal git bash ! Et ça c'est pratique --&gt;
+Principle of **Cloud** : installation of Git on a server and copy of the repository.
 
+Several hosters exist:
 
-&lt;!-- --- --&gt;
-&lt;!-- # Premier commit --&gt;
+**Github** (Microsoft) &lt;svg viewBox="0 0 496 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"&gt;&lt;/path&gt;&lt;/svg&gt;   
+**Bitbucket** &lt;svg viewBox="0 0 512 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M22.2 32A16 16 0 0 0 6 47.8a26.35 26.35 0 0 0 .2 2.8l67.9 412.1a21.77 21.77 0 0 0 21.3 18.2h325.7a16 16 0 0 0 16-13.4L505 50.7a16 16 0 0 0-13.2-18.3 24.58 24.58 0 0 0-2.8-.2L22.2 32zm285.9 297.8h-104l-28.1-147h157.3l-25.2 147z"&gt;&lt;/path&gt;&lt;/svg&gt;   
+**Gitlab** &lt;svg viewBox="0 0 512 512" style="height:1em;position:relative;display:inline-block;top:.1em;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M105.2 24.9c-3.1-8.9-15.7-8.9-18.9 0L29.8 199.7h132c-.1 0-56.6-174.8-56.6-174.8zM.9 287.7c-2.6 8 .3 16.9 7.1 22l247.9 184-226.2-294zm160.8-88l94.3 294 94.3-294zm349.4 88l-28.8-88-226.3 294 247.9-184c6.9-5.1 9.7-14 7.2-22zM425.7 24.9c-3.1-8.9-15.7-8.9-18.9 0l-56.6 174.8h132z"&gt;&lt;/path&gt;&lt;/svg&gt;
 
-&lt;!-- On peut faire notre premier commit !!! --&gt;
-&lt;!-- Cela se passe en 2 étapes : ajouter les fichiers à l'index et faire le commit. --&gt;
+And the list is long: [https://git.wiki.kernel.org/index.php/GitHosting](https://git.wiki.kernel.org/index.php/GitHosting)
 
-&lt;!-- .pull-left[ --&gt;
+It is possible to copy a repository on several hosts (mirroring) !
 
-&lt;!-- **Git Bash** --&gt;
+*You can even have a remote on the same computer, or on an external disk ! For example another disk...but the reality is a bit more complex.*
 
-&lt;!-- ```{bash} --&gt;
-&lt;!-- $ git add Notes_Maxime.Rmd --&gt;
-&lt;!-- $ git commit --&gt;
-&lt;!-- ``` --&gt;
+---
+# Gorgious's repository
 
-&lt;!-- Cela va ouvrir un éditeur de texte ! (Vim par défaut). On peut écrire ce qu'on veut ici. --&gt;
-&lt;!-- ] --&gt;
+**Repo** : github.com/Gorgious/name
 
-&lt;!-- .pull-right[ --&gt;
+&lt;img src="Tuto_git_files/figure-html/github-1.png" style="display: block; margin: auto;" /&gt;
 
-&lt;!-- **R** --&gt;
+---
+# Clone a remote
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- usethis::use_git( --&gt;
-&lt;!--   message = "Initial commit" --&gt;
-&lt;!--   ) --&gt;
-&lt;!-- ``` --&gt;
+&lt;img src="Tuto_git_files/figure-html/clone-1.png" style="display: block; margin: auto;" /&gt;
 
-&lt;!-- Ne permet pas d'être très précis. --&gt;
-&lt;!-- ] --&gt;
+---
+# Local commit
 
-&lt;!-- .pull-left[ --&gt;
-&lt;!-- **GHD** --&gt;
+&lt;img src="Tuto_git_files/figure-html/local-1.png" style="display: block; margin: auto;" /&gt;
 
-&lt;!-- * Cliquer sur Changes --&gt;
+---
+# Push
 
-&lt;!-- * Cocher la case à gauche --&gt;
+&lt;img src="Tuto_git_files/figure-html/push-1.png" style="display: block; margin: auto;" /&gt;
 
-&lt;!-- * Ecrire le commit --&gt;
-&lt;!-- ] --&gt;
+---
+# Late
 
-&lt;!-- .pull-right[ --&gt;
-&lt;!-- **Rstudio** --&gt;
+&lt;img src="Tuto_git_files/figure-html/retard-1.png" style="display: block; margin: auto;" /&gt;
 
-&lt;!-- * Cliquer sur Commit --&gt;
+---
+# Pull
 
-&lt;!-- * Cocher la case *Staged* --&gt;
+&lt;img src="Tuto_git_files/figure-html/pull-1.png" style="display: block; margin: auto;" /&gt;
 
-&lt;!-- * Ecrire le commit --&gt;
-&lt;!-- ] --&gt;
 
+---
+# COMMIT -&gt; PULL -&gt; PUSH
 
-&lt;!-- ??? --&gt;
+&lt;img src="Tuto_git_files/figure-html/pull_push_diag-10-1.png" style="display: block; margin: auto;" /&gt;
 
-&lt;!-- Tab permet l'auto completion des noms de fichiers ! --&gt;
 
-&lt;!-- --- --&gt;
-&lt;!-- # Répéter l'opération --&gt;
+---
+# Conflits : DON'T PANIC
 
-&lt;!-- On peut maintenant modifier le fichier et recommencer : --&gt;
+A conflict occurs when several people modify the same document in the same place.
 
-&lt;!-- **Editer -&gt; Sauvegarder -&gt; Ajouter à l'index -&gt; Commit** --&gt;
+Most of the time git handles the differences (**merge**) alone. It requires the intervention of a user in case of impossible choice.
 
-&lt;!-- -- --&gt;
+.pull-left[
 
-&lt;!-- On peut vérifier l'état avec *Diff* et l'historique avec *log* --&gt;
+```bash
+# Commit d39ac60
+x &lt;- "Hi"
+- x &lt;- paste(x,"this is a file")
++ x &lt;- paste(x,"this is a great file")
+cat(x)
+```
 
-&lt;!-- .pull-left[ --&gt;
 
-&lt;!-- **Git Bash** --&gt;
+```bash
+# Commit cbdac1e
+x &lt;- "Hi"
+- x &lt;- paste(x,"this is a file").
++ x &lt;- paste(x,"this is a boring file")
+cat(x)
+```
+]
 
-&lt;!-- ```{bash} --&gt;
-&lt;!-- $ git status --&gt;
-&lt;!-- $ git diff --&gt;
-&lt;!-- $ git log --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
+--
 
-&lt;!-- .pull-right[ --&gt;
+.pull-right[
 
-&lt;!-- **R** --&gt;
+```bash
+x &lt;- "Hi"
+*&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD:file.R
+*+ x &lt;- paste(x,"this is a great file")
+*=======
+*+ x &lt;- paste(x,"this is a boring file")
+*&gt;&gt;&gt;&gt;&gt;&gt;&gt; main:File.R
+cat(x)
+```
 
-&lt;!-- Pour une fois que R ne fait pas tout... --&gt;
-&lt;!-- ] --&gt;
+We need to edit by hand (solve the conflict) and commit.
+]
 
-&lt;!-- .pull-left[ --&gt;
-&lt;!-- **GHD** --&gt;
+It's important here to have someone in charge of the main repository.
 
-&lt;!-- * Status -&gt; Changes --&gt;
+---
+# Alternative : branches
 
-&lt;!-- * log -&gt; History --&gt;
-&lt;!-- ] --&gt;
+Be able to test things on a parallel history to make sure you don't break anything.
 
-&lt;!-- .pull-right[ --&gt;
-&lt;!-- **Rstudio** --&gt;
+&lt;img src="Tuto_git_files/figure-html/branches-1.png" style="display: block; margin: auto;" /&gt;
 
-&lt;!-- * Status -&gt; Diff --&gt;
+**HEAD** : current status of the files.
+*master* et *dev* : branch names
 
-&lt;!-- * log -&gt; icone Horloge --&gt;
-&lt;!-- ] --&gt;
-
-&lt;!-- On va faire quelques commits... Ajoutez des fichiers pour tester ! --&gt;
-
-&lt;!-- --- --&gt;
-
-&lt;!-- class: inverse, center, middle --&gt;
-
-&lt;!-- # Exercice : plusieurs fichiers locaux --&gt;
-
-
-&lt;!-- --- --&gt;
-&lt;!-- # Multiples fichiers ! --&gt;
-
-&lt;!-- ## Git peut inclure plusieurs fichiers dans un commit. --&gt;
-
-&lt;!-- A vous de tester les différents cas suivants : --&gt;
-
-&lt;!-- .pull-left[ --&gt;
-
-&lt;!-- * Ajouter des fichiers --&gt;
-
-&lt;!-- * Supprimer un fichier --&gt;
-&lt;!-- ] --&gt;
-
-&lt;!-- .pull-right[ --&gt;
-
-&lt;!-- * Renommer un fichier --&gt;
-
-&lt;!-- * Déplacer un fichier dans un dossier --&gt;
-&lt;!-- ] --&gt;
-
-&lt;!-- -- --&gt;
-
-&lt;!-- ## Cas spécial : ignore un fichier --&gt;
-
-&lt;!-- Il est parfois important de ne pas suivre un fichier avec Git. Pour cela on utilise le **.gitignore** --&gt;
-
-&lt;!-- .pull-left[ --&gt;
-&lt;!-- **Git Bash** --&gt;
-&lt;!-- ```{bash} --&gt;
-&lt;!-- $ vim .gitignore --&gt;
-&lt;!-- ``` --&gt;
-&lt;!-- ] --&gt;
-
-&lt;!-- .pull-right[ --&gt;
-&lt;!-- **Rstudio** --&gt;
-
-&lt;!-- * Nouveau fichier txt nommé --&gt;
-&lt;!-- ] --&gt;
-
-&lt;!-- ```{bash} --&gt;
-&lt;!-- ./*.csv --&gt;
-&lt;!-- ./*.Rproj --&gt;
-&lt;!-- ./*.html --&gt;
-&lt;!-- ``` --&gt;
 
 
 &lt;!-- --- --&gt;
 
-&lt;!-- ```{r child='github.Rmd', eval=TRUE} --&gt;
+&lt;!-- ```{r child='git_exo.Rmd', eval=TRUE} --&gt;
 &lt;!-- ``` --&gt;
 
 
