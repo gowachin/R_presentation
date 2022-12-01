@@ -23,7 +23,7 @@ class: center, middle, inverse, title-slide
 ### LESSEM | INRAE
 ]
 .date[
-### 2022-12-01 (updated: 2022-11-30)
+### 2022-12-01 (updated: 2022-12-01)
 ]
 
 ---
@@ -296,7 +296,7 @@ It is possible to copy a repository on several hosts (mirroring) !
 ---
 # COMMIT -&gt; PULL -&gt; PUSH
 
-&lt;img src="Tuto_git_files/figure-html/pull_push_diag-10-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="Tuto_git_files/figure-html/pull_push_diag-11-1.png" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -357,10 +357,493 @@ Be able to test things on a parallel history to make sure you don't break anythi
 
 
 
-&lt;!-- --- --&gt;
+---
 
-&lt;!-- ```{r child='git_exo.Rmd', eval=TRUE} --&gt;
-&lt;!-- ``` --&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+exclude: true
+
+class: inverse, center, middle
+
+# Introduction
+
+---
+class: inverse, center, middle
+
+# Practice
+
+&lt;!-- Ces slides présentent l'utilisation de Git avec Rstudio, Github Desktop, R et bien sur Git Bash qui est un terminal de commande. --&gt;
+
+&lt;!-- Bien que tout ces outils permettent de faire des dépots Git et de commit, plus on va avancer, plus il deviendra pertinent d'utiliser le terminal. --&gt;
+
+&lt;!-- Il est donc préférable de lire cette partie de [Happy git for Ruser](https://happygitwithr.com/shell.html) afin d'appréhender cet outils qui offre toute la puissance de git. --&gt;
+
+&lt;!-- Afin de ne pas paniquer, une [cheatsheet](https://services.github.com/on-demand/downloads/github-git-cheat-sheet.pdf) est également disponible ici pour comprendre la plupart des options. --&gt;
+
+
+---
+# Config git account !
+
+In Git Bash terminal :
+
+
+```bash
+$ git config --global user.name 'Maxime Jaunatre'
+$ git config --global user.email 'myveryownmail@mail.com'
+$ git config --global --list
+```
+
+Or using the `{usethis}` package in R terminal :
+
+
+```r
+## install if needed (do this exactly once):
+## install.packages("usethis")
+library(usethis)
+use_git_config(user.name = "Maxime Jaunatre",
+               user.email = "myveryownmail@mail.com")
+```
+
+This allow to sign the commits
+
+---
+# Initiate git
+
+## Create a new folder (Rstudio project)
+
+In Git Bash terminal :
+
+
+```bash
+$ cd
+$ git init tuto_git
+Initialized empty Git repository in path/to/your/directory/tuto/.git/
+```
+
+&lt;!-- Avec Github Desktop (GHD) : File &gt; New Repository &gt; Type name &gt; Create repository --&gt;
+
+With Rstudio : File &gt; New Directory &gt; R project &gt; Type name + check "Create git repository"
+
+---
+# Initiate git
+
+## You can also add git to an existing project
+
+In Git Bash terminal :
+
+
+```bash
+$ cd path/to/directory
+$ git init
+Initialized empty Git repository in path/to/your/directory/tuto/.git/
+```
+
+In R terminal :
+
+
+```r
+usethis::use_git()
+# Read the messages !
+```
+
+&lt;!-- Avec Github Desktop (GHD) : File &gt; New Repository &gt; Type name &gt; Create repository --&gt;
+
+With Rstudio : Tools &gt; Project Options … &gt; Git/SVN. Under “Version control system”, choose “Git”. Confirm New Git Repository? Yes!
+
+
+???
+
+Basically the same thing but from an existing directory.
+
+
+---
+# Adding files to git repository
+
+Once the file is saved (Ctrl+S), **git** will observe the change!
+
+Check this in the Git tab or in the command terminal:
+
+
+```bash
+$ git status
+```
+
+We can also see that in the Git tab which indicates a small *A* next to our file.
+
+???
+
+We can set Rstudio to show the git bash terminal! And that's handy
+
+
+---
+# First commit
+
+We can make our first commit!!!
+It happens in 2 steps: add the files to the index and make the commit.
+
+.pull-left[
+
+**Git Bash**
+
+
+```bash
+$ git add Notes_Maxime.Rmd
+$ git commit
+```
+
+This will open a text editor! (We can write whatever we want here.
+]
+
+.pull-right[
+
+**Rstudio**
+
+* Click on Commit
+
+* Check the *Staged* box
+
+* Write the commit
+]
+
+.pull-left[
+
+**R**
+
+```r
+usethis::use_git(
+  message = "Initial commit"
+  )
+# or
+git2r::add(repo, "test.txt")
+git2::commit(repo, "Commit message")
+```
+]
+
+.pull-right[
+&lt;img src="CSU_RepRo_files/figure-html/rstudio_commit.png" width="85%" style="display: block; margin: auto;" /&gt;
+]
+
+
+???
+
+Tab allows auto completion of file names !
+
+---
+# Repeat the operation
+
+Now we can modify the file and start again:
+
+**Edit -&gt; Save -&gt; Add to index -&gt; Commit**
+
+--
+
+You can check the status with *Diff* and the history with *log*.
+
+.pull-left[
+
+**Git Bash**
+
+
+```bash
+$ git status
+$ git diff
+$ git log
+```
+]
+
+.pull-right[
+**Rstudio**
+
+* Status -&gt; Diff
+
+* log -&gt; Clock icon
+]
+
+.pull-left[
+
+**R**
+
+```r
+git2r::status()
+```
+]
+
+.pull-right[
+&lt;img src="CSU_RepRo_files/figure-html/git_stage.png" width="85%" style="display: block; margin: auto;" /&gt;
+]
+
+Let's make some commits... Add some files to test!
+
+
+---
+
+class: inverse, center, middle
+
+# Clone remote repository from github/gitlab
+
+---
+# Config Github Token (PAT) !
+
+Github does not work anymore with passwords -&gt; security !
+
+Create a token by going to [https://github.com/settings/tokens](https://github.com/settings/tokens) and -&gt; "Generate token".
+
+Or in R :
+
+
+```r
+usethis::create_github_token()
+```
+
+
+Validate the boxes "repo", "user" and "workflow". Don't forget to copy the key !
+It will be requested the next time you use git and need it.
+
+You can even store it with R :
+
+
+```r
+gitcreds::gitcreds_set() # interactive command
+```
+
+
+---
+
+# Clone a github repository
+
+We will copy a remote repository to disk: **https://github.com/Ifremer-IAM/Tutorat_git**
+
+
+.pull-left[
+
+**Git Bash**
+
+
+```bash
+$ git clone &lt;URL&gt;
+```
+]
+
+.pull-right[
+
+**R**
+
+For once R doesn't do everything...
+]
+
+.pull-left[
+**Rstudio**
+
+* File -&gt; New Project
+
+* Version Control -&gt; Git
+
+* URL : copy the url
+]
+
+.pull-right[
+&lt;img src="CSU_RepRo_files/figure-html/clone_repo.png" width="85%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+[Happy Git for the useR](https://happygitwithr.com/usage-intro.html) explains other cases than this one.
+
+???
+
+Take the time for everyone to pull and commit, because there will be conflicts!
+
+---
+
+# Commit -&gt; Pull -&gt; Push
+&lt;img src="Tuto_git_files/figure-html/diag-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+# Create a new branch
+
+.pull-left[
+
+**Git Bash**
+
+
+```bash
+$ git checkout -b &lt;NOM&gt;
+```
+]
+
+.pull-right[
+
+**R**
+
+```r
+git2r::branch_create(name = &lt;NOM&gt;)
+```
+]
+
+
+.pull-left[
+**Rstudio**
+
+* Onglet Git -&gt; Symbole violet
+]
+
+.pull-right[
+&lt;img src="CSU_RepRo_files/figure-html/new_branch.png" width="85%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# Navigate in the history
+
+Once a certain number of commits have been defined, you can go back or change branches.
+
+## Change branch
+
+.pull-left[
+
+**Git Bash**
+
+You just have to give the name of the branch. We can list them as follows:
+
+
+```bash
+$ git branch
+```
+
+Switch to the *main* branch
+
+
+```bash
+$ git checkout main
+```
+]
+
+.pull-right[
+**Rstudio**
+
+* Git tab -&gt; Next to the creation of branches you can choose which one to look at
+]
+
+You can change branches if all files are **committed** or ignored.
+
+
+---
+# Navigate in the history
+
+Once a certain number of commits are defined, you can go back or change branches.
+
+## Change commit
+
+.pull-left[
+**Git Bash**
+
+You just have to give the SHA of the commit. We can list them as follows:
+
+
+```bash
+$ git log --oneline
+$ git checkout &lt;SHA&gt;
+```
+]
+
+.pull-right[
+**Rstudio**
+
+I haven't done this with Rstudio yet, if anyone finds it...
+
+
+```r
+# git2r::checkout()
+```
+
+]
+
+You can change commits if all files are **commit** or ignored.
+
+Another way to observe the past is to use **Github** which allows to easily visualize the history of a repository : see the article of [Happy Git for Ruser](https://happygitwithr.com/time-travel-see-past.html).
+
+---
+# Explanation
+
+**git checkout** allows to move **HEAD**, which corresponds to what is presented on your computer.
+
+.pull-left[
+&lt;img src="Tuto_git_files/figure-html/head_act-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="Tuto_git_files/figure-html/head_branch-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-left[
+Reverting allows to see the state but you can also start a new branch re-commit from a past commit.
+Example:
+
+
+```bash
+$ git checkout -b test A
+$ git add ... ; git commit -m 'F'
+```
+
+]
+
+.pull-right[
+&lt;img src="Tuto_git_files/figure-html/head_past-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# Merging branches
+
+Once the code is working we can do a **merge** of the branches.
+
+.pull-left[
+&lt;img src="Tuto_git_files/figure-html/branch_pre-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="Tuto_git_files/figure-html/branch_premerge-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-left[
+A merge is always done from the target branch (*main*) by incorporating the external branch (here *dev*)
+
+
+```bash
+$ git checkout main
+$ git merge dev
+```
+]
+
+.pull-right[
+&lt;img src="Tuto_git_files/figure-html/branch merge-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+In the case where each branch has commits, a new commit *merge* will be created with the opportunity to resolve conflicts. This commit belongs to both branches *main* and *dev*.
+
 
 
 ---

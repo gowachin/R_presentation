@@ -5,7 +5,7 @@
 
 ## Infinite moon reader ####
 xaringan:::inf_mr(moon = "CSU_RepRo.Rmd")
-xaringan:::inf_mr(moon = "Tuto_git.Rmd")
+xaringan:::inf_mr(moon = "git_exo.Rmd")
 
 ## Rendering to pdf ####
 # remotes::install_github("jhelvy/xaringanBuilder")

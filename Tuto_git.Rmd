@@ -240,10 +240,10 @@ File to list all sensible files that we **don't** want to save. Like *data/* or 
 ```
 
 
-<!-- --- -->
+---
 
-<!-- ```{r child='git_exo.Rmd', eval=TRUE} -->
-<!-- ``` -->
+```{r child='git_exo.Rmd', eval=TRUE}
+```
 
 
 ---
