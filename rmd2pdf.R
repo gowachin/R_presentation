@@ -12,3 +12,4 @@ xaringan:::inf_mr(moon = "git_exo.Rmd")
 # also require pdftools and chromote
 library(xaringanBuilder) # not working because missing chrome
 build_pdf("CSU_RepRo.html", partial_slides = TRUE)
+to_pdf("Tuto_git.html", partial_slides = TRUE)
