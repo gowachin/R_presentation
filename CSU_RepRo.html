@@ -23,10 +23,10 @@ class: center, middle, inverse, title-slide
 ### Maxime Jaunatre
 ]
 .institute[
-### UMR AMURE | IFREMER
+### UR LESSEM | INRAE
 ]
 .date[
-### 2022-03-17 (updated: 2022-07-12)
+### 2022-03-17 (updated: 2023-01-23)
 ]
 
 ---
@@ -48,7 +48,7 @@ exclude: true
 
 # Science Reproductible avec un grand R
 
-**Résumé :** Le logiciel R est un outil indispensable aux recherches menés au sein d'AMURE.
+**Résumé :** Le logiciel R est un outil indispensable aux recherches menées au sein d'AMURE.
 Dans le contexte du mouvement de la science ouverte, Qu'il s'agisse d'analyse de données, de statistique ou de modélisation,  se pose la question de la reproductibilité de la science  : sommes nous tous capables de réutiliser les outils développés il y a 6 mois, un an ou plus ? Ces outils sont-ils suffisament ouverts pour permettre une utilisation par tout à chacun ? Enfin, à quoi peuvent bien servir des données ouvertes si les outils qui les utilisent ne le sont pas ?
 Cette présentation fera un tour d'horizon des bonnes pratiques sous R et des outils qu'il propose afin de faciliter une production quotidienne de science reproductible et ouverte. Au programme : Rstudio, packages, Git/Github, données, documentation.
 
@@ -311,7 +311,7 @@ Important de commencer seul sur un petit projet pour appréhender le systeme
 Github = Microsoft (GAFAM)
 
 ---
-
+exclude: true
 &lt;img src="CSU_RepRo_files/figure-html/gitlab/gitlab_ifremer.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 **Connection avec login extranet**, possibilité de partager à des membres externes.
@@ -324,11 +324,11 @@ Ifremer héberge un gitlab et quelques universités également.
 quoi qu'il arrive les dépots github/gitlab peuvent être totalement privés.
 
 ---
-
+exclude: true
 &lt;img src="CSU_RepRo_files/figure-html/gitlab/create_proj.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
-
+exclude: true
 
 &lt;img src="CSU_RepRo_files/figure-html/gitlab/init_project.png" width="100%" style="display: block; margin: auto;" /&gt;
 
@@ -603,12 +603,12 @@ toujours à jour.
 
 ```r
 # Title ####
-# Author, date, contact etc
+# Author, date, contact (?) etc
 # Description
 
 ## Depends ####
 library(IAM)
-# devtools::install_github(
+# remotes::install_github(
 #   "github.com/gowachin/todormd"
 # )
 
@@ -618,7 +618,7 @@ sources("R/hello_world.R")
 foo &lt;- function(){cat("Don't panic !")}
 
 ## Datasets ####
-read.csv(file = "raw_data/sole.csv")
+read.csv(file = "raw_data/Picea_abies.csv")
 
 ## Edit Dataset ####
 
@@ -737,7 +737,7 @@ Cela signifie l'oublis de ces commandes maudites :
 
 
 ```r
-*setwd("C:/home/maxime/Documents/Projet magnifique/mouette/analyse/bob/modèle/test/")
+*setwd("C:/home/maxime/Documents/Projet magnifique/mouette/analyse/bob/modèle/Tset/")
 ```
 
 
@@ -819,7 +819,7 @@ Un script ne doit dépendre que des données présentes dans son projet.
   
 Seule exception : les données de type cache : faire tourner les scripts plus facilement. 
 
-Package `{drake}` pour refaire tourner que les parties modifiées ou dépendantes d'un script.
+Package `{targets}` pour refaire tourner que les parties modifiées ou dépendantes d'un script.
 
 &lt;img src="CSU_RepRo_files/figure-html/drake.png" width="60%" style="display: block; margin: auto;" /&gt;
 
@@ -960,7 +960,7 @@ test_that("add works", {
 ```
 
 ```
-## Test passed 🥇
+## Test passed 🎊
 ```
 
 ```r
@@ -974,7 +974,7 @@ test_that("add str error", {
 ```
 
 ```
-## Test passed 🎊
+## Test passed 🥳
 ```
 ]
 
