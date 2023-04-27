@@ -1,9 +1,9 @@
 ---
-title: 'Science Reproductible avec `r icons::fontawesome("github")`'
-subtitle: "slides : [https://tinyurl.com/2s4antdy](https://tinyurl.com/2s4antdy)"
+title: 'Using `r icons::fontawesome("git-square")` with `r icons::fontawesome("r-project")`'
+#subtitle: "slides : [https://tinyurl.com/2s4antdy](https://tinyurl.com/2s4antdy)"
 author: "Maxime Jaunatre"
-institute: "UMR AMURE | IFREMER" 
-date: "2022-05-05 (updated: `r Sys.Date()`)"
+institute: "LESSEM | INRAE" 
+date: "2022-12-01 (updated: `r Sys.Date()`)"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -49,11 +49,11 @@ exclude: true
 
 class: inverse, center, middle
 
-# Partie : Github et dépôts distants
+# Remote repository : Github
 
 
 ---
-# Travailler à plusieurs
+# Working with others
 
 ```{r bordel, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache= TRUE}
 \begin{tikzpicture}
@@ -102,29 +102,29 @@ class: inverse, center, middle
 \end{tikzpicture}
 ```
 
-Ca devient vite complexe... 12 versions dans un dossier ?
+It becomes complex very quickly... 12 versions of a single file?
 
 ---
-# Utilisation d'un remote
+# Using a remote repository
 
-Git est installé sur votre ordinateur, et un dépôt dans votre dossier.
+Git is installed on your computer, and a repository in your folder.
 
-Principe de **Cloud** : installation de Git sur un serveur et copie du dépôt.
+Principle of **Cloud** : installation of Git on a server and copy of the repository.
 
-Plusieurs hébergeur existent :
+Several hosters exist:
 
 **Github** (Microsoft) `r icons::fontawesome("github")`   
 **Bitbucket** `r icons::fontawesome("bitbucket")`   
 **Gitlab** `r icons::fontawesome("gitlab")`
 
-Et la liste est longue : [https://git.wiki.kernel.org/index.php/GitHosting](https://git.wiki.kernel.org/index.php/GitHosting)
+And the list is long: [https://git.wiki.kernel.org/index.php/GitHosting](https://git.wiki.kernel.org/index.php/GitHosting)
 
-On peut tout à fait copier un dépôt sur plusieurs hébergeurs (mirroring) !
+It is possible to copy a repository on several hosts (mirroring) !
 
-*On peut même avoir un remote sur le même ordinateur, ou sur un disque externe ! Par exemple le disque Z...mais la réalité est un peu plus complexe.*
+*You can even have a remote on the same computer, or on an external disk ! For example another disk...but the reality is a bit more complex.*
 
 ---
-# Depot chez Gorgious
+# Gorgious's repository
 
 **Repo** : github.com/Gorgious/name
 
@@ -148,9 +148,9 @@ On peut tout à fait copier un dépôt sur plusieurs hébergeurs (mirroring) !
         & c78c64d & \\  
         &  & \\ 
     };
-     \node[fit=(m-1-1)(m-1-1)]{Etno P.};
-     \node[fit=(m-1-2)(m-1-2)]{Gorgious K.};
-     \node[fit=(m-1-3)(m-1-3)]{Candy H. C.};
+     \node[fit=(m-1-1)(m-1-1)]{Collaborator};
+     \node[fit=(m-1-2)(m-1-2)]{Github};
+     \node[fit=(m-1-3)(m-1-3)]{Local};
   
     \foreach \i/\j in {2/3, 3/4} {
       \draw [arrow] (m-\i-2) -- (m-\j-2);
@@ -181,9 +181,9 @@ On peut tout à fait copier un dépôt sur plusieurs hébergeurs (mirroring) !
         & c78c64d & c78c64d \\  
         &  &  \\  
     };
-    \node[fit=(m-1-1)(m-1-1)]{Etno P.};
-    \node[fit=(m-1-2)(m-1-2)]{Gorgious K.};
-    \node[fit=(m-1-3)(m-1-3)]{Candy H. C.};
+     \node[fit=(m-1-1)(m-1-1)]{Collaborator};
+     \node[fit=(m-1-2)(m-1-2)]{Github};
+     \node[fit=(m-1-3)(m-1-3)]{Local};
   
     \foreach \i/\j in {2/3, 3/4} {
       \draw [arrow] (m-\i-2) -- (m-\j-2);
@@ -215,9 +215,9 @@ On peut tout à fait copier un dépôt sur plusieurs hébergeurs (mirroring) !
         & c78c64d & c78c64d \\  
         &  & |[high]| cbdac1e \\  
     };
-    \node[fit=(m-1-1)(m-1-1)]{Etno P.};
-    \node[fit=(m-1-2)(m-1-2)]{Gorgious K.};
-    \node[fit=(m-1-3)(m-1-3)]{Candy H. C.};
+     \node[fit=(m-1-1)(m-1-1)]{Collaborator};
+     \node[fit=(m-1-2)(m-1-2)]{Github};
+     \node[fit=(m-1-3)(m-1-3)]{Local};
   
     \foreach \i/\j in {2/3, 3/4} {
       \draw [arrow] (m-\i-2) -- (m-\j-2);
@@ -250,9 +250,9 @@ On peut tout à fait copier un dépôt sur plusieurs hébergeurs (mirroring) !
         & c78c64d & c78c64d \\  
         & |[high]| cbdac1e & |[high]| cbdac1e \\  
     };
-    \node[fit=(m-1-1)(m-1-1)]{Etno P.};
-    \node[fit=(m-1-2)(m-1-2)]{Gorgious K.};
-    \node[fit=(m-1-3)(m-1-3)]{Candy H. C.};
+     \node[fit=(m-1-1)(m-1-1)]{Collaborator};
+     \node[fit=(m-1-2)(m-1-2)]{Github};
+     \node[fit=(m-1-3)(m-1-3)]{Local};
   
     \foreach \i/\j in {2/3, 3/4} {
       \draw [arrow] (m-\i-2) -- (m-\j-2);
@@ -264,7 +264,7 @@ On peut tout à fait copier un dépôt sur plusieurs hébergeurs (mirroring) !
 ```
 
 ---
-# Retard
+# Late
 
 ```{r retard, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache=TRUE}
 
@@ -286,9 +286,9 @@ On peut tout à fait copier un dépôt sur plusieurs hébergeurs (mirroring) !
         c78c64d & c78c64d & c78c64d \\  
          & cbdac1e & cbdac1e \\
     };
-    \node[fit=(m-1-1)(m-1-1)]{Etno P.};
-    \node[fit=(m-1-2)(m-1-2)]{Gorgious K.};
-    \node[fit=(m-1-3)(m-1-3)]{Candy H. C.};
+     \node[fit=(m-1-1)(m-1-1)]{Collaborator};
+     \node[fit=(m-1-2)(m-1-2)]{Github};
+     \node[fit=(m-1-3)(m-1-3)]{Local};
   
     \foreach \i/\j in {2/3, 3/4} {
       \draw [arrow] (m-\i-1) -- (m-\j-1);
@@ -323,9 +323,9 @@ On peut tout à fait copier un dépôt sur plusieurs hébergeurs (mirroring) !
         c78c64d & c78c64d & c78c64d \\  
         |[high]| cbdac1e & cbdac1e & cbdac1e \\
     };
-    \node[fit=(m-1-1)(m-1-1)]{Etno P.};
-    \node[fit=(m-1-2)(m-1-2)]{Gorgious K.};
-    \node[fit=(m-1-3)(m-1-3)]{Candy H. C.};
+     \node[fit=(m-1-1)(m-1-1)]{Collaborator};
+     \node[fit=(m-1-2)(m-1-2)]{Github};
+     \node[fit=(m-1-3)(m-1-3)]{Local};
   
     \foreach \i/\j in {2/3, 3/4} {
       \draw [arrow] (m-\i-1) -- (m-\j-1);
@@ -340,7 +340,7 @@ On peut tout à fait copier un dépôt sur plusieurs hébergeurs (mirroring) !
 
 
 ---
-# Lien COMMIT -> PULL -> PUSH
+# COMMIT -> PULL -> PUSH
 
 ```{r pull_push_diag, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE}
 \begin{tikzpicture}[block/.style={draw,fill=strange,minimum height=2.5em},
@@ -367,137 +367,28 @@ On peut tout à fait copier un dépôt sur plusieurs hébergeurs (mirroring) !
 ```
 
 
-
----
-
-class: inverse, center, middle
-
-# Exercice : Cloner un dépot distant
-
----
-# Config Github Token (PAT) !
-
-Github ne fonctionne plus avec les mot de passe -> sécurité !
-
-Créer un Token en allant sur le site [https://github.com/settings/tokens](https://github.com/settings/tokens) and -> “Generate token”.
-
-Ou alors dans R :
-
-```{r, echo = TRUE}
-usethis::create_github_token()
-```
-
-
-Valider les cases "repo", "user" et "workflow". Penser a copier la clé !
-Elle sera demandé à la prochaine utilisation de git en ayant besoin.
-
-On peut même la stocker avec R :
-
-```{r, echot = TRUE}
-gitcreds::gitcreds_set() # commande interactive
-```
-
-
----
-# Cloner un dépôt github
-
-On va copier un dépot distant sur le disque : **https://github.com/Ifremer-IAM/Tutorat_git**
-
-
-.pull-left[
-
-**Git Bash**
-
-```{bash, echo = TRUE}
-$ git clone <URL>
-```
-]
-
-.pull-right[
-
-**R**
-
-Pour une fois que R ne fait pas tout...
-]
-
-.pull-left[
-**GHD**
-
-* File -> Clone repository
-
-* URL : copier l'url
-
-*NE PERMET PAS DE CLONER LES DEPOTS PRIVES*
-]
-
-.pull-right[
-**Rstudio**
-
-* File -> New Project
-
-* Version Control -> Git
-
-* URL : copier l'url
-]
-
---
-
-**A vous de rajouter un document de votre choix avec un commit !**
-
-[Happy Git for the useR](https://happygitwithr.com/usage-intro.html) explique d'autre cas que celui-ci.
-
-???
-
-Prendre le temps que chacun pull and commit, car il va y avoir des conflits !
-
----
-# Commit -> Pull -> Push
-```{r diag, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE}
-\begin{tikzpicture}[block/.style={draw,fill=strange,minimum height=2.5em},
-    font=\sffamily,>=stealth]
-
-    \begin{scope}[start chain=A going below,node distance=1em,
-                  local bounding box=buffers]
-        \node[block,minimum width=6em](remote){Remote github};
-        \node[right= 8em of remote, block,minimum width=6em](local){Fichiers};
-    \end{scope} 
-
-    \node[below= 6em of buffers,align=center, block,minimum width=6em](repo){Repository \\Git local};
-
-    %\draw[->, thick](remote) edge[bend left] node[midway, fill=white]{Pull} (local);
-    \draw[->, thick](remote) edge[bend left] node[midway, fill=white]{Pull} (repo);
-    %\draw[->, thick](remote) edge[dashed] node[midway, fill=white]{Fetch} (repo);
-    \draw[->, thick](remote) edge node[midway, fill=white]{Clone} (local);
-    \draw[->,thick](local) edge[bend left] node[midway, fill=white]{Add} (repo);
-    \draw[->,thick](repo) edge[bend left] node[midway, fill=white]{Push} (remote);
-    \draw[->,thick](repo) edge[loop right] node[midway, fill=white]{Commit} (repo);
-    
-
-\end{tikzpicture}
-```
-
 ---
 # Conflits : DON'T PANIC
 
-Un conflit interviens quand plusieurs personnes modifient le même document au même endroit.
+A conflict occurs when several people modify the same document in the same place.
 
-La plupart du temps git gère les différences (**merge**) en solo. Il demande l'intervention d'un utilisateur en cas de choix impossible.
+Most of the time git handles the differences (**merge**) alone. It requires the intervention of a user in case of impossible choice.
 
 .pull-left[
 ```{bash, echo = TRUE}
 # Commit d39ac60
-Coucou
-- Ceci est un fichier.
-+ Ceci est un super fichier.
-Bisous
+x <- "Hi"
+- x <- paste(x,"this is a file")
++ x <- paste(x,"this is a great file")
+cat(x)
 ```
 
 ```{bash, echo = TRUE}
 # Commit cbdac1e
-Coucou
-- Ceci est un fichier.
-+ Ceci est un fichier nul.
-Bisous
+x <- "Hi"
+- x <- paste(x,"this is a file").
++ x <- paste(x,"this is a boring file")
+cat(x)
 ```
 ]
 
@@ -505,359 +396,51 @@ Bisous
 
 .pull-right[
 ```{bash, echo = TRUE}
-Coucou
+x <- "Hi"
 *<<<<<<< HEAD:file.R
-*+ Ceci est un super fichier.
+*+ x <- paste(x,"this is a great file")
 *=======
-*+ Ceci est un fichier nul.
+*+ x <- paste(x,"this is a boring file")
 *>>>>>>> main:File.R
-Bisous
+cat(x)
 ```
 
-Il faut éditer à la main et commit.
+We need to edit by hand (solve the conflict) and commit.
 ]
 
-Important de garder le contact sur qui fait quoi ^^
+It's important here to have someone in charge of the main repository.
 
 ---
 # Alternative : branches
 
-Pouvoir tester des choses sur un historique parallèle pour s'assurer de ne rien casser.
+Be able to test things on a parallel history to make sure you don't break anything.
 
 ```{r branches, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE}
 \begin{tikzpicture}
-  \gitDAG[grow right sep = 2em]{
-    A -- B -- { 
-      C,
-      {D -- E },
+\gitDAG[grow right sep = 2em]{
+    A -- B -- {
+        C,
+        {D -- E },
     }
-  };
-  % Remote branch
-  \gitremotebranch
-    [origmaster]    % node name
-    {origin/master} % node text
-    {above=of C}    % node placement
-    {C}             % target
-  % Branch
-  \gitbranch
-    {dev}        % node name and text 
-    {above=of E} % node placement
-    {E}          % target
-  % HEAD reference
-  \gitHEAD
-    {above=of dev} % node placement
-    {dev}          % target
+};
+% Remote branch
+\gitremotebranch
+[origmaster]    % node name
+{origin/master} % node text
+{above=of C}    % node placement
+{C}             % target
+% Branch
+\gitbranch
+{dev}        % node name and text
+{above=of E} % node placement
+{E}          % target
+% HEAD reference
+\gitHEAD
+{above=of dev} % node placement
+{dev}          % target
 \end{tikzpicture}
 ```
 
-**HEAD** : situation actuelle des fichiers.
-*master* et *dev* : nom de branche
-
----
-
-class: inverse, center, middle
-
-# Exercice : Créer une branche
-
-
----
-# Créer une branche
-
-On va tous créer une branche avec notre nom :
-
-.pull-left[
-
-**Git Bash**
-
-```{bash}
-$ git checkout -b <NOM>
-```
-]
-
-.pull-right[
-
-**R**
-
-Pour une fois que R ne fait pas tout...
-]
-
-.pull-left[
-**GHD**
-
-* Branch -> New Branch
-]
-
-.pull-right[
-**Rstudio**
-
-* Onglet Git -> Symbole violet
-]
-
-On peut tous travailler sur notre branche et ensuite un responsable peut les merge ou alors proposer un **pull-request**
-
----
-# Naviguer dans l'historique
-
-Une fois un certain nombre de commits définis, on peut revenir en arrière ou surtout changer de branches.
-
-## Changement de branche
-
-.pull-left[
-
-**Git Bash**
-
-Il suffit de donner le nom de la branche. On peut les lister comme suivant :
-
-```{bash}
-$ git branch
-```
-
-On bascule sur la branche *main*
-
-```{bash}
-$ git checkout main
-```
-]
-
-.pull-right[
-**Rstudio**
-
-* Onglet Git -> A côté de la création des branches on peut choisir laquelle on regarde
-]
-
-On peut changer de branches si tout les fichiers sont **commit** ou ignorés.
-
-
----
-# Naviguer dans l'historique
-
-Une fois un certain nombre de commits définis, on peut revenir en arrière ou surtout changer de branches.
-
-## Changement de commit
-
-.pull-left[
-**Git Bash**
-
-Il suffit de donner le SHA du commit. On peut les lister comme suivant :
-
-```{bash}
-$ git log --oneline
-$ git checkout <SHA>
-```
-]
-
-.pull-right[
-**Rstudio**
-
-Je n'ai pas encore fait ça avec Rstudio, si jamais quelqu'un trouve...
-]
-
-On peut changer de commits si tout les fichiers sont **commit** ou ignorés.
-
-Une manière également d'observer le passé est de passer par **Github** qui permet de visualiser facilement l'historiqure d'un dépôt : voir l'article de [Happy Git for Ruser](https://happygitwithr.com/time-travel-see-past.html).
-
----
-# Explication
-
-**git checkout** permet de déplacer **HEAD**, qui correspond à ce qui est présenté sur votre ordinateur.
-
-.pull-left[
-```{r head_act, engine='tikz', fig.ext = 'png', fig.width = 2, engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE}
-    \begin{tikzpicture}
-      \gitDAG[grow right sep = 2em]{
-        A -- B -- { 
-          C,
-          {D -- E },
-        }
-      };
-      % Branch
-      \gitbranch
-        {dev}      % node name and text 
-        {above=of E} % node placement
-        {E}          % target
-      \gitbranch
-        {main}      % node name and text 
-        {above=of C} % node placement
-        {C}          % target
-      % HEAD reference
-      \gitHEAD
-        {above= of B} % node placement
-        {B}          % target
-      % \SAandWT
-      \node[below= of A](git){\small \$ git checkout B};
-    \end{tikzpicture}
-```
-]
-
-.pull-right[
-```{r head_branch, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE}
-
-    \begin{tikzpicture}
-        \gitDAG[grow right sep = 2em]{
-          A -- B -- { 
-            C,
-            {D -- E },
-          }
-        };
-        % Branch
-        \gitbranch
-          {dev}      % node name and text 
-          {above=of E} % node placement
-          {E}          % target
-        \gitbranch
-          {main}      % node name and text 
-          {above=of C} % node placement
-          {C}          % target
-        % HEAD reference
-        \gitHEAD
-          {above=of dev} % node placement
-          {dev}          % target
-        % \SAandWT
-        \node[below= of A](git){\small \$ git checkout dev};
-      \end{tikzpicture}
-```
-]
-
---
-
-.pull-left[
-Revenir en arrière permet de voir l'état mais on peut également commencer une nouvelles branche re-commit depuis un commit passé.
-Exemple :
-
-```{bash}
-$ git checkout -b test A
-$ git add ... ; git commit -m 'F'
-```
-
-]
-
-.pull-right[
-```{r head_past, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE}
-      \begin{tikzpicture}
-        \gitDAG[grow right sep = 2em]{
-          A -- {B -- { 
-            C,
-            {D -- E },
-          },
-          F
-          }
-        };
-        % Branch
-        \gitbranch
-          {dev}      % node name and text 
-          {right=of E} % node placement
-          {E}          % target
-        \gitbranch
-          {main}      % node name and text 
-          {right=of C} % node placement
-          {C}          % target
-        \gitbranch
-          {test}      % node name and text 
-          {right=of F} % node placement
-          {F}          % target
-        % HEAD reference
-        \gitHEAD
-          {above=of F} % node placement
-          {F}          % target
-        % \SAandWT
-      \end{tikzpicture}
-```
-]
-
----
-# Merging branches
-
-Une fois que le code fonctionne on peut faire un **merge** des branches.
-
-.pull-left[
-```{r branch_pre, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE}
-      \begin{tikzpicture}
-        \gitDAG[grow right sep = 2em]{
-          A -- B -- { 
-            C,
-            {D -- E },
-          }
-        };
-        % Branch
-        \gitbranch
-          {dev}        % node name and text 
-          {right=of E} % node placement
-          {E}          % target
-          \gitbranch
-          {main}        % node name and text 
-          {right=of C} % node placement
-          {C}          % target
-        % HEAD reference
-        \gitHEAD
-          {below=of E} % node placement
-          {E}          % target
-        % \SAandWT
-      \end{tikzpicture}
-```
-]
-
-.pull-right[
-```{r branch_premerge, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE}
-      \begin{tikzpicture}
-        \gitDAG[grow right sep = 2em]{
-          A -- B -- { 
-            C,
-            {D -- E },
-          }
-        };
-        % Branch
-        \gitbranch
-          {dev}        % node name and text 
-          {right=of E} % node placement
-          {E}          % target
-          \gitbranch
-          {main}        % node name and text 
-          {right=of C} % node placement
-          {C}          % target
-        % HEAD reference
-        \gitHEAD
-          {right=of main} % node placement
-          {main}          % target
-        % \SAandWT
-      \end{tikzpicture}
-```
-]
-
-.pull-left[
-Un merge se fait toujours depuis la branche cible (*main*) en incorporant la branche externe (ici *dev*)
-
-```{bash}
-$ git checkout main
-$ git merge dev
-```
-]
-
-.pull-right[
-```{r branch merge, engine='tikz', fig.ext = 'png', engine.opts = list(template = "tex/gitdags.tex"), echo = FALSE, eval=TRUE, cache = TRUE}
-      \begin{tikzpicture}
-        \gitDAG[grow right sep = 2em]{
-          A -- B -- { 
-            C,
-            {D -- E },
-          } -- Merge
-        };
-        % Branch
-        \gitbranch
-          {main}        % node name and text 
-          {right=of Merge} % node placement
-          {Merge}          % target
-        \gitbranch
-          {dev}        % node name and text 
-          {below=of main} % node placement
-          {Merge}          % target
-        % HEAD reference
-        \gitHEAD
-          {above=of Merge} % node placement
-          {Merge}          % target
-        % \SAandWT
-      \end{tikzpicture}
-```
-]
-
-Dans le cas où chaque branche a des commits, un nouveau commit *merge* va être créé avec l'opportunité de régler les conflits. Ce commit appartient aux deux branches *main* et *dev*.
+**HEAD** : current status of the files.
+*master* et *dev* : branch names
 
