@@ -1,0 +1,166 @@
+\documentclass[12pt, colorinlistoftodos]{article} 
+
+\title{Licensing R packages developed in a research unit}
+\author{Maxime Jaunatre}
+
+\usepackage{ifthen} 
+\newboolean{draft}\setboolean{draft}{false} % display notes, stamp
+
+\providecommand{\main}{.}  % *Modification: define file location
+\usepackage{\main/.tex/setup}
+
+% \usepackage{draftwatermark}
+%     \SetWatermarkScale{4}
+%     \SetWatermarkText{DRAFT}
+%     \SetWatermarkLightness{0.8}
+
+\begin{document}
+
+\thispagestyle{plain}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{\main/.tex/header_ifre.png}
+    \par ~ \par
+    \begin{minipage}{\textwidth}
+        \begin{center}
+            {\huge \csname @title\endcsname }
+        \end{center}
+        \rule{7em}{.4pt}\par
+        \csname @author\endcsname ~| UMR AMURE \hfill %\par 
+        \href{mailto:maxime.jaunatre@ifremer.fr}{Mail} | \today
+    \end{minipage}
+\end{figure}
+\hrule
+%\ifthenelse{\boolean{draft}}{\listoftodos \hrule}{} %is this list present or not
+
+\section{Introduction}
+
+Every line of code produced as part of the research is subject to copyright. 
+However, copyright only allows the author to make decisions about modifying, sharing and using his software.
+A license is therefore essential to declare precisely the conditions of use/communication/modification of the software by others.
+
+This document gathers some elements of knowledge and thoughts used to determine the choice of licensing the R packages produced in the framework of the IAM bio-economic model development within the UMR AMURE. 
+It includes considerations related to the licensing of software produced in the framework of research work.
+%It also reproduces the process undertaken in the framework of IAM to select its license.
+
+\section{Licenses}
+
+Licenses are contracts protecting authors, collaborators and eventually users. 
+They can establish obligations to respect for the sharing/use/modification of the software.
+
+It is therefore essential to license developed software as soon as possible and before distribution.
+Licenses establish obligations. The use of other software (packages, dependencies, bricks)
+can therefore lead to having to respect other licenses.
+It is therefore necessary to pay attention to the compatibility of the licenses.
+\textit{Example: if my software uses a package whose license prevents a commercial use, I could not market my software.}
+
+An essential concept is copyleft (as opposed to copyright). 
+The copyleft of a license allows to determine the amount of permissions of a software.
+Thus a strong copyleft imposes reciprocity and maintenance of the original license with modifications, 
+while a weak copyleft allows modifications to be under other licenses.
+In the case of a strong copyleft, we say that the initial license contaminates the license of my software.
+
+\subsection*{Free software}
+
+A software is said to be free if it validates 4 criteria according to 
+the \href{https://www.gnu.org/philosophy/free-sw.html#four-freedoms}{Free Software Foundation (FSF)}:
+
+\begin{enumerate}
+    \item freedom to run the program
+    \item freedom to study how the program works and to modify it (access to the source code)
+    \item freedom to distribute copies to others
+    \item freedom to distribute modified copies (with source code)
+\end{enumerate}
+
+It is more a philosophy of sharing than a notion of price.
+
+\subsection*{Open-source software}
+
+An software is open source if its license meets these conditions according 
+to the \href{https://opensource.org/docs/osd}{Open Source Initiative (OSI)}:
+
+\begin{enumerate}
+    \item Free redistribution. The license must not prevent a party from selling or giving away the software
+    \item Source code (availability of the code)
+    \item Derived works
+    \item Integrity of the author's source code
+    \item No discrimination against individuals or groups
+    \item No discrimination against fields of activity
+    \item Distribution of the license
+    \item The license must not be product specific
+    \item The license must not restrict other software
+    \item The license must be technology neutral
+\end{enumerate}
+
+\section{Licensing R}
+
+As mentioned earlier, some licenses may be incompatible.
+This is important in the case of an R package, since the R language is under a license itself.
+
+Therefore, it is necessary to understand which licenses are used in the context of R.
+A sum up of information by Colin Fay (ThinkR dev) is accessible in \href{https://thinkr-open.github.io/licensing-r/}{\textit{Licensing R} (Fay Colin, 2019).}
+
+To sum up, R require the license to be in a list they provide and GNU GPL\footnote{acronym for GNU General Public License, GNU being a project bringing together several free software (acronym : \textit{"GNU’s Not UNIX"}).}-compatible.
+This is because R packages are considered as add-on or plug-in, and simplify the list of licenses we can use.
+
+\textit{Licensing R} contains an important part about checking dependancies'licenses. 
+The R code is provided in the \href{https://thinkr-open.github.io/licensing-r/practical.html#dependencies-exploration}{5.2 section}.
+
+\section{Ifremer context}
+
+Institutions where the code is developped has its importance.
+Development produced in public institutions as Ifremer have to comply to 
+\href{https://www.legifrance.gouv.fr/loda/article_lc/LEGIARTI000033205142/2020-09-21/}{"La loi numérique"}. 
+This mean that every software produced with public funding must be 
+under open-source license, free and accessible to everyone.
+In order to frame this, the french governement published a \href{https://www.data.gouv.fr/fr/pages/legal/licences/}{list of licenses to use}.
+% Donc déjà, sache que vous pouvez déposer le code à l'APP (https://www.app.asso.fr/), ça ne mange pas de pain...
+
+An important point here is the presence of a private funding. 
+If so, a restricted license can be used. 
+To use a open-source license, you need to collect agrement from the funding organism.
+
+\subsection*{CeCILL, a french license}
+
+In 2004, french agencies (CEA, CNRS and INRIA) announced a new free-software license designed for compatibility between GNU GPL and French law.
+The \href{https://cecill.info/index.fr.html}{CeCILL license}\footnote{acronym for Ce(A)C(NRS)I(NRIA)L(ogiciel)L(ibre)}, exist in different versions.
+
+\begin{enumerate}
+    \item CeCILL : free software license compatible with GNU GPL, in version 1, 2 and 2.1
+    \item CeCILL-B : similar to BSD\footnote{acronym for Berkeley Software Distribution} type license and thus compatible with GNU LGPL\footnote{acronym for GNU Lesser General Public License} licenses (less restrictive licenses)
+    \item CeCILL-C : adapted to software component licenses (more restrictive licenses)
+\end{enumerate}
+
+\section{Important notes}
+
+On a project involving multiple authors, it is important to have each 
+contributor persmission to change the license.
+This is because every code line added is under contributor's copyright. 
+It is however possible for contributors to assign their copyright to the main main author. 
+This will prevent future issues in a growing number of contribution.
+
+The exploration of the different types of licences has thus led to the choice of a CeCILL v2.1 licence for the IAM bio-economic model, 
+in order to respect the context of R software and the "Loi numérique".
+IAM is thus a free open-source software and the acceptance of the licence is done at the download or at the first application of one of the following rights:
+\begin{enumerate}
+    \item Right to use the software (reproduce, load, display, execute, store and/or study the operation)
+    \item Right to make contributions (translate, adapt, arrange, modify and/or reproduce)
+    \item Right to distribute (disseminate, transmit, communicate on any medium and/or by any means as well as to market)
+\end{enumerate}
+The distribution of IAM with or without modification must always be done with the associated licence (CeCILL) and access to the source code.
+IAM can be included and distributed in code licensed under the GNU GPL, GNU Affero GPL or EUPL. 
+
+Translated with www.DeepL.com/Translator (free version)
+
+\section{Links and sources}
+
+\begin{enumerate}
+    \item FSF : \url{https://www.gnu.org/philosophy/free-sw.html#four-freedoms}
+    \item OSI : \url{https://opensource.org/docs/osd}
+    \item \textit{Licensing R}, Fay Colin, 2019 : \url{https://thinkr-open.github.io/licensing-r}
+    \item Loi Numérique, Légifrance : \url{https://www.legifrance.gouv.fr/loda/article_lc/LEGIARTI000033205142/2020-09-21/}
+    \item data.gouv.fr License list : \url{https://www.data.gouv.fr/fr/pages/legal/licences/}
+    \item CeCILL license : \url{https://cecill.info/index.fr.html}
+\end{enumerate}
+
+\end{document}
