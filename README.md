@@ -39,3 +39,8 @@ UMR AMURE, IFREMER 05/05/2022.
 Session tutorat sur Git pour expliquer son utilisation locale (commit), et son utilisation avec des remotes pour un travail collectif. Les slides sont avant tout un support pour une demi-journée interractive où chacun test les différentes commandes. Les commandes sont si possible montrées sur Git Bash, Rstudio, R et Github Desktop. 
 
 La session requiert au préalable l'installation de Git, R, Rstudio ainsi que la création d'un compte Github pour cloner un dépot exemple de travail.
+
+
+## Licences libre sur le code (fr)
+
+Présentation sur les licences libres et leur utilité dans le code. En cours d'écriture.
